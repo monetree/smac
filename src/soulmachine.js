@@ -1,4 +1,5 @@
 import { Scene } from "@soulmachines/smwebsdk";
+import { useEffect } from "react";
 
 const Soulmachine = () => {
   let scene;
@@ -25,6 +26,10 @@ const Soulmachine = () => {
       .then((sessionId) => onConnectionSuccess(sessionId))
       .catch((error) => onConnectionError(error));
   }
+
+  useEffect(() => {
+    connect();
+  }, []);
 
   /**
    * Handle successful connection
@@ -62,7 +67,8 @@ const Soulmachine = () => {
 
   return (
     <>
-      <div id="shadow"></div>
+      <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
+      {/* <div id="shadow"></div>
 
       <div id="content">
         <div className="account-info">
@@ -119,7 +125,7 @@ const Soulmachine = () => {
             Reset
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
