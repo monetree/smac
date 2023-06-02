@@ -367,7 +367,7 @@ button:hover {
 video {
   display: block;
   /*border:1px solid;*/
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 
 #signin-container {
