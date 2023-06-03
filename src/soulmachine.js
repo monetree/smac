@@ -17,7 +17,7 @@ const Soulmachine = () => {
     // create a new scene object
     scene = new Scene({
       apiKey:
-        "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWRpZ2l0YWwtZ3JlZXRlciIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxX2FmNzViZTg3LTRlYWEtNDQzYi04YWVkLTI1OTM4YjAxMmY2ZCJ9",
+        "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
       videoElement: videoEl,
       requestedMediaDevices: { microphone: true, camera: true },
     });
