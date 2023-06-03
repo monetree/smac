@@ -77,7 +77,9 @@ const Soulmachine = () => {
     <>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-      <button onClick={muteDigitalPerson}>{isMute ? "Unmute" : "Mute"}</button>
+      <button onClick={muteDigitalPerson} style={{ marginTop: "20px" }}>
+        {isMute ? "Unmute" : "Mute"}
+      </button>
 
       {/* <div id="shadow"></div>
 
