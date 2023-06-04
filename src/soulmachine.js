@@ -2,7 +2,7 @@ import { Scene } from "@soulmachines/smwebsdk";
 import { useEffect, useState } from "react";
 
 const Soulmachine = () => {
-  // const [isMute, setIsMute] = useState(false);
+  const [isMute, setIsMute] = useState(false);
 
   let scene;
   /**
