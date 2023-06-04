@@ -19,7 +19,7 @@ const Soulmachine = () => {
       apiKey:
         "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
       videoElement: videoEl,
-      requestedMediaDevices: { microphone: true, camera: true },
+      requestedMediaDevices: { microphone: !isMute, camera: true },
     });
 
     // connect the Scene to the session server
@@ -31,7 +31,7 @@ const Soulmachine = () => {
 
   useEffect(() => {
     connect();
-  }, []);
+  }, [isMute]);
 
   /**
    * Handle successful connection
@@ -69,8 +69,8 @@ const Soulmachine = () => {
 
   const muteDigitalPerson = () => {
     setIsMute(!isMute);
-    const videoEl = document.getElementById("sm-video");
-    videoEl.muted = !isMute;
+    // const videoEl = document.getElementById("sm-video");
+    // videoEl.muted = !isMute;
   };
 
   return (
