@@ -66,19 +66,23 @@ const Soulmachine = () => {
     }
   }
 
-  const muteDigitalPerson = () => {
+  function toggleUserMicrophone() {
     setIsMute(!isMute);
+    console.log("status: ", scene.isMicrophoneActive());
     const active = scene.isMicrophoneActive();
     scene.setMediaDeviceActive({
       microphone: !active,
     });
-  };
+  }
 
   return (
     <>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-      <button onClick={muteDigitalPerson} style={{ marginTop: "20px" }}>
+      <button
+        onClick={() => toggleUserMicrophone()}
+        style={{ marginTop: "20px" }}
+      >
         {isMute ? "Unmute" : "Mute"}
       </button>
 
