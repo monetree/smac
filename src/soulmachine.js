@@ -2,7 +2,7 @@ import { Scene } from "@soulmachines/smwebsdk";
 import { useEffect, useState } from "react";
 
 const Soulmachine = () => {
-  const [isMute, setIsMute] = useState(false);
+  // const [isMute, setIsMute] = useState(false);
 
   let scene;
   /**
@@ -67,7 +67,7 @@ const Soulmachine = () => {
   }
 
   const muteDigitalPerson = () => {
-    setIsMute(!isMute);
+    // setIsMute(!isMute);
     const active = scene.isMicrophoneActive();
     scene.setMediaDeviceActive({
       microphone: !active,
@@ -78,9 +78,11 @@ const Soulmachine = () => {
     <>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-      <button onClick={muteDigitalPerson} style={{ marginTop: "20px" }}>
-        {isMute ? "Unmute" : "Mute"}
-      </button>
+      {scene && (
+        <button onClick={muteDigitalPerson} style={{ marginTop: "20px" }}>
+          {scene.isMicrophoneActive() ? "Mute" : "Unmute"}
+        </button>
+      )}
 
       {/* <div id="shadow"></div>
 
