@@ -69,7 +69,7 @@ const Soulmachine = () => {
   const muteDigitalPerson = () => {
     setIsMute(!isMute);
     scene.setMediaDeviceActive({
-      microphone: !isMute,
+      microphone: isMute,
     });
   };
 
