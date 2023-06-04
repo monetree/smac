@@ -1,10 +1,19 @@
+import React from "react";
+import Login from "./Login";
 import Soulmachine from "./soulmachine";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
   return (
-    <div>
-      <Soulmachine />
-    </div>
+    <React.Fragment>
+      {!isLoggedIn && 
+        <Login setIsLoggedin={(isLoggedinState)=>{
+          setIsLoggedIn(isLoggedinState);
+        }} />
+      }
+      {isLoggedIn && <Soulmachine />}
+    </React.Fragment>
   );
 }
 
