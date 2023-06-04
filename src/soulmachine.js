@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 const Soulmachine = () => {
   const [isMute, setIsMute] = useState(false);
-  const [isMicrophone, setIsMicrophone] = useState(true);
 
   let scene;
   /**
@@ -69,9 +68,9 @@ const Soulmachine = () => {
 
   const muteDigitalPerson = () => {
     setIsMute(!isMute);
-    setIsMicrophone(!isMicrophone);
+    const active = scene.isMicrophoneActive();
     scene.setMediaDeviceActive({
-      microphone: !isMicrophone,
+      microphone: !active,
     });
   };
 
