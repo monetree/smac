@@ -15,7 +15,7 @@ const Soulmachine = () => {
   const videoEl = document.getElementById("sm-video");
   scene = new Scene({
     apiKey:
-      "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
+      "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfNWM5MGM3OTEtNTc1ZC00NDgwLTk1YjMtYmYxM2VjNzkxNzAxIn0=",
     videoElement: videoEl,
     requestedMediaDevices: { microphone: !isMute, camera: true },
   });
