@@ -68,6 +68,7 @@ const Soulmachine = () => {
 
   function toggleUserMicrophone() {
     setIsMute(!isMute);
+    console.log("status: ", scene.isMicrophoneActive());
     const active = scene.isMicrophoneActive();
     scene.setMediaDeviceActive({
       microphone: !active,
