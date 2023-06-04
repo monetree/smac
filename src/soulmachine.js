@@ -10,17 +10,18 @@ const Soulmachine = () => {
    * Request a JWT from the token server and use it
    * to connect to the Soul Machines session server.
    */
-  // create a new scene object
-  // get the video element
-
   async function connect() {
+    // get the video element
     const videoEl = document.getElementById("sm-video");
+
+    // create a new scene object
     scene = new Scene({
       apiKey:
-        "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfNWM5MGM3OTEtNTc1ZC00NDgwLTk1YjMtYmYxM2VjNzkxNzAxIn0=",
+        "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
       videoElement: videoEl,
-      requestedMediaDevices: { microphone: !isMute, camera: true },
+      requestedMediaDevices: { microphone: true, camera: true },
     });
+
     // connect the Scene to the session server
     await scene
       .connect()
@@ -68,9 +69,8 @@ const Soulmachine = () => {
 
   const muteDigitalPerson = () => {
     setIsMute(!isMute);
-    scene.setMediaDeviceActive({
-      microphone: !isMute,
-    });
+    const videoEl = document.getElementById("sm-video");
+    videoEl.muted = !isMute;
   };
 
   return (
