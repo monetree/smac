@@ -11,19 +11,17 @@ const Soulmachine = () => {
    * to connect to the Soul Machines session server.
    */
 
-  // get the video element
-  const videoEl = document.getElementById("sm-video");
-
-  // create a new scene object
-  scene = new Scene({
-    apiKey:
-      "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
-    videoElement: videoEl,
-    requestedMediaDevices: { microphone: true, camera: true },
-  });
-
   async function connect() {
-    // connect the Scene to the session server
+    // get the video element
+    const videoEl = document.getElementById("sm-video");
+    // create a new scene object
+    scene = new Scene({
+      apiKey:
+        "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVtbWFiZXRhIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfMTI0YWRhZDMtM2NkYi00ZGMzLWI2MzYtZjlmOWRjYTExYjhmIn0=",
+      videoElement: videoEl,
+      requestedMediaDevices: { microphone: true, camera: true },
+    });
+
     await scene
       .connect()
       .then((sessionId) => onConnectionSuccess(sessionId))
