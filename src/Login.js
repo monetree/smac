@@ -17,11 +17,11 @@ const Login = ({setIsLoggedin})=> {
 
     return (
         <div id="content" className="login-container">
-            <div className="login-container-block card">
+            <div className="login-container-block card-">
                 <div className="">
-                    <h1 className="login-title"> Alie Polyverse</h1>
+                    <h1 className="login-title">  Polyverse</h1>
                     <h3 className="login-title"> Sign in</h3>
-                    <h4 className="login-title">to continue to Alie Polyverse</h4>
+                    {/* <h4 className="login-title">to continue to Alie Polyverse</h4> */}
                 </div>
                 <div className="btn-position">
                     <div className="space-y-3 text-center ">
