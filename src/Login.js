@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 const Login = ({ setIsLoggedin }) => {
@@ -9,6 +9,7 @@ const Login = ({ setIsLoggedin }) => {
     "soubhagyakumar666@gmail.com",
     "pinnamanenivvs@gmail.com",
     "dprabhakar@webprodigiesinc.com",
+    "taranjeetsingh3326@gmail.com",
   ];
 
   const login = useGoogleLogin({
