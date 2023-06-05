@@ -1,48 +1,61 @@
-import React from 'react';
-import { GoogleLogin } from 'react-google-login';
+import React, { useEffect, useState } from "react";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
-const Login = ({setIsLoggedin})=> {
+const Login = ({ setIsLoggedin }) => {
+  const [user, setUser] = useState([]);
+  const emails = [
+    "mailbox@phanig.com",
+    "soubhagyakumar666@gmail.com",
+    "pinnamanenivvs@gmail.com",
+    "dprabhakar@webprodigiesinc.com",
+  ];
 
-    const responseGoogle = (googleUser) => {
-        let profile = googleUser.getBasicProfile();
-        let userData = {
-            id: profile.getId(),
-            name: profile.getName(),
-            picture: profile.getImageUrl(),
-            email: profile.getEmail()
-        }
-        localStorage.setItem("userData", JSON.stringify(userData));
-        setIsLoggedin(true);
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
+  });
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          if (!emails.includes(res.data.email)) {
+            alert("You don't have access to this page .. ");
+            return;
+          } else {
+            setIsLoggedin(true);
+          }
+        })
+        .catch((err) => console.log(err));
     }
+  }, [user]);
 
-    return (
-        <div id="content" className="login-container">
-            <div className="login-container-block card-">
-                <div className="">
-                    <h1 className="login-title">  Polyverse</h1>
-                    <h3 className="login-title"> Sign in</h3>
-                    {/* <h4 className="login-title">to continue to Alie Polyverse</h4> */}
-                </div>
-                <div className="btn-position">
-                    <div className="space-y-3 text-center ">
-                       
-                        <GoogleLogin
-                            clientId={'118420081966-s1n42272jcg4r5l4erufahti23ubp8o0.apps.googleusercontent.com'}
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            // isSignedIn={true}
-                            className={"googleLoginBtn"}
-                        >
-                            <div className="google-btn" id="gSignInWrapper">
-                                
-                                <p className="text-lg font-medium lg:text-xl btn-text">Sign in with google</p>
-                            </div>
-                        </GoogleLogin>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div id="content" className="login-container">
+      <div className="login-container-block card-">
+        <div className="">
+          <h1 className="login-title"> Polyverse</h1>
+          <h3 className="login-title"> Sign in</h3>
+          {/* <h4 className="login-title">to continue to Alie Polyverse</h4> */}
         </div>
-    )
-}
+        <div className="btn-position">
+          <div className="space-y-3 text-center ">
+            <button onClick={() => login()}>Sign in with Google 🚀 </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Login;
