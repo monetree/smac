@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import GoogleButton from "react-google-button";
 
 const Login = ({ setIsLoggedin }) => {
   const [user, setUser] = useState([]);
@@ -53,7 +54,8 @@ const Login = ({ setIsLoggedin }) => {
         </div>
         <div className="btn-position">
           <div className="space-y-3 text-center ">
-            <button onClick={() => login()}>Sign in with Google 🚀 </button>
+            {/* <button onClick={() => login()}>Sign in with Google 🚀 </button> */}
+            <GoogleButton onClick={() => login()} />
           </div>
         </div>
       </div>
