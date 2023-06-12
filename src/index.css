@@ -726,5 +726,10 @@ button img {
   color: #ffff;;
 }
 
+.loader {
+  text-align: center;
+  vertical-align: middle;
+}
+
 
 
