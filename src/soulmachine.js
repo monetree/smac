@@ -80,14 +80,14 @@ const Soulmachine = () => {
     <>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-      {/* <button
+      <button
         onClick={() => toggleUserMicrophone()}
         style={{ marginTop: "20px" }}
       >
         {isMute ? "Unmute" : "Mute"}
-      </button> */}
+      </button>
 
-      {/* <div id="shadow"></div>
+      <div id="shadow"></div>
 
       <div id="content">
         <div className="account-info">
@@ -144,7 +144,7 @@ const Soulmachine = () => {
             Reset
           </button>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
