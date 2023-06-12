@@ -11,6 +11,18 @@ function App() {
     googleLogout();
   };
 
+  const getUserInfo = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    if(!userInfo){
+      return null;
+    }
+    userInfo = JSON.parse(userInfo);
+    if(!userInfo?.name){
+      return null;
+    }
+    return userInfo;
+  }
+
   return (
     <React.Fragment>
       {!isLoggedIn && (

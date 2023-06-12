@@ -28,10 +28,7 @@ const Soulmachine = () => {
     await scene
       .connect()
       .then((sessionId) => onConnectionSuccess(sessionId))
-      .catch((error) => onConnectionError(error))
-      .finally(()=> {
-        setIsLoader(false);
-      });
+      .catch((error) => onConnectionError(error));
   }
 
   useEffect(() => {
@@ -48,10 +45,14 @@ const Soulmachine = () => {
     // start the video playing
     scene
       .startVideo()
-      .then((videoState) =>
-        console.info("started video with state:", videoState)
-      )
-      .catch((error) => console.warn("could not start video:", error));
+      .then((videoState) => {
+        console.info("started video with state:", videoState);
+        setIsLoader(false);
+      })
+      .catch((error) => {
+        console.warn("could not start video:", error);
+        setIsLoader(false);
+      });
   }
 
   /**
@@ -59,6 +60,7 @@ const Soulmachine = () => {
    * On error, we must display some feedback to the user
    */
   function onConnectionError(error) {
+    setIsLoader(false);
     switch (error.name) {
       case "noUserMedia":
         console.warn("user blocked device access");
