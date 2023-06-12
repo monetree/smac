@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.main-wrapper {
+  position: relative;
+}
+.action-wrapper {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  
+}
+.mute-btn {
+  border: 1px solid #ffff;
+}
+.mute-btn:hover {
+  border: unset;
+  background-color: #ffff;
+  color: black;
+}
+

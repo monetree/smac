@@ -1,5 +1,5 @@
 import { Scene } from "@soulmachines/smwebsdk";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const Soulmachine = () => {
   const [isMute, setIsMute] = useState(false);
@@ -77,17 +77,19 @@ const Soulmachine = () => {
   };
 
   return (
-    <>
+    <div className={"main-wrapper"}>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
+    <div className={"action-wrapper"}>
       <button
-        onClick={() => toggleUserMicrophone()}
-        style={{ marginTop: "20px" }}
-      >
-        {isMute ? "Unmute" : "Mute"}
-      </button>
+          onClick={() => toggleUserMicrophone()}
+          className={"mute-btn"}
+        >
+          {isMute ? "Unmute" : "Mute"}
+        </button>
+    </div>
 
-      <div id="shadow"></div>
+      {/* <div id="shadow"></div>
 
       <div id="content">
         <div className="account-info">
@@ -144,8 +146,8 @@ const Soulmachine = () => {
             Reset
           </button>
         </div>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 };
 
