@@ -729,6 +729,10 @@ button img {
 .loader {
   text-align: center;
   vertical-align: middle;
+  position: absolute;
+  color: #ffff;
+  top:40%;
+  left: 40%;
 }
 
 
