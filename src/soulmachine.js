@@ -87,44 +87,44 @@ const Soulmachine = () => {
 
   return (
     <div className={"main-wrapper"}>
-      {isLoader && 
-       <p className={"loader"}>Loading...</p>
-      }
-      {!isLoader && 
-       <Fragment>
-          <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
-
-          <aside id="menu" className={"user-menu"}>
-            <div id="right">
-              <img
-                src="../assets/x-icon.svg"
-                width={22}
-                height={22}
-                id="x-icon"
-              />
+     
+        {isLoader && 
+          <p className={"loader"}>Loading...</p>
+        }
+        <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
+        {!isLoader && 
+          <Fragment>
+            <aside id="menu" className={"user-menu"}>
+              <div id="right">
+                <img
+                  src="../assets/x-icon.svg"
+                  width={22}
+                  height={22}
+                  id="x-icon"
+                />
+              </div>
+              <div className="in-line in-line-first">
+                <img
+                  id="profile-pic"
+                  src={getUserInfo().picture}
+                  width={55}
+                  height={55}
+                />
+                <p className={"username"}>
+                  <b>Welcome {getUserInfo().name}</b>
+                </p>
+              </div>
+            </aside>
+            <div className={"action-wrapper"}>
+              <button
+                  onClick={() => toggleUserMicrophone()}
+                  className={"mute-btn"}
+                >
+                  {isMute ? "Unmute" : "Mute"}
+                </button>
             </div>
-            <div className="in-line in-line-first">
-              <img
-                id="profile-pic"
-                src={getUserInfo().picture}
-                width={55}
-                height={55}
-              />
-              <p className={"username"}>
-                <b>Welcome {getUserInfo().name}</b>
-              </p>
-            </div>
-          </aside>
-          <div className={"action-wrapper"}>
-            <button
-                onClick={() => toggleUserMicrophone()}
-                className={"mute-btn"}
-              >
-                {isMute ? "Unmute" : "Mute"}
-              </button>
-          </div>
-        </Fragment>
-      }
+          </Fragment>
+        }
 
       {/* <div id="shadow"></div>
 
