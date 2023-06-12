@@ -702,6 +702,8 @@ button img {
 
 .main-wrapper {
   position: relative;
+  height: 100vh;
+  background: black;
 }
 .action-wrapper {
   position: absolute;

@@ -95,7 +95,7 @@ const Soulmachine = () => {
         {isLoader && 
           <p className={"loader"}>Loading...</p>
         }
-        <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
+        <video id="sm-video" style={{  height: "100%" }}></video>
         {!isLoader && 
           <Fragment>
             <aside id="menu" className={"user-menu"}>
