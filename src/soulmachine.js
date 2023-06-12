@@ -1,11 +1,13 @@
 import { Scene } from "@soulmachines/smwebsdk";
 import { Fragment, useEffect, useState } from "react";
 
+let scene;
+
 const Soulmachine = () => {
   const [isLoader, setIsLoader] = useState(true);
   const [isMute, setIsMute] = useState(false);
 
-  let scene;
+  
   /**
    * Start a new connection.
    * Request a JWT from the token server and use it
