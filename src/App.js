@@ -25,7 +25,7 @@ function App() {
 
   return (
     <React.Fragment>
-      {!isLoggedIn && (
+      {!isLoggedIn && !getUserInfo() && (
         <GoogleOAuthProvider clientId="118420081966-s1n42272jcg4r5l4erufahti23ubp8o0.apps.googleusercontent.com">
           <Login
             setIsLoggedin={(isLoggedinState) => {
@@ -34,7 +34,7 @@ function App() {
           />
         </GoogleOAuthProvider>
       )}
-      {isLoggedIn && <Soulmachine logout={logOut} />}
+      {(isLoggedIn || getUserInfo() ) && <Soulmachine logout={logOut} />}
     </React.Fragment>
   );
 }
