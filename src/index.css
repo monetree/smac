@@ -192,6 +192,7 @@ body * {
   top: 0px;
   z-index: 1000;
   background-color: white;
+  height: 100px;
   width: 300px;
   position: absolute;
   display: flex;
