@@ -191,7 +191,7 @@ body * {
 #menu {
   top: 0px;
   z-index: 1000;
-  background-color: white;
+  /* background-color: white; */
   height: 100px;
   width: 300px;
   position: absolute;
