@@ -76,18 +76,45 @@ const Soulmachine = () => {
     });
   };
 
+  const getUserInfo = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    userInfo = JSON.parse(userInfo);
+    return userInfo;
+  }
+
   return (
     <div className={"main-wrapper"}>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-    <div className={"action-wrapper"}>
-      <button
-          onClick={() => toggleUserMicrophone()}
-          className={"mute-btn"}
-        >
-          {isMute ? "Unmute" : "Mute"}
-        </button>
-    </div>
+        <aside id="menu">
+          <div id="right">
+            <img
+              src="../assets/x-icon.svg"
+              width={22}
+              height={22}
+              id="x-icon"
+            />
+          </div>
+          <div className="in-line in-line-first">
+            <img
+              id="profile-pic"
+              src={getUserInfo().picture}
+              width={55}
+              height={55}
+            />
+            <p>
+              <b>Welcome</b>
+            </p>
+          </div>
+        </aside>
+        <div className={"action-wrapper"}>
+          <button
+              onClick={() => toggleUserMicrophone()}
+              className={"mute-btn"}
+            >
+              {isMute ? "Unmute" : "Mute"}
+            </button>
+        </div>
 
       {/* <div id="shadow"></div>
 
@@ -116,27 +143,7 @@ const Soulmachine = () => {
         </div>
 
         <br />
-        <aside id="menu">
-          <div id="right">
-            <img
-              src="../assets/x-icon.svg"
-              width={22}
-              height={22}
-              id="x-icon"
-            />
-          </div>
-          <div className="in-line in-line-first">
-            <img
-              id="profile-pic"
-              src="../assets/user-icon.svg"
-              width={55}
-              height={55}
-            />
-            <p>
-              <b>Welcome</b>
-            </p>
-          </div>
-        </aside>
+        
 
         <div style={{ marginTop: "10cm", marginLeft: "43%" }}>
           <button type="button" onClick={connect}>

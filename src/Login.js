@@ -38,6 +38,8 @@ const Login = ({ setIsLoggedin }) => {
             alert("You don't have access to this page .. ");
             return;
           } else {
+            console.log("***google Info**", res.data);
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
             setIsLoggedin(true);
           }
         })
