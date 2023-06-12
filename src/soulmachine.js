@@ -100,10 +100,8 @@ const Soulmachine = () => {
           <Fragment>
             <aside id="menu" className={"user-menu"}>
               <div id="right">
-                <img
-                  src="../assets/x-icon.svg"
-                  width={22}
-                  height={22}
+                <div
+                 
                   id="x-icon"
                 />
               </div>
@@ -115,7 +113,8 @@ const Soulmachine = () => {
                   height={55}
                 />
                 <p className={"username"}>
-                  <b>Welcome {getUserInfo().name}</b>
+                  <b>Welcome </b>  
+                  {getUserInfo().name}
                 </p>
               </div>
             </aside>
