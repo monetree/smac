@@ -86,7 +86,7 @@ const Soulmachine = () => {
     <div className={"main-wrapper"}>
       <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
 
-        <aside id="menu">
+        <aside id="menu" className={"user-menu"}>
           <div id="right">
             <img
               src="../assets/x-icon.svg"
@@ -102,8 +102,8 @@ const Soulmachine = () => {
               width={55}
               height={55}
             />
-            <p>
-              <b>Welcome</b>
+            <p className={"username"}>
+              <b>Welcome {getUserInfo().name}</b>
             </p>
           </div>
         </aside>

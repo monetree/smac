@@ -718,5 +718,13 @@ button img {
   color: black;
 }
 
+.user-menu {
+  background-color: black;
+}
+
+.user-menu .username {
+  color: #ffff;;
+}
+
 
 
