@@ -191,15 +191,15 @@ body * {
 #menu {
   top: 0px;
   z-index: 1000;
-  background-color: white;
-  height: 100vh;
+  /* background-color: white; */
+  height: 100px;
   width: 300px;
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: left;
   border-radius: 0 20px 20px 0;
-  left: -300px;
+  /* left: -300px; */
   transition: all 0.3s;
 }
 
@@ -697,6 +697,44 @@ button img {
 }
 .googleLoginBtn span {
   padding: 0 !important;
+}
+
+
+.main-wrapper {
+  position: relative;
+  height: 100vh;
+  background: black;
+}
+.action-wrapper {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  
+}
+.mute-btn {
+  border: 1px solid #ffff;
+}
+.mute-btn:hover {
+  border: unset;
+  background-color: #ffff;
+  color: black;
+}
+
+.user-menu {
+  background-color: black;
+}
+
+.user-menu .username {
+  color: #ffff;;
+}
+
+.loader {
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  color: black;
+  top:40%;
+  left: 40%;
 }
 
 

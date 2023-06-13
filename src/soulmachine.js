@@ -1,10 +1,13 @@
 import { Scene } from "@soulmachines/smwebsdk";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+
+let scene;
 
 const Soulmachine = () => {
+  const [isLoader, setIsLoader] = useState(true);
   const [isMute, setIsMute] = useState(false);
 
-  let scene;
+  
   /**
    * Start a new connection.
    * Request a JWT from the token server and use it
@@ -42,10 +45,14 @@ const Soulmachine = () => {
     // start the video playing
     scene
       .startVideo()
-      .then((videoState) =>
-        console.info("started video with state:", videoState)
-      )
-      .catch((error) => console.warn("could not start video:", error));
+      .then((videoState) => {
+        console.info("started video with state:", videoState);
+        setIsLoader(false);
+      })
+      .catch((error) => {
+        console.warn("could not start video:", error);
+        setIsLoader(false);
+      });
   }
 
   /**
@@ -53,6 +60,7 @@ const Soulmachine = () => {
    * On error, we must display some feedback to the user
    */
   function onConnectionError(error) {
+    setIsLoader(false);
     switch (error.name) {
       case "noUserMedia":
         console.warn("user blocked device access");
@@ -68,7 +76,6 @@ const Soulmachine = () => {
 
   const toggleUserMicrophone = () => {
     setIsMute(!isMute);
-    alert(1);
     console.log("status: ", scene.isMicrophoneActive());
     const active = scene.isMicrophoneActive();
     scene.setMediaDeviceActive({
@@ -76,16 +83,51 @@ const Soulmachine = () => {
     });
   };
 
-  return (
-    <>
-      <video id="sm-video" style={{ width: "100%", height: "100%" }}></video>
+  const getUserInfo = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    userInfo = JSON.parse(userInfo);
+    return userInfo;
+  }
 
-      {/* <button
-        onClick={() => toggleUserMicrophone()}
-        style={{ marginTop: "20px" }}
-      >
-        {isMute ? "Unmute" : "Mute"}
-      </button> */}
+  return (
+    <div className={"main-wrapper"}>
+     
+        {isLoader && 
+          <p className={"loader"}>Loading...</p>
+        }
+        <video id="sm-video" style={{  height: "100%" }}></video>
+        {!isLoader && 
+          <Fragment>
+            <aside id="menu" className={"user-menu"}>
+              <div id="right">
+                <div
+                 
+                  id="x-icon"
+                />
+              </div>
+              <div className="in-line in-line-first">
+                <img
+                  id="profile-pic"
+                  src={getUserInfo().picture}
+                  width={55}
+                  height={55}
+                />
+                <p className={"username"}>
+                  <b>Welcome </b>  
+                  {getUserInfo().name}
+                </p>
+              </div>
+            </aside>
+            <div className={"action-wrapper"}>
+              <button
+                  onClick={() => toggleUserMicrophone()}
+                  className={"mute-btn"}
+                >
+                  {isMute ? "Unmute" : "Mute"}
+                </button>
+            </div>
+          </Fragment>
+        }
 
       {/* <div id="shadow"></div>
 
@@ -114,27 +156,7 @@ const Soulmachine = () => {
         </div>
 
         <br />
-        <aside id="menu">
-          <div id="right">
-            <img
-              src="../assets/x-icon.svg"
-              width={22}
-              height={22}
-              id="x-icon"
-            />
-          </div>
-          <div className="in-line in-line-first">
-            <img
-              id="profile-pic"
-              src="../assets/user-icon.svg"
-              width={55}
-              height={55}
-            />
-            <p>
-              <b>Welcome</b>
-            </p>
-          </div>
-        </aside>
+        
 
         <div style={{ marginTop: "10cm", marginLeft: "43%" }}>
           <button type="button" onClick={connect}>
@@ -145,7 +167,7 @@ const Soulmachine = () => {
           </button>
         </div>
       </div> */}
-    </>
+    </div>
   );
 };
 
