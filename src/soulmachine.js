@@ -119,12 +119,48 @@ const Soulmachine = () => {
               </div>
             </aside>
             <div className={"action-wrapper"}>
-              <button
+              {/* <button
                   onClick={() => toggleUserMicrophone()}
                   className={"mute-btn"}
                 >
                   {isMute ? "Unmute" : "Mute"}
+                </button> */}
+
+                {!isMute &&
+                <button onClick={() => toggleUserMicrophone()}  color="primary" className=" mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                 
+                     <svg className={"mute-icon-svg"} style={{maxWidth: 12}} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 29" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
+                        <g fill="none" fill-rule="evenodd" stroke="#ffff" stroke-width="2" transform="translate(1)">
+                          <path stroke-linecap="round" d="M18 13c0 5.523-3.477 10-9 10s-9-4.477-9-10" opacity=".56"></path>
+                          <rect width="8" height="17" x="5" y="1" rx="4"></rect>
+                          <path stroke-linecap="round" d="M4 28h10" opacity=".56"></path>
+                          <path stroke-linecap="round" d="M9 23v5"></path>
+                        </g>
+                      </svg>
+                 
+                  <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                  <span className="mat-button-focus-overlay"></span>
                 </button>
+                }
+                 {isMute &&
+                <button onClick={() => toggleUserMicrophone()}  color="primary" className="un-mute mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                
+                    <svg className={"mute-icon-svg"} style={{maxWidth: 12}} width="100%" height="100%" viewBox="0 0 22 29" version="1.1" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g transform="translate(1.000000, 1.000000)" stroke="#ffff" stroke-width="2">
+                          <path d="M19,12 C19,17.523 15.523,22 10,22 C4.477,22 1,17.523 1,12" opacity="0.56" stroke-linecap="round"></path>
+                          <path d="M10,0 C7.790861,0 6,1.790861 6,4 L6,13 C6,15.209139 7.790861,17 10,17 C12.209139,17 14,15.209139 14,13 L14,4 C14,1.790861 12.209139,0 10,0 Z" opacity="0.5"></path>
+                          <path d="M5,27 L15,27" opacity="0.56" stroke-linecap="round"></path>
+                          <path d="M10,22 L10,27" opacity="0.5" stroke-linecap="round"></path>
+                          <path d="M0,2 L21,23" stroke-linecap="round"></path>
+                        </g>
+                      </g>
+                    </svg>
+                 
+                  <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                  <span className="mat-button-focus-overlay"></span>
+                </button>
+                }
             </div>
           </Fragment>
         }

@@ -720,6 +720,20 @@ button img {
   color: black;
 }
 
+.mute-icon-svg {
+  padding: 7px;
+  background: black;
+  border: 1px solid #ffff;
+  border-radius: 40px;
+}
+
+.mute-icon-svg:hover {
+  padding: 7px;
+  background: #8f8585;
+  border: unset;
+  border-radius: 40px;
+}
+
 .user-menu {
   background-color: black;
 }
