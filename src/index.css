@@ -435,7 +435,7 @@ video {
 .action-btns {
   position: absolute;
   bottom: 120px;
-  left: 20px;
+  left: 25px;
   display: flex;
   align-items: center;
 }
@@ -444,6 +444,13 @@ video {
   width: 56px;
   height: 56px;
   border-radius: 50%;
+}
+
+.action-btns button.microphone.mat-focus-indicator {
+  border: 1px solid #ffff;
+}
+.action-btns button.microphone.mat-focus-indicator:hover {
+  background-color: rgb(116, 89, 254);
 }
 
 .action-btns .speech-indicator.mute {
@@ -693,8 +700,7 @@ button img {
 }
 .action-wrapper {
   position: absolute;
-  bottom: 15px;
-  left: 0px;
+  bottom: 30px;
   
 }
 .mute-btn {
