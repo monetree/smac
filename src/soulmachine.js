@@ -53,6 +53,10 @@ const Soulmachine = ({logout}) => {
           (connectionStateData) => {
           // callback handling for connectionState upda
           console.log("***onConnectionStateUpdated***", connectionStateData);
+          if(connectionStateData && connectionStateData.name === "Disconnected"){
+            cleanupSessionStorage();
+            connect();
+          }
         });
 
         scene.conversation.onConversationStateUpdated.addListener(
