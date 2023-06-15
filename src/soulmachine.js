@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 
 let scene;
 
-const Soulmachine = () => {
+const Soulmachine = ({logout}) => {
   const [isLoader, setIsLoader] = useState(true);
   const [isMute, setIsMute] = useState(false);
 
@@ -106,11 +106,21 @@ const Soulmachine = () => {
                   width={55}
                   height={55}
                 />
-                <p className={"username"}>
-                  <b>Welcome </b>  
-                  {getUserInfo().name}
-                </p>
-              </div>
+                <div>
+                  <p className={"username"}>
+                    <b>Welcome </b>  
+                    {getUserInfo().name}
+                  
+                  </p>
+                  <div className="account-info-visible-mobile">
+                    <button className={'logout-btn'} onClick={logout} >Logout</button>
+                  </div>
+                </div>
+
+                </div>
+                <div className="account-info account-info-visible-desktop">
+                  <button className={'logout-btn'} onClick={logout} >Logout</button>
+                </div>
             </aside>
             <div className={"action-wrapper"}>
 
@@ -152,45 +162,7 @@ const Soulmachine = () => {
             </div>
           </Fragment>
         }
-
-      {/* <div id="shadow"></div>
-
-      <div id="content">
-        <div className="account-info">
-          <button id="logoutBtn">Logout</button>
-        </div>
-        <div id="show-menu-button">
-          <div className="line" />
-          <div className="line" />
-          <div className="line" />
-        </div>
-        <div id="video-wrapper">
-          <div id="video-container">
-            <video id="sm-video" width="300px" height="300px"></video>
-          </div>
-          <div id="img-container">
-            <img
-              id="img-avatar"
-              width={300}
-              height={300}
-              style={{ borderRadius: "50%" }}
-              src="https://baby-staging-bucket.s3.us-east-2.amazonaws.com/cartoon.jpeg"
-            />
-          </div>
-        </div>
-
-        <br />
-        
-
-        <div style={{ marginTop: "10cm", marginLeft: "43%" }}>
-          <button type="button" onClick={connect}>
-            Connect
-          </button>
-          <button style={{ marginRight: "2cm" }} type="button">
-            Reset
-          </button>
-        </div>
-      </div> */}
+     
     </div>
   );
 };

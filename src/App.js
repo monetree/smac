@@ -2,13 +2,13 @@ import React from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Login from "./Login";
 import Soulmachine from "./soulmachine";
-import { googleLogout } from "@react-oauth/google";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logOut = () => {
-    googleLogout();
+    localStorage.removeItem("userInfo");
+    setIsLoggedIn(false);
   };
 
   const getUserInfo = () => {
