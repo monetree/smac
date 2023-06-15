@@ -99,13 +99,7 @@ const Soulmachine = () => {
         {!isLoader && 
           <Fragment>
             <aside id="menu" className={"user-menu"}>
-              <div id="right">
-                <div
-                 
-                  id="x-icon"
-                />
-              </div>
-              <div className="in-line in-line-first">
+              <div className="menu-child">
                 <img
                   id="profile-pic"
                   src={getUserInfo().picture}
@@ -119,12 +113,6 @@ const Soulmachine = () => {
               </div>
             </aside>
             <div className={"action-wrapper"}>
-              {/* <button
-                  onClick={() => toggleUserMicrophone()}
-                  className={"mute-btn"}
-                >
-                  {isMute ? "Unmute" : "Mute"}
-                </button> */}
 
                 {!isMute &&
                 <button onClick={() => toggleUserMicrophone()}  color="primary" className=" mat-focus-indicator microphone mat-fab mat-button-base mat-primary">

@@ -191,9 +191,6 @@ body * {
 #menu {
   top: 0px;
   z-index: 1000;
-  /* background-color: white; */
-  height: 100px;
-  width: 300px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -560,11 +557,6 @@ video {
     bottom: 50px;
   }
 
-  #menu {
-    height: 30vh;
-    width: 300px;
-    left: -0px;
-  }
 
   #x-icon {
     visibility: hidden;
@@ -736,10 +728,23 @@ button img {
 
 .user-menu {
   background-color: black;
+  width: 100%;
 }
 
 .user-menu .username {
   color: #ffff;;
+}
+
+#sm-video {
+  width: 100%;
+}
+
+.menu-child {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .loader {
