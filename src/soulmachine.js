@@ -48,6 +48,19 @@ const Soulmachine = ({logout}) => {
       .then((videoState) => {
         console.info("started video with state:", videoState);
         setIsLoader(false);
+
+        scene.connectionState.onConnectionStateUpdated.addListener(
+          (connectionStateData) => {
+          // callback handling for connectionState upda
+          console.log("***onConnectionStateUpdated***", connectionStateData);
+        });
+
+        scene.conversation.onConversationStateUpdated.addListener(
+          (conversationState) => {
+              // callback handling for conversationState updates
+              console.log("***onConversationStateUpdated***", conversationState);
+          }
+      );
       })
       .catch((error) => {
         console.warn("could not start video:", error);
