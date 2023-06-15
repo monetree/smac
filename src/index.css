@@ -723,12 +723,16 @@ button img {
 }
 
 .loader {
-  text-align: center;
-  vertical-align: middle;
-  position: absolute;
-  color: black;
-  top:40%;
-  left: 40%;
+  height: 100%;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader .spinner-border {
+  --bs-spinner-width: 4rem !important;
+  --bs-spinner-height: 4rem !important;
 }
 
 .logout-btn {

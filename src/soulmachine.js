@@ -93,7 +93,11 @@ const Soulmachine = ({logout}) => {
     <div className={"main-wrapper"}>
      
         {isLoader && 
-          <p className={"loader"}>Loading...</p>
+          <div className="loader ">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
         }
         <video id="sm-video" style={{  height: "100%" }} autoPlay={true} playsInline={true} ></video>
         {!isLoader && 
@@ -125,9 +129,9 @@ const Soulmachine = ({logout}) => {
             <div className={"action-wrapper action-btns"}>
 
               {!isMute &&
-                <button onClick={() => toggleUserMicrophone()}   id="un-mute-icon"  color="primary" class=" mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
-                <span class="mat-button-wrapper">
-                  <mat-icon _ngcontent-vsg-c85="" role="img" svgicon="microphone_mute" class="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_mute">
+                <button onClick={() => toggleUserMicrophone()}   id="un-mute-icon"  color="primary" className=" mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                <span className="mat-button-wrapper">
+                  <mat-icon _ngcontent-vsg-c85="" role="img" svgicon="microphone_mute" className="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_mute">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 29" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
                       <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="2" transform="translate(1)">
                         <path stroke-linecap="round" d="M18 13c0 5.523-3.477 10-9 10s-9-4.477-9-10" opacity=".56"></path>
@@ -138,14 +142,14 @@ const Soulmachine = ({logout}) => {
                     </svg>
                   </mat-icon>
                 </span>
-                <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
-                <span class="mat-button-focus-overlay"></span>
+                <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                <span className="mat-button-focus-overlay"></span>
               </button>
               }
                 {isMute &&
-                  <button onClick={() => toggleUserMicrophone()} id="mute-icon" color="primary" class="un-mute mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
-                  <span class="mat-button-wrapper">
-                    <mat-icon _ngcontent-jop-c85="" role="img" svgicon="microphone_unmute" class="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_unmute">
+                  <button onClick={() => toggleUserMicrophone()} id="mute-icon" color="primary" className="un-mute mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                  <span className="mat-button-wrapper">
+                    <mat-icon _ngcontent-jop-c85="" role="img" svgicon="microphone_unmute" className="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_unmute">
                       <svg width="100%" height="100%" viewBox="0 0 22 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                           <g transform="translate(1.000000, 1.000000)" stroke="#FFFFFF" stroke-width="2">
@@ -159,8 +163,8 @@ const Soulmachine = ({logout}) => {
                       </svg>
                     </mat-icon>
                   </span>
-                  <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
-                  <span class="mat-button-focus-overlay"></span>
+                  <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                  <span className="mat-button-focus-overlay"></span>
                 </button>
               }
 
