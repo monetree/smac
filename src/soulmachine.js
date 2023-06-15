@@ -55,6 +55,7 @@ const Soulmachine = ({logout}) => {
           console.log("***onConnectionStateUpdated***", connectionStateData);
           if(connectionStateData && connectionStateData.name === "Disconnected"){
             connect();
+            setIsMute(false);
           }
         });
 
