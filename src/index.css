@@ -473,6 +473,7 @@ video {
   height: 49px;
   border-radius: 36px;
   pointer-events: all;
+  margin-left: 10px;
 }
 
 @keyframes speakingAnimation {
