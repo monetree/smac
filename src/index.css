@@ -437,7 +437,8 @@ video {
   border: 1px solid #ffff;
 }
 .action-btns button.microphone.mat-focus-indicator:hover {
-  background-color: rgb(116, 89, 254);
+  /* background-color: rgb(116, 89, 254); */
+  background-color: #6c757d;
 }
 
 .action-btns .speech-indicator.mute {
@@ -451,7 +452,7 @@ video {
 .action-btns .speech-indicator {
   width: 117px;
   height: 56px;
-  background-color: #10c1cb;
+  background-color: #ffff;
   transition: background-color 0.3s ease-in-out;
   display: flex;
   justify-content: center;
@@ -478,7 +479,7 @@ video {
   width: 6px;
   height: 6px;
   border-radius: 3px;
-  background: #fff;
+  background: black;
   margin: 0 3px;
   transform: translateY(0);
   transition: transform 0.2s ease-in-out, height 0.2s ease-in-out;
@@ -510,7 +511,7 @@ video {
 
 .action-btns .speech-indicator .speech-indicator-span {
   animation-name: speakingAnimation;
-  background: var(--secondary-contrast-500, #fff);
+  background: var(--secondary-contrast-500, black);
 }
 
 #img-avatar {
@@ -616,9 +617,6 @@ button img {
 }
 
 /* On mouse-over, add a deeper shadow */
-.card:hover {
-  /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); */
-}
 
 /* Add some padding inside the card container */
 .container {
