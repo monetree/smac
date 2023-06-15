@@ -54,7 +54,6 @@ const Soulmachine = ({logout}) => {
           // callback handling for connectionState upda
           console.log("***onConnectionStateUpdated***", connectionStateData);
           if(connectionStateData && connectionStateData.name === "Disconnected"){
-            cleanupSessionStorage();
             connect();
           }
         });
