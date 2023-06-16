@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Login from "./Login";
 import Soulmachine from "./soulmachine";
-import { googleLogout } from "@react-oauth/google";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const logOut = () => {
-    googleLogout();
+    console.log("***logOut Called**");
+    localStorage.removeItem("userInfo");
+    setIsLoggedIn(false);
   };
 
   const getUserInfo = () => {
@@ -23,9 +24,16 @@ function App() {
     return userInfo;
   }
 
+  useEffect(()=> {
+    let isLoggedInUser = getUserInfo();
+    setIsLoggedIn(!!isLoggedInUser);
+  }, []);
+
+  console.log("***isLoggedIn***", isLoggedIn);
+
   return (
     <React.Fragment>
-      {!isLoggedIn && !getUserInfo() && (
+      {!isLoggedIn && (
         <GoogleOAuthProvider clientId="118420081966-s1n42272jcg4r5l4erufahti23ubp8o0.apps.googleusercontent.com">
           <Login
             setIsLoggedin={(isLoggedinState) => {
@@ -34,7 +42,7 @@ function App() {
           />
         </GoogleOAuthProvider>
       )}
-      {(isLoggedIn || getUserInfo() ) && <Soulmachine logout={logOut} />}
+      {isLoggedIn && <Soulmachine logout={logOut} />}
     </React.Fragment>
   );
 }

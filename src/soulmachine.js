@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 
 let scene;
 
-const Soulmachine = () => {
+const Soulmachine = ({logout}) => {
   const [isLoader, setIsLoader] = useState(true);
   const [isMute, setIsMute] = useState(false);
 
@@ -48,6 +48,23 @@ const Soulmachine = () => {
       .then((videoState) => {
         console.info("started video with state:", videoState);
         setIsLoader(false);
+
+        scene.connectionState.onConnectionStateUpdated.addListener(
+          (connectionStateData) => {
+          // callback handling for connectionState upda
+          console.log("***onConnectionStateUpdated***", connectionStateData);
+          if(connectionStateData && connectionStateData.name === "Disconnected"){
+            connect();
+            setIsMute(false);
+          }
+        });
+
+        scene.conversation.onConversationStateUpdated.addListener(
+          (conversationState) => {
+              // callback handling for conversationState updates
+              console.log("***onConversationStateUpdated***", conversationState);
+          }
+      );
       })
       .catch((error) => {
         console.warn("could not start video:", error);
@@ -93,80 +110,93 @@ const Soulmachine = () => {
     <div className={"main-wrapper"}>
      
         {isLoader && 
-          <p className={"loader"}>Loading...</p>
+          <div className="loader ">
+          <div className="spinner-border" role="status">
+            <span className="sr-only"></span>
+          </div>
+        </div>
         }
-        <video id="sm-video" style={{  height: "100%" }}></video>
+        <video id="sm-video" style={{  height: "100%" }} autoPlay={true} playsInline={true} ></video>
         {!isLoader && 
           <Fragment>
             <aside id="menu" className={"user-menu"}>
-              <div id="right">
-                <div
-                 
-                  id="x-icon"
-                />
-              </div>
-              <div className="in-line in-line-first">
+              <div className="menu-child">
                 <img
                   id="profile-pic"
                   src={getUserInfo().picture}
                   width={55}
                   height={55}
                 />
-                <p className={"username"}>
-                  <b>Welcome </b>  
-                  {getUserInfo().name}
-                </p>
-              </div>
+                <div>
+                  <p className={"username"}>
+                    <b>Welcome </b>  
+                    {getUserInfo().name}
+                  
+                  </p>
+                  <div className="account-info-visible-mobile">
+                    <button className={'logout-btn'} onClick={logout} >Logout</button>
+                  </div>
+                </div>
+
+                </div>
+                <div className="account-info account-info-visible-desktop">
+                  <button className={'logout-btn'} onClick={logout} >Logout</button>
+                </div>
             </aside>
-            <div className={"action-wrapper"}>
-              <button
-                  onClick={() => toggleUserMicrophone()}
-                  className={"mute-btn"}
-                >
-                  {isMute ? "Unmute" : "Mute"}
+            <div className={"action-wrapper action-btns"}>
+
+              {!isMute &&
+                <button onClick={() => toggleUserMicrophone()}   id="un-mute-icon"  color="primary" className=" mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                <span className="mat-button-wrapper">
+                  <mat-icon _ngcontent-vsg-c85="" role="img" svgicon="microphone_mute" className="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_mute">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20 29" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
+                      <g fill="none" fill-rule="evenodd" stroke="#FFF" stroke-width="2" transform="translate(1)">
+                        <path stroke-linecap="round" d="M18 13c0 5.523-3.477 10-9 10s-9-4.477-9-10" opacity=".56"></path>
+                        <rect width="8" height="17" x="5" y="1" rx="4"></rect>
+                        <path stroke-linecap="round" d="M4 28h10" opacity=".56"></path>
+                        <path stroke-linecap="round" d="M9 23v5"></path>
+                      </g>
+                    </svg>
+                  </mat-icon>
+                </span>
+                <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                <span className="mat-button-focus-overlay"></span>
+              </button>
+              }
+                {isMute &&
+                  <button onClick={() => toggleUserMicrophone()} id="mute-icon" color="primary" className="un-mute mat-focus-indicator microphone mat-fab mat-button-base mat-primary">
+                  <span className="mat-button-wrapper">
+                    <mat-icon _ngcontent-jop-c85="" role="img" svgicon="microphone_unmute" className="mat-icon notranslate microphone-icon mat-icon-no-color ng-star-inserted" aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="microphone_unmute">
+                      <svg width="100%" height="100%" viewBox="0 0 22 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g transform="translate(1.000000, 1.000000)" stroke="#FFFFFF" stroke-width="2">
+                            <path d="M19,12 C19,17.523 15.523,22 10,22 C4.477,22 1,17.523 1,12" opacity="0.56" stroke-linecap="round"></path>
+                            <path d="M10,0 C7.790861,0 6,1.790861 6,4 L6,13 C6,15.209139 7.790861,17 10,17 C12.209139,17 14,15.209139 14,13 L14,4 C14,1.790861 12.209139,0 10,0 Z" opacity="0.5"></path>
+                            <path d="M5,27 L15,27" opacity="0.56" stroke-linecap="round"></path>
+                            <path d="M10,22 L10,27" opacity="0.5" stroke-linecap="round"></path>
+                            <path d="M0,2 L21,23" stroke-linecap="round"></path>
+                          </g>
+                        </g>
+                      </svg>
+                    </mat-icon>
+                  </span>
+                  <span matripple="" className="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                  <span className="mat-button-focus-overlay"></span>
                 </button>
+              }
+
+              <div id="speech-indicator" className={`speech-indicator ${isMute ? "mute" : ""}`}>
+                <span className="speech-indicator-span"></span>
+                <span className="speech-indicator-span"></span>
+                <span className="speech-indicator-span"></span>
+                <span className="speech-indicator-span"></span>
+                <span className="speech-indicator-span"></span>
+                <span className="speech-indicator-span"></span>
+              </div>
             </div>
           </Fragment>
         }
-
-      {/* <div id="shadow"></div>
-
-      <div id="content">
-        <div className="account-info">
-          <button id="logoutBtn">Logout</button>
-        </div>
-        <div id="show-menu-button">
-          <div className="line" />
-          <div className="line" />
-          <div className="line" />
-        </div>
-        <div id="video-wrapper">
-          <div id="video-container">
-            <video id="sm-video" width="300px" height="300px"></video>
-          </div>
-          <div id="img-container">
-            <img
-              id="img-avatar"
-              width={300}
-              height={300}
-              style={{ borderRadius: "50%" }}
-              src="https://baby-staging-bucket.s3.us-east-2.amazonaws.com/cartoon.jpeg"
-            />
-          </div>
-        </div>
-
-        <br />
-        
-
-        <div style={{ marginTop: "10cm", marginLeft: "43%" }}>
-          <button type="button" onClick={connect}>
-            Connect
-          </button>
-          <button style={{ marginRight: "2cm" }} type="button">
-            Reset
-          </button>
-        </div>
-      </div> */}
+     
     </div>
   );
 };
