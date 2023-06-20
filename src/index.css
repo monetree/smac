@@ -763,6 +763,18 @@ button img {
   .account-info-visible-mobile {
     display:block;
    }
+
+   .action-wrapper {
+     bottom : 100px !important;
+   }
+
+   .logout-btn {
+    padding: 5px 10px;
+  }
+
+  .username {
+    margin-bottom: 5px;
+  }
 }
 
 
