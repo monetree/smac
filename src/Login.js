@@ -19,6 +19,13 @@ const Login = ({ setIsLoggedin }) => {
     "sameera1892@gmail.com",
     "sanjeev@vscgroup.co",
     "vpsps@yahaoo.com",
+    "vpspublicschool@gmail.com",
+    "ikonsway@gmail.com",
+    "bablusb143@gmail.com",
+    "sfwhyd@gmail.com",
+    "krudra@gmail.com",
+    "mail4lucky@gmail.com",
+    "Kchawalla79@gmail.com",
   ];
 
   const login = useGoogleLogin({
