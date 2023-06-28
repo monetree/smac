@@ -151,7 +151,7 @@ DPChat.propTypes = {
 };
 
 export default styled(DPChat)`
-  height: 100vh;
+  height: 90vh;
 
   .video-overlay {
     overflow: hidden;
