@@ -133,7 +133,7 @@ function DPChat({
             </div>
           </div>
           {showTranscript === true || micOn === false ? (
-            <div className="row justify-content-center" style={{marginBottom: 20}}>
+            <div className="row justify-content-center" style={{marginBottom: 0}}>
               <div className="col-md-8 col-lg-5 p-3">
                 <TextInput />
               </div>
