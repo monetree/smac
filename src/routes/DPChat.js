@@ -127,11 +127,11 @@ function DPChat({
               </div>
             </div>
           ) : null}
-          <div className="row">
+          {/* <div className="row">
             <div className="d-flex justify-content-center m-2">
               <STTFeedback />
             </div>
-          </div>
+          </div> */}
           {showTranscript === true || micOn === false ? (
             <div className="row justify-content-center" style={{marginBottom: 0}}>
               <div className="col-md-8 col-lg-5 p-3">

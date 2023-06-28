@@ -86,7 +86,7 @@ function FeedbackModal({
           <div>
             <div className="row">
               <h2 className="text-center">
-                Can you rate your experience with Digital Persona A?
+                Can you rate your experience with Emma?
               </h2>
             </div>
             <div className="row">

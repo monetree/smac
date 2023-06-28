@@ -139,7 +139,7 @@ function Feedback({ className }) {
               : (
                 <div>
                   <div className="row">
-                    <h2 className="text-center">Can you rate your experience with Digital Persona A?</h2>
+                    <h2 className="text-center">Can you rate your experience with Digital Emma?</h2>
                   </div>
                   <div className="row">
                     <div
