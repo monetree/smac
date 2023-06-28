@@ -170,35 +170,6 @@ function Controls({
         </div>
       ) : null}
       <div className="d-flex" style={{background: "#ffff"}}>
-        <div>
-          {/* mute dp sound */}
-          <button
-            type="button"
-            className="control-icon"
-            aria-label="Toggle DP Audio"
-            data-tip="Toggle DP Audio"
-            onClick={() => dispatch(setOutputMute({ isOutputMuted: !isOutputMuted }))}
-          >
-            {isOutputMuted ? (
-              <VolumeMuteFill size={iconSize} style={{ border: highlightMute ? 'red 2px solid' : '' }} />
-            ) : (
-              <VolumeUpFill size={iconSize} color={primaryAccent} style={{ border: highlightMute ? 'red 2px solid' : '' }} />
-            )}
-          </button>
-        </div>
-        <div>
-          {/* skip through whatever dp is currently speaking */}
-          <button
-            type="button"
-            className="control-icon"
-            disabled={speechState !== 'speaking'}
-            onClick={() => dispatch(stopSpeaking())}
-            data-tip="Skip Speech"
-            aria-label="Skip Speech"
-          >
-            <SkipEndFill size={iconSize} style={{ border: highlightSkip ? 'red 2px solid' : '' }} />
-          </button>
-        </div>
 
          {/* show transcript */}
         {/* <div>
@@ -219,24 +190,7 @@ function Controls({
           </button>
         </div> */}
 
-         {/* toggle user mic */}
-        {/* <div>
-         
-          <button
-            type="button"
-            className="control-icon"
-            aria-label="Toggle Microphone"
-            data-tip="Toggle Microphone"
-            disabled={requestedMediaPerms.micDenied === true}
-            onClick={() => dispatch(setMicOn({ micOn: !micOn }))}
-          >
-            {micOn ? (
-              <MicFill size={iconSize} color={primaryAccent} style={{ border: highlightMic ? 'red 2px solid' : '' }} />
-            ) : (
-              <MicMuteFill size={iconSize} style={{ border: highlightMic ? 'red 2px solid' : '' }} />
-            )}
-          </button>
-        </div> */}
+        
           {/* toggle user camera */}
         
         {/* <div>

@@ -18,6 +18,9 @@ import {
 import {
   MicFill,
   MicMuteFill,
+  SkipEndFill,
+  VolumeMuteFill,
+  VolumeUpFill
 } from 'react-bootstrap-icons';
 import { primaryAccent } from '../globalStyle';
 
@@ -28,7 +31,7 @@ function Header({
 }) {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { connected, loading, micOn, highlightMic } = useSelector(({ sm }) => ({ ...sm }));
+  const { connected, loading, micOn, highlightMic, speechState, highlightSkip, highlightMute, isOutputMuted} = useSelector(({ sm }) => ({ ...sm }));
 
 
   const history = useHistory();
@@ -68,14 +71,14 @@ function Header({
                     <div className="menu-child">
                       <img
                         id="profile-pic"
-                        src={getUserInfo().picture}
+                        src={getUserInfo()?.picture}
                         width={55}
                         height={55}
                       />
                       <div>
                         <p className={`username ${pathname === '/loading' ? "black" : ""}`}>
                           <b>Welcome </b>
-                          {getUserInfo().name}
+                          {getUserInfo()?.name}
                         </p>
                       
                       </div>
@@ -143,6 +146,41 @@ function Header({
               <span className="speech-indicator-span"></span>
               <span className="speech-indicator-span"></span>
             </div>
+
+             {/* skip through whatever dp is currently speaking */}
+          <div>
+            <button
+              type="button"
+              style={{marginLeft:10}}
+              className="control-icon mat-focus-indicator microphone mat-fab mat-button-base mat-primary"
+              disabled={speechState !== 'speaking'}
+              onClick={() => dispatch(stopSpeaking())}
+              data-tip="Skip Speech"
+              aria-label="Skip Speech"
+            >
+              <SkipEndFill size={iconSize} style={{ border: highlightSkip ? 'red 2px solid' : '' }} />
+            </button>
+          </div>
+
+          {/* mute dp sound */}
+        <div>
+          <button
+            type="button"
+            style={{marginLeft:10}}
+            className="control-icon mat-focus-indicator microphone mat-fab mat-button-base mat-primary"
+            aria-label="Toggle DP Audio"
+            data-tip="Toggle DP Audio"
+            onClick={() => dispatch(setOutputMute({ isOutputMuted: !isOutputMuted }))}
+          >
+            {isOutputMuted ? (
+              <VolumeMuteFill size={iconSize} style={{ border: highlightMute ? 'red 2px solid' : '' }} />
+            ) : (
+              <VolumeUpFill size={iconSize} color={primaryAccent} style={{ border: highlightMute ? 'red 2px solid' : '' }} />
+            )}
+          </button>
+        </div>
+        
+
         </div>
       }
     </Fragment>
