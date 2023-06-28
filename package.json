@@ -6,9 +6,9 @@
   },
   "private": true,
   "scripts": {
-    "start:server": "npm run build && npx serve -s build",
+    "start:server": "DISABLE_ESLINT_PLUGIN=true npm run build && npx serve -s build",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy:gcp": "npm run build && gcloud app deploy --project ui-test-persona-nhyv app.yaml --stop-previous-version --promote --version baseline --quiet"

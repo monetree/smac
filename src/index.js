@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './globalStyle';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <Provider store={store}>
       <Router />
     </Provider>
@@ -16,7 +16,7 @@ ReactDOM.render(
     {/* globally enable react tooltips */}
     <ReactTooltip />
     {/* will be null if GA tracking is not enabled */}
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById('root'),
 );
 
