@@ -421,8 +421,8 @@ video {
 
 .action-btns {
   position: absolute;
-  bottom: 120px;
-  left: 25px;
+  bottom: 45px;
+  left: 3px;
   display: flex;
   align-items: center;
 }
@@ -764,7 +764,7 @@ button img {
    }
 
    .action-wrapper {
-     bottom : 100px !important;
+     bottom : 45px !important;
    }
 
    .logout-btn {
