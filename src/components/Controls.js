@@ -247,31 +247,8 @@ function Controls({
                       Logout
                     </button>
                   </li>
-                  <li>
-                    <button
-                      className="btn-unstyled"
-                      type="button"
-                      onClick={() => {
-                        setShowContextMenu(false);
-                        setShowFeedback(true);
-                      }}
-                    >
-                      <Megaphone size={18} />
-                      {' '}
-                      Give Feedback
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="btn-unstyled"
-                      type="button"
-                      onClick={() => shareDP()}
-                    >
-                      <Share size={18} />
-                      {' '}
-                      {shareCopy}
-                    </button>
-                  </li>
+                 
+               
                   <li>
                     <a
                       target="_blank"
