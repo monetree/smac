@@ -199,8 +199,9 @@ function Controls({
             <SkipEndFill size={iconSize} style={{ border: highlightSkip ? 'red 2px solid' : '' }} />
           </button>
         </div>
-        <div>
-          {/* show transcript */}
+
+         {/* show transcript */}
+        {/* <div>
           <button
             type="button"
             className="control-icon"
@@ -216,7 +217,8 @@ function Controls({
               style={{ border: highlightChat ? 'red 2px solid' : '' }}
             />
           </button>
-        </div>
+        </div> */}
+
          {/* toggle user mic */}
         {/* <div>
          
@@ -235,8 +237,9 @@ function Controls({
             )}
           </button>
         </div> */}
-        <div>
           {/* toggle user camera */}
+        
+        {/* <div>
           <button
             type="button"
             className="control-icon"
@@ -255,7 +258,8 @@ function Controls({
               <CameraVideoOffFill size={iconSize} style={{ border: highlightCamera ? 'red 2px solid' : '' }} />
             )}
           </button>
-        </div>
+        </div> */}
+
         <div className="context-control-parent">
           <button
             className="control-icon context-controls-trigger"
