@@ -85,7 +85,7 @@ function DPChat({
   }, [ccDisplaRef]);
 
   return (
-    <div className={className}>
+    <div className={className} style={{background:"black"}}>
       <div className="video-overlay">
         {/* top row */}
         <div className="row">
