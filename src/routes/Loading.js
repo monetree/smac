@@ -3,11 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import {
-  ArrowLeftCircleFill,
-  ArrowRightCircleFill,
-  MicFill,
-} from "react-bootstrap-icons";
 import { createScene } from "../store/sm";
 import Header from "../components/Header";
 import {
@@ -17,24 +12,18 @@ import {
 } from "../config";
 
 function Loading({ className }) {
-  const { connected, loading, error, requestedMediaPerms, connectionState } =
+  const { connected, loading, error, connectionState } =
     useSelector(({ sm }) => sm);
   const dispatch = useDispatch();
 
-  const { percentageLoaded, name, currentStep, totalSteps } = connectionState;
+  const { name} = connectionState;
 
   const stateNameMap = {
     SearchingForDigitalPerson: "Searching For Digital Person",
     DownloadingAssets: "Downloading Assets",
     ConnectingToDigitalPerson: "Connecting To Digital Person",
   };
-  // map name vals to plain english if we know the state name, otherwise just display the name as is
-  const stateName = name in stateNameMap ? stateNameMap[name] : name;
 
-  // // pull querystring to see if we are displaying an error
-  // // (app can redirect to /loading on fatal err)
-  // const useQuery = () => new URLSearchParams(useLocation().search);
-  // const query = useQuery();
 
   // create persona scene on button press on on mount, depending on device size
   const createSceneIfNotStarted = () => {
