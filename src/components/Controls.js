@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 import {
   CameraVideoFill,
   CameraVideoOffFill,
@@ -17,8 +17,8 @@ import {
   VolumeMuteFill,
   VolumeUpFill,
   X,
-} from 'react-bootstrap-icons';
-import ReactTooltip from 'react-tooltip';
+} from "react-bootstrap-icons";
+import ReactTooltip from "react-tooltip";
 import {
   stopSpeaking,
   setShowTranscript,
@@ -26,21 +26,19 @@ import {
   setOutputMute,
   setMicOn,
   setCameraOn,
-} from '../store/sm/index';
-import mic from '../img/mic.svg';
-import micFill from '../img/mic-fill.svg';
-import breakpoints from '../utils/breakpoints';
-import { primaryAccent } from '../globalStyle';
-import FeedbackModal from './FeedbackModal';
+} from "../store/sm/index";
+import mic from "../img/mic.svg";
+import micFill from "../img/mic-fill.svg";
+import breakpoints from "../utils/breakpoints";
+import { primaryAccent } from "../globalStyle";
+import FeedbackModal from "./FeedbackModal";
 
 const volumeMeterHeight = 24;
 const volumeMeterMultiplier = 1.2;
 const smallHeight = volumeMeterHeight;
 const largeHeight = volumeMeterHeight * volumeMeterMultiplier;
 
-function Controls({
-  className,
-}) {
+const Controls = ({ className, setIsPopup }) => {
   const {
     micOn,
     cameraOn,
@@ -134,7 +132,7 @@ function Controls({
 
   const [showContextMenu, setShowContextMenu] = useState(false);
 
-  const originalShareCopy = 'Share Experience';
+  const originalShareCopy = "Share Experience";
   const [shareCopy, setShareCopy] = useState(originalShareCopy);
 
   const shareDP = async () => {
@@ -142,11 +140,11 @@ function Controls({
     try {
       await navigator.share({ url });
     } catch {
-      const type = 'text/plain';
+      const type = "text/plain";
       const blob = new Blob([url], { type });
       const data = [new window.ClipboardItem({ [type]: blob })];
       navigator.clipboard.write(data);
-      setShareCopy('Link copied!');
+      setShareCopy("Link copied!");
       setTimeout(() => setShareCopy(originalShareCopy), 3000);
     }
   };
@@ -169,9 +167,8 @@ function Controls({
           </div>
         </div>
       ) : null}
-      <div className="d-flex" style={{background: "#ffff"}}>
-
-         {/* show transcript */}
+      <div className="d-flex" style={{ background: "#ffff" }}>
+        {/* show transcript */}
         {/* <div>
           <button
             type="button"
@@ -190,9 +187,8 @@ function Controls({
           </button>
         </div> */}
 
-        
-          {/* toggle user camera */}
-        
+        {/* toggle user camera */}
+
         {/* <div>
           <button
             type="button"
@@ -226,13 +222,25 @@ function Controls({
             {showContextMenu ? (
               <X size={iconSize} color="#fff" />
             ) : (
-              <ThreeDotsVertical size={iconSize} style={{ border: highlightMenu ? 'red 2px solid' : '' }} />
+              <ThreeDotsVertical
+                size={iconSize}
+                style={{ border: highlightMenu ? "red 2px solid" : "" }}
+              />
             )}
           </button>
           {showContextMenu ? (
             <div className="context-controls shadow">
               <div className="d-flex justify-content-end align-items-start">
                 <ul>
+                  <li>
+                    <button
+                      className={"logout-btn"}
+                      onClick={() => setIsPopup(true)}
+                    >
+                      <FontAwesomeIcon icon={faGear} />
+                    </button>
+                  </li>
+
                   <li>
                     <button
                       className="btn-unstyled "
@@ -242,13 +250,10 @@ function Controls({
                         localStorage.setItem("userInfo", "");
                       }}
                     >
-                      <Escape size={18} />
-                      {' '}
-                      Logout
+                      <Escape size={18} /> Logout
                     </button>
                   </li>
-                 
-               
+
                   <li>
                     <a
                       target="_blank"
@@ -256,9 +261,7 @@ function Controls({
                       className="text-black text-decoration-none"
                       rel="noreferrer"
                     >
-                      <Link45deg size={18} />
-                      {' '}
-                      Visit Polyverse
+                      <Link45deg size={18} /> Visit Polyverse
                     </a>
                   </li>
                 </ul>
@@ -267,11 +270,9 @@ function Controls({
           ) : null}
         </div>
       </div>
-
-      
     </div>
   );
-}
+};
 
 Controls.propTypes = { className: PropTypes.string.isRequired };
 
@@ -279,11 +280,11 @@ export default styled(Controls)`
   .context-controls {
     position: absolute;
     z-index: 100;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     left: 0;
     top: 0;
 
-    &>div {
+    & > div {
       width: 100vw;
       height: 100vh;
 
@@ -295,18 +296,18 @@ export default styled(Controls)`
 
       list-style-type: none;
 
-      background: #FFF;
-      border: 1px solid rgba(0,0,0,0.1);
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-right: none;
 
-      &>li {
-        border-bottom: 1px solid rgba(0,0,0,0.4);
+      & > li {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
         padding: 0.5rem;
       }
-      &>li:last-child {
+      & > li:last-child {
         border: none;
         padding-bottom: 0;
       }
@@ -321,7 +322,7 @@ export default styled(Controls)`
     border: none;
     background: none;
 
-    padding: .4rem;
+    padding: 0.4rem;
   }
   .form-control {
     opacity: 0.8;
@@ -344,15 +345,19 @@ export default styled(Controls)`
     display: flex;
     align-items: flex-end;
     justify-content: start;
-    min-width: ${({ videoWidth }) => (videoWidth <= breakpoints.md ? 21 : 32)}px;
+    min-width: ${({ videoWidth }) =>
+      videoWidth <= breakpoints.md ? 21 : 32}px;
     .meter-component {
       /* don't use media queries for this since we need to write the value
       in the body of the component */
-      height: ${({ videoWidth }) => (videoWidth >= breakpoints.md ? largeHeight : smallHeight)}px;
-      background-size: ${({ videoWidth }) => (videoWidth >= breakpoints.md ? largeHeight : smallHeight)}px;
+      height: ${({ videoWidth }) =>
+        videoWidth >= breakpoints.md ? largeHeight : smallHeight}px;
+      background-size: ${({ videoWidth }) =>
+        videoWidth >= breakpoints.md ? largeHeight : smallHeight}px;
       background-position: bottom;
       background-repeat: no-repeat;
-      min-width: ${({ videoWidth }) => (videoWidth <= breakpoints.md ? 21 : 28)}px;
+      min-width: ${({ videoWidth }) =>
+        videoWidth <= breakpoints.md ? 21 : 28}px;
       position: absolute;
     }
     .meter-component-1 {
@@ -374,10 +379,10 @@ export default styled(Controls)`
     align-items: center;
     width: 100vw;
     min-height: 100vh;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
   }
   .alert-modal-card {
-    background: #FFF;
+    background: #fff;
     padding: 1.3rem;
     border-radius: 5px;
   }
