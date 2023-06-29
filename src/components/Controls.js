@@ -153,22 +153,7 @@ const Controls = ({ className, setIsPopup }) => {
 
   return (
     <div className={className}>
-      {showFeedback ? (
-        <div className="alert-modal">
-          <div className="alert-modal-card container">
-            <FeedbackModal
-              onClose={() => {
-                setShowFeedback(false);
-              }}
-              closeText="Resume Conversation"
-              denyFeedbackText="Close"
-              denyFeedback={() => {
-                setShowFeedback(false);
-              }}
-            />
-          </div>
-        </div>
-      ) : null}
+    
       <div className="d-flex" style={{ background: "#ffff" }}>
         {/* show transcript */}
         {/* <div>
@@ -236,10 +221,10 @@ const Controls = ({ className, setIsPopup }) => {
                 <ul>
                   <li>
                     <button
-                      className={"logout-btn"}
+                      className={"btn-unstyled"}
                       onClick={() => setIsPopup(true)}
                     >
-                      <FontAwesomeIcon icon={faGear} />
+                      <FontAwesomeIcon icon={faGear} /> Settings
                     </button>
                   </li>
 
@@ -256,16 +241,7 @@ const Controls = ({ className, setIsPopup }) => {
                     </button>
                   </li>
 
-                  <li>
-                    <a
-                      target="_blank"
-                      href="https://www.polyverse.app/"
-                      className="text-black text-decoration-none"
-                      rel="noreferrer"
-                    >
-                      <Link45deg size={18} /> Visit Polyverse
-                    </a>
-                  </li>
+                 
                 </ul>
               </div>
             </div>
