@@ -4,9 +4,17 @@ import to from "await-to-js";
 import proxyVideo, { mediaStreamProxy } from "../../proxyVideo";
 import roundObject from "../../utils/roundObject";
 import { meatballString } from "./meatball";
+import {avatars} from "../../config";
 
 const AUTH_MODE = parseInt(process.env.REACT_APP_PERSONA_AUTH_MODE, 10) || 0;
-const API_KEY = process.env.REACT_APP_API_KEY || "";
+
+
+let activeAvatar = localStorage.getItem("activeAvatar")
+      ? JSON.parse(localStorage.getItem("activeAvatar"))
+      : avatars[0];
+  
+
+const API_KEY = activeAvatar.key || process.env.REACT_APP_API_KEY || "";
 const TOKEN_ISSUER = process.env.REACT_APP_TOKEN_URL;
 const PERSONA_ID = "1";
 // CAMERA_ID commented out because CUE manages camera
