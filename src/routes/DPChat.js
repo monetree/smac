@@ -12,9 +12,9 @@ import { disconnectPage, disconnectRoute } from "../config";
 import TextInput from "../components/TextInput";
 import STTFeedback from "../components/STTFeedback";
 
-import AvatarOne from "./assets/img/avatar-1.jpg";
-import AvatarTwo from "./assets/img/avatar-2.jpg";
-import AvatarThree from "./assets/img/avatar-3.jpg";
+import AvatarOne from "../img/avatar-1.jpg";
+import AvatarTwo from "../img/avatar-2.jpg";
+import AvatarThree from "../img/avatar-3.jpg";
 
 import Popup from "../components/popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import { ArrowLeftCircleFill, ArrowRightCircleFill, MicFill } from 'react-bootstrap-icons';
-import { createScene } from '../store/sm';
-import Header from '../components/Header';
-import { headerHeight, landingBackgroundColor, landingBackgroundImage } from '../config';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import {
+  ArrowLeftCircleFill,
+  ArrowRightCircleFill,
+  MicFill,
+} from "react-bootstrap-icons";
+import { createScene } from "../store/sm";
+import Header from "../components/Header";
+import {
+  headerHeight,
+  landingBackgroundColor,
+  landingBackgroundImage,
+} from "../config";
 
-function Loading({
-  className,
-}) {
-  const {
-    connected,
-    loading,
-    error,
-    requestedMediaPerms,
-    connectionState,
-  } = useSelector(({ sm }) => (sm));
+function Loading({ className }) {
+  const { connected, loading, error, requestedMediaPerms, connectionState } =
+    useSelector(({ sm }) => sm);
   const dispatch = useDispatch();
 
-  const {
-    percentageLoaded, name, currentStep, totalSteps,
-  } = connectionState;
+  const { percentageLoaded, name, currentStep, totalSteps } = connectionState;
 
   const stateNameMap = {
-    SearchingForDigitalPerson: 'Searching For Digital Person',
-    DownloadingAssets: 'Downloading Assets',
-    ConnectingToDigitalPerson: 'Connecting To Digital Person',
+    SearchingForDigitalPerson: "Searching For Digital Person",
+    DownloadingAssets: "Downloading Assets",
+    ConnectingToDigitalPerson: "Connecting To Digital Person",
   };
   // map name vals to plain english if we know the state name, otherwise just display the name as is
-  const stateName = (name in stateNameMap) ? stateNameMap[name] : name;
+  const stateName = name in stateNameMap ? stateNameMap[name] : name;
 
   // // pull querystring to see if we are displaying an error
   // // (app can redirect to /loading on fatal err)
@@ -61,18 +60,16 @@ function Loading({
         </div>
         {/* </div> */}
       </div>
-    </div>
+    </div>,
   ];
 
   const [skip, setSkip] = useState(false);
- 
+
   const history = useHistory();
 
   useEffect(() => {
-    if ( connected === true) history.push('/video');
+    if (connected === true) history.push("/video");
   }, [connected]);
-
-  
 
   return (
     <div className={className}>
@@ -80,10 +77,7 @@ function Loading({
       <div className="container">
         <div className="row justify-content-center align-items-center">
           <div className="col-11 col-md-6 text-center mobile">
-            <div className="row">
-              {pages[page]}
-            </div>
-          
+            <div className="row">{pages[page]}</div>
           </div>
         </div>
       </div>
