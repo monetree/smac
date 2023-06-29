@@ -9,19 +9,19 @@ const Popup = ({
   handleSubmit,
 }) => {
   return (
-    <div class="modal block" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
+    <div className="modal block" id="myModal">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
             <button
               onClick={() => setIsPopup(false)}
               type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
+              className="btn-close"
+              dataBsDismiss="modal"
             ></button>
           </div>
 
-          <div class="modal-body">
+          <div className="modal-body">
             <h5 className="text-center">Select your avatar ... </h5>
             <div className="avatars">
               {avatars.map((avatar, index) => (

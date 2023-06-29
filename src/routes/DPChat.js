@@ -159,7 +159,7 @@ const DPChat = ({ className }) => {
         </div>
       </div>
       {connected ? <PersonaVideo /> : null}
-      {console.log("***isPopup***", isPopup)}
+     
       {isPopup ? (
         <Popup
           setIsPopup={setIsPopup}
