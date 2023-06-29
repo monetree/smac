@@ -45,8 +45,6 @@ const DPChat = ({ className }) => {
         }
   );
 
-  const [apiKey, setApikey] = useState(activeAvatar.key);
-
   const handleSubmit = () => {
     window.location.reload();
   };
@@ -193,7 +191,7 @@ const DPChat = ({ className }) => {
         </div>
       </div>
       {connected ? <PersonaVideo /> : null}
-            {console.log("***isPopup***", isPopup)}
+      {console.log("***isPopup***", isPopup)}
       {isPopup ? (
         <Popup
           setIsPopup={setIsPopup}

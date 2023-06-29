@@ -1,20 +1,19 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { createRef, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import * as actions from '../store/sm';
-import proxyVideo from '../proxyVideo';
-import { headerHeight, transparentHeader } from '../config';
+import React, { createRef, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import * as actions from "../store/sm";
+import proxyVideo from "../proxyVideo";
+import { headerHeight, transparentHeader } from "../config";
 
-function PersonaVideo({
-  className,
-}) {
+function PersonaVideo({ className }) {
   const dispatch = useDispatch();
-  const setVideoDimensions = (videoWidth, videoHeight) => dispatch(
-    actions.setVideoDimensions({ videoWidth, videoHeight }),
-  );
-  const { isOutputMuted, loading, connected } = useSelector(({ sm }) => ({ ...sm }));
+  const setVideoDimensions = (videoWidth, videoHeight) =>
+    dispatch(actions.setVideoDimensions({ videoWidth, videoHeight }));
+  const { isOutputMuted, loading, connected } = useSelector(({ sm }) => ({
+    ...sm,
+  }));
   // video elem ref used to link proxy video element to displayed video
   const videoRef = createRef();
   // we need the container dimensions to render the right size video in the persona server
@@ -22,7 +21,7 @@ function PersonaVideo({
   // only set the video ref once, otherwise we get a flickering whenever the window is resized
   const [videoDisplayed, setVideoDisplayed] = useState(false);
   // we need to keep track of the inner window height so the video displays correctly
-  const [height, setHeight] = useState('100vh');
+  const [height, setHeight] = useState("100vh");
 
   const handleResize = () => {
     if (containerRef.current) {
@@ -41,7 +40,7 @@ function PersonaVideo({
   // we need to get the src data from that element to use here
   useEffect(() => {
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     if (connected) {
       if (!videoDisplayed) {
         videoRef.current.srcObject = proxyVideo.srcObject;
@@ -49,38 +48,28 @@ function PersonaVideo({
       }
     }
     // when component dismounts, remove resize listener
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <div ref={containerRef} className={className} style={{ height }}>
-      {
-        connected
-          ? (
-            <video
-              ref={videoRef}
-              autoPlay
-              playsInline
-              className="persona-video"
-              id="personavideo"
-              data-sm-video
-              muted={isOutputMuted}
-            />
-          )
-          : null
-      }
-      {
-        loading
-          ? (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          )
-          : null
-      }
-      {
-        connected === false && loading === false ? 'disconnected' : ''
-      }
+      {connected ? (
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          className="persona-video"
+          id="personavideo"
+          data-sm-video
+          muted={isOutputMuted}
+        />
+      ) : null}
+      {loading ? (
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      ) : null}
+      {connected === false && loading === false ? "disconnected" : ""}
     </div>
   );
 }
@@ -99,7 +88,7 @@ export default styled(PersonaVideo)`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: ${transparentHeader ? '' : headerHeight};
+  margin-top: ${transparentHeader ? "" : headerHeight};
   .persona-video {
     /* the video element will conform to the container dimensions, so keep this as it is */
     width: 100%;
