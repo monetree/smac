@@ -85,18 +85,18 @@ function App() {
         </div>
       ) : null}
       <Switch>
-        <Route path="/content-card-test">
+        {/* <Route path="/content-card-test">
           <ContentCardTest />
-        </Route>
+        </Route> */}
         <Route path="/loading">
           <Loading />
         </Route>
         <Route path="/video">
           <DPChat />
         </Route>
-        <Route path="/feedback">
+        {/* <Route path="/feedback">
           <Feedback />
-        </Route>
+        </Route> */}
         {/* / goes at the bottom */}
         <Route path="/">
           <GoogleOAuthProvider clientId="118420081966-s1n42272jcg4r5l4erufahti23ubp8o0.apps.googleusercontent.com">

@@ -776,5 +776,39 @@ button img {
   }
 }
 
+/* POPUP css */
+
+.block {
+  display: block;
+}
+
+.avatars {
+  display: flex;
+  justify-content: center;
+}
+
+.avatars > .avatar {
+  width: 150px;
+  margin: 5px;
+  opacity: 1;
+}
+.avatars > .avatar > img {
+  border-radius: 10px;
+  width: 150px;
+}
+
+.avatars > .avatar > img:hover {
+  opacity: 0.8;
+}
+
+.avatars > .avatar > .img-active {
+  opacity: 0.8;
+  border: 3px solid #444242;
+}
+
+.modal-content {
+  min-height: 400px;
+  margin-top: 5em;
+}
 
 

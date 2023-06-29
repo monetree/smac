@@ -17,8 +17,6 @@ import AvatarTwo from "../img/avatar-2.jpg";
 import AvatarThree from "../img/avatar-3.jpg";
 
 import Popup from "../components/popup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 const DPChat = ({ className }) => {
   const {
@@ -195,7 +193,7 @@ const DPChat = ({ className }) => {
         </div>
       </div>
       {connected ? <PersonaVideo /> : null}
-
+            {console.log("***isPopup***", isPopup)}
       {isPopup ? (
         <Popup
           setIsPopup={setIsPopup}

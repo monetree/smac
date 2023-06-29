@@ -32,6 +32,8 @@ import micFill from "../img/mic-fill.svg";
 import breakpoints from "../utils/breakpoints";
 import { primaryAccent } from "../globalStyle";
 import FeedbackModal from "./FeedbackModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
 
 const volumeMeterHeight = 24;
 const volumeMeterMultiplier = 1.2;
