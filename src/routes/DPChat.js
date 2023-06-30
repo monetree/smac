@@ -78,6 +78,12 @@ const DPChat = ({ className }) => {
     // run resize once on mount, then add listener for future resize events
     handleResize();
     window.addEventListener("resize", handleResize);
+
+    let activeAvatar = localStorage.getItem("activeAvatar")
+      ? JSON.parse(localStorage.getItem("activeAvatar"))
+      : avatars[0];
+    setActiveAvatar(activeAvatar);
+
     // run cleanup on unmount
     return () => cleanup();
   }, []);

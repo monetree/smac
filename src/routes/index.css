@@ -815,15 +815,18 @@ button img {
 .avatars > .avatar > img {
   border-radius: 10px;
   width: 100%;
+  opacity: 0.8;
 }
 
 .avatars > .avatar > img:hover {
-  opacity: 0.8;
+  opacity: 1;
+  border: 3px solid #3b4aaa;
 }
 
 .avatars > .avatar > .img-active {
-  opacity: 0.8;
-  border: 3px solid #444242;
+  /* border: 3px solid #444242; */
+  border: 3px solid #3b4aaa;
+  opacity: 1;
 }
 
 .modal-content {
