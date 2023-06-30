@@ -33,15 +33,16 @@ const Popup = ({
                       activeAvatar.name === avatar.name ? "img-active" : ""
                     }
                   />
+                  <p className="text-center mt-3"><strong>{avatar.language}</strong></p>
                 </div>
               ))}
             </div>
 
-            <div className="row mt-5">
+            <div className="row mt-3">
               <div className="col-sm-12">
                 <p className="text-center">
                   <button
-                    className="btn btn-secondary btn-block"
+                    className="btn popup-btn btn-block"
                     onClick={handleSubmit}
                   >
                     Submit

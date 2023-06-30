@@ -16,7 +16,7 @@ let activeAvatar = localStorage.getItem("activeAvatar")
 
 const API_KEY = activeAvatar.key || process.env.REACT_APP_API_KEY || "";
 const TOKEN_ISSUER = process.env.REACT_APP_TOKEN_URL;
-const PERSONA_ID = "1";
+const PERSONA_ID = activeAvatar.name;
 // CAMERA_ID commented out because CUE manages camera
 // const CAMERA_ID = 'CloseUp';
 
