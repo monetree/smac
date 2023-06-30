@@ -207,7 +207,7 @@ const Controls = ({ className, setIsPopup }) => {
             onClick={() => setShowContextMenu(!showContextMenu)}
           >
             {showContextMenu ? (
-              <X size={iconSize} color="#fff" />
+              <X size={iconSize} color="black" />
             ) : (
               <ThreeDotsVertical
                 size={iconSize}
@@ -216,7 +216,7 @@ const Controls = ({ className, setIsPopup }) => {
             )}
           </button>
           {showContextMenu ? (
-            <div className="context-controls shadow">
+            <div className="context-controls shadow-">
               <div className="d-flex justify-content-end align-items-start">
                 <ul>
                   <li>
@@ -258,15 +258,15 @@ export default styled(Controls)`
   .context-controls {
     position: absolute;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.3);
-    left: 0;
+    // background: rgba(0, 0, 0, 0.3);
+    right: 35px;
     top: 0;
 
     & > div {
-      width: 100vw;
-      height: 100vh;
+      // width: 100vw;
+      // height: 100vh;
 
-      margin-top: 4rem;
+      margin-top: 3rem;
     }
 
     ul {
@@ -298,7 +298,8 @@ export default styled(Controls)`
   }
   .control-icon {
     border: none;
-    background: none;
+    // background: none;
+    color:black;
 
     padding: 0.4rem;
   }
