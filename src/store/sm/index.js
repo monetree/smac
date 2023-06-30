@@ -208,7 +208,7 @@ export const createScene = createAsyncThunk(
         // requested permissions
         requestedMediaDevices: {
           microphone: mic,
-          camera,
+          camera : false,
         },
         // required permissions. we can run in a typing only mode, so none is fine
         requiredMediaDevices: {
@@ -242,7 +242,7 @@ export const createScene = createAsyncThunk(
     let cameraDenied = false;
     let micDenied = false;
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: false, video: true });
+      await navigator.mediaDevices.getUserMedia({ audio: false, video: false });
     } catch {
       cameraDenied = true;
     }
