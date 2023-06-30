@@ -57,7 +57,7 @@ function Loading({ className }) {
   const history = useHistory();
 
   useEffect(() => {
-    if (connected === true) history.push("/video");
+    if (connected === true) history.push("/chat");
   }, [connected]);
 
   return (

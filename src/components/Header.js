@@ -96,7 +96,7 @@ const Header = ({ className, setIsPopup }) => {
                 {/* right align */}
                 <div
                   className={`${
-                    connected && !loading && pathname === "/video"
+                    connected && !loading && pathname === "/chat"
                       ? ""
                       : "d-none"
                   }`}
