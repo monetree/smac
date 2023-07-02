@@ -59,7 +59,7 @@ function Transcript({ className, transcript }) {
           ? transcriptDisplay
           : (
             <li className="list-group-item">
-              No items to show, say something!
+              
             </li>
           )}
         {/* height added because safari doesn't display zero height elems,

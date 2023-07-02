@@ -58,7 +58,7 @@ function App() {
               <button
                 className="btn-unstyled"
                 type="button"
-                onClick={() => setIgnoreError(true)}
+                onClick={() => {setIgnoreError(true); windowlocation.reload();}}
               >
                 <XCircle size={22} />
               </button>

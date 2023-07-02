@@ -311,6 +311,15 @@ export const createScene = createAsyncThunk(
           const { transcript: text } = output.alternatives[0];
           // we get multiple recognizeResults messages, so only add the final one to transcript
           // but keep track of intermediate one to show the user what they're saying
+          if (text && (
+            text.toLowerCase().includes("stop emma") ||
+            text.toLowerCase().includes("emma stop") ||
+            text.toLowerCase().includes("stop")
+          )){
+            if (!persona) console.error("persona not initiated!");
+            else persona.stopSpeaking();
+          }
+
           if (output.final === false) {
             return thunk.dispatch(
               actions.setIntermediateUserUtterance({
@@ -588,10 +597,12 @@ export const createScene = createAsyncThunk(
         }
 
         case "stopRecognize": {
+          console.log("**stopRecognize**");
           break;
         }
 
         case "startRecognize": {
+          console.log("**startRecognize8**");
           break;
         }
 
