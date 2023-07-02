@@ -266,7 +266,7 @@ export default styled(Controls)`
     right: -100%;
     top: 0;
 
-    @media (max-width: 600px) {
+    @media (max-width: 600px) { 
       right: 0;
     }
 

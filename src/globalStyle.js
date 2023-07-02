@@ -22,6 +22,12 @@ export default createGlobalStyle`
   .btn-unstyled {
     border: none;
     background: none;
+    display:flex;
+    place-items: center;
+
+    svg {
+      margin-right: 5px
+    }
   }
   .error-modal {
     position: absolute;

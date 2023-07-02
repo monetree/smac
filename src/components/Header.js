@@ -67,10 +67,10 @@ const Header = ({ className, setIsPopup }) => {
             <div className="d-flex align-items-center justify-content-between">
               <div>
                 {/* left align */}
-                {/* <Link to={logoLink}  className={`${pathname === '/loading' ? 'logo' : 'd-none'}`}>
+                <Link to={logoLink}  className={`${pathname === '/loading' ? 'logo' : 'd-none'}`}>
                   Polyverse
-                </Link> */}
-                <aside id="menu" className={"user-menu"}>
+                </Link>
+                <aside id="menu" className={`user-menu ${pathname === '/loading' ? 'd-none' : ''}`}>
                   <div className="menu-child">
                     <img
                       id="profile-pic"
