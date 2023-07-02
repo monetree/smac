@@ -273,6 +273,7 @@ export const createScene = createAsyncThunk(
     // connection state /progress handler
     scene.connectionState.onConnectionStateUpdated.addListener(
       (connectionStateData) => {
+        console.log("******connectionStateData***", connectionStateData);
         thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
       }
     );
