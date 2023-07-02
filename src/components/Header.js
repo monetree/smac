@@ -89,7 +89,7 @@ const Header = ({ className }) => {
               <div className={"main-menu"}>
                 {/* left align */}
                 <a href={"/"} style={{color : pathname === '/chat' ? "#fff" : "black"}}  className={`${(pathname === '/loading' || pathname === '/chat') ? 'logo' : 'd-none'}`}>
-                  Polyverse
+                  AvatarX
                 </a>
                 <ul className={"main-menu-ul"}>
                   <li className={"main-menu-li"}>

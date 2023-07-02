@@ -10,7 +10,7 @@ import AvatarThree from "./img/avatar-3.jpg";
 export const transparentHeader = true;
 export const headerHeight = "4.2rem";
 export const logo = smLogo;
-export const logoAltText = "Polyverse logo";
+export const logoAltText = "AvatarX logo";
 export const logoLink = "/";
 
 // background image is positioned in a way that is best for pictures of the persona's face.

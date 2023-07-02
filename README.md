@@ -1,4 +1,4 @@
-# Polyverse Avatar based Techer
+# AvatarX Avatar based Techer
 
 
 ## Setup
@@ -32,4 +32,4 @@ This project strictly follows [AirBnB's JavaScript style guide](https://github.c
 We have also provided an `.editorconfig` file that you can use in your editor to match the indentation, whitespace, and other styling rules we used in creating this template.
 
 ## Support 
-Our team would love to hear from you. For any additional support, feedback, bugs, feature requests, please [submit a ticket](https://support.soulmachines.com) or reach out to us at [support@polyverse.com](support@soulmachines.com). 
+Our team would love to hear from you. For any additional support, feedback, bugs, feature requests, please [submit a ticket](https://support.soulmachines.com) or reach out to us at [support@avatarx.com](support@soulmachines.com). 
