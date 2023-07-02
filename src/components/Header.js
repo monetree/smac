@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -20,9 +20,13 @@ import {
 } from "react-bootstrap-icons";
 import { primaryAccent } from "../globalStyle";
 
+import Popup from "../components/popup";
+
+import {avatars} from "../config";
+
 const iconSize = 24;
 
-const Header = ({ className, setIsPopup }) => {
+const Header = ({ className }) => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const {
@@ -35,6 +39,10 @@ const Header = ({ className, setIsPopup }) => {
     highlightMute,
     isOutputMuted,
   } = useSelector(({ sm }) => ({ ...sm }));
+
+  const [isPopup, setIsPopup] = useState(false);
+  const [activeAvatar, setActiveAvatar] = useState({});
+
 
   const history = useHistory();
 
@@ -55,7 +63,22 @@ const Header = ({ className, setIsPopup }) => {
     if (!isLoggedInUser) {
       history.push("/");
     }
+
+    let activeAvatar = localStorage.getItem("activeAvatar")
+    ? JSON.parse(localStorage.getItem("activeAvatar"))
+    : avatars[0];
+    setActiveAvatar(activeAvatar);
+
   }, []);
+
+  const handleSubmit = () => {
+    window.location.reload();
+  };
+
+  const handleActiveAvatar = (item) => {
+    setActiveAvatar(item);
+    localStorage.setItem("activeAvatar", JSON.stringify(item));
+  };
 
   return (
     <Fragment>
@@ -65,14 +88,14 @@ const Header = ({ className, setIsPopup }) => {
             <div className="d-flex align-items-center justify-content-between">
               <div className={"main-menu"}>
                 {/* left align */}
-                <Link to={logoLink} style={{color : pathname === '/chat' ? "#fff" : "black"}}  className={`${(pathname === '/loading' || pathname === '/chat') ? 'logo' : 'd-none'}`}>
+                <a href={"/"} style={{color : pathname === '/chat' ? "#fff" : "black"}}  className={`${(pathname === '/loading' || pathname === '/chat') ? 'logo' : 'd-none'}`}>
                   Polyverse
-                </Link>
+                </a>
                 <ul className={"main-menu-ul"}>
                   <li className={"main-menu-li"}>
                     <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`} href={"/"}>Home</a>
                   </li>
-                  <li className={"main-menu-li"}>
+                  <li className={"main-menu-li"} onClick={()=> setIsPopup(true)}>
                     <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`}>Settings</a>
                   </li>
                   <li className={"main-menu-li"}>
@@ -223,6 +246,17 @@ const Header = ({ className, setIsPopup }) => {
             </button>
           </div>
         </div>
+      )}
+      {isPopup ? (
+        <Popup
+          setIsPopup={setIsPopup}
+          avatars={avatars}
+          activeAvatar={activeAvatar}
+          handleActiveAvatar={handleActiveAvatar}
+          handleSubmit={handleSubmit}
+        />
+      ) : (
+        ""
       )}
     </Fragment>
   );

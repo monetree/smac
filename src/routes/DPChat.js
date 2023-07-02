@@ -10,9 +10,7 @@ import { disconnect, sendEvent, setVideoDimensions } from "../store/sm/index";
 import Header from "../components/Header";
 import { disconnectPage, disconnectRoute } from "../config";
 import TextInput from "../components/TextInput";
-import Popup from "../components/popup";
 
-import {avatars} from "../config";
 
 const DPChat = ({ className }) => {
   const {
@@ -27,18 +25,7 @@ const DPChat = ({ className }) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const [isPopup, setIsPopup] = useState(false);
-  const [activeAvatar, setActiveAvatar] = useState({});
-
-  const handleSubmit = () => {
-    window.location.reload();
-  };
-
-  const handleActiveAvatar = (item) => {
-    setActiveAvatar(item);
-    localStorage.setItem("activeAvatar", JSON.stringify(item));
-  };
+  
 
   if (disconnected === true) {
     if (disconnectPage) {
@@ -78,12 +65,7 @@ const DPChat = ({ className }) => {
     // run resize once on mount, then add listener for future resize events
     handleResize();
     window.addEventListener("resize", handleResize);
-
-    let activeAvatar = localStorage.getItem("activeAvatar")
-      ? JSON.parse(localStorage.getItem("activeAvatar"))
-      : avatars[0];
-    setActiveAvatar(activeAvatar);
-
+   
     // run cleanup on unmount
     return () => cleanup();
   }, []);
@@ -106,22 +88,8 @@ const DPChat = ({ className }) => {
       <div className="video-overlay">
         {/* top row */}
         <div className="row">
-          <Header setIsPopup={setIsPopup} />
-          {/* {
-            // consumers of the template can uncomment this block if they want a camera preview
-            // will need to add cameraOn to the values they get from the state
-              cameraOn
-                ? (
-                  <div className="row d-flex justify-content-end">
-                    <div className="col-auto">
-                      <div className="camera-preview">
-                        <CameraPreview />
-                      </div>
-                    </div>
-                  </div>
-                )
-                : <div />
-            } */}
+          <Header />
+          
         </div>
         {/* middle row */}
         <div
@@ -165,17 +133,7 @@ const DPChat = ({ className }) => {
       </div>
       {connected ? <PersonaVideo /> : null}
      
-      {isPopup ? (
-        <Popup
-          setIsPopup={setIsPopup}
-          avatars={avatars}
-          activeAvatar={activeAvatar}
-          handleActiveAvatar={handleActiveAvatar}
-          handleSubmit={handleSubmit}
-        />
-      ) : (
-        ""
-      )}
+      
     </div>
   );
 };
