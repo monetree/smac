@@ -227,7 +227,7 @@ export const createScene = createAsyncThunk(
         },
         sendMetadata: {
           // send url updates for react app as PAGE_METADATA intents to NLP
-          pageUrl: true,
+          pageUrl: false,
         },
         stopSpeakingWhenNotVisible: false,
       };
@@ -309,6 +309,7 @@ export const createScene = createAsyncThunk(
             return false;
           }
           const { transcript: text } = output.alternatives[0];
+          console.log("**text**", text);
           // we get multiple recognizeResults messages, so only add the final one to transcript
           // but keep track of intermediate one to show the user what they're saying
           if (text && (
@@ -316,6 +317,7 @@ export const createScene = createAsyncThunk(
             text.toLowerCase().includes("emma stop") ||
             text.toLowerCase().includes("stop")
           )){
+            console.log("**stopSpeaking CAlled**");
             if (!persona) console.error("persona not initiated!");
             else persona.stopSpeaking();
           }
@@ -338,6 +340,7 @@ export const createScene = createAsyncThunk(
         // handles output from NLP (what DP is saying)
         case "personaResponse": {
           const { currentSpeech } = message.body;
+          
           thunk.dispatch(
             actions.addConversationResult({
               source: "persona",

@@ -23,7 +23,7 @@ export const landingBackgroundImage = placeholder;
 // if set to true, on disconnect, the app will redirect to the specified route.
 // if false, it will redirect to /
 export const disconnectPage = true;
-export const disconnectRoute = "/feedback";
+export const disconnectRoute = "/";
 
 export const avatars = [
   {
