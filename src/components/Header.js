@@ -69,6 +69,8 @@ const Header = ({ className }) => {
     : avatars[0];
     setActiveAvatar(activeAvatar);
 
+    window.scrollTo(0, 0);
+
   }, []);
 
   const handleSubmit = () => {
