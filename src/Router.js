@@ -70,16 +70,17 @@ function App() {
                 some feedback to help us improve!
               </p>
               <div className="d-flex justify-content-center mb-4">
-                <Link to="/loading" className="btn btn-dark me-2">
+                {/* <Link to="/loading" className="btn btn-dark me-2">
                   Reconnect
-                </Link>
-                <Link to="/" className="btn btn-outline-dark">
-                  Return to Main Page
-                </Link>
+                </Link> */}
+                <a href="/loading" className="btn btn-dark me-2">
+                  Reconnect
+                </a>
+                
               </div>
-              <div className="d-flex justify-content-center">
+              {/* <div className="d-flex justify-content-center">
                 <code className="text-danger">{error.msg}</code>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

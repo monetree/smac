@@ -255,12 +255,20 @@ const Controls = ({ className, setIsPopup }) => {
 Controls.propTypes = { className: PropTypes.string.isRequired };
 
 export default styled(Controls)`
+
+  .context-control-parent {
+    position : relative
+  }
   .context-controls {
     position: absolute;
     z-index: 100;
     // background: rgba(0, 0, 0, 0.3);
-    right: 35px;
+    right: -100%;
     top: 0;
+
+    @media (max-width: 600px) {
+      right: 0;
+    }
 
     & > div {
       // width: 100vw;

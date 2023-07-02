@@ -154,8 +154,7 @@ const DPChat = ({ className }) => {
           </div> */}
           {showTranscript === true || micOn === false ? (
             <div
-              className="row justify-content-center"
-              style={{ marginBottom: 5 }}
+              className="row justify-content-center text-input-parent"
             >
               <div className="col-md-8 col-lg-5 p-3-">
                 <TextInput />
@@ -210,6 +209,12 @@ export default styled(DPChat)`
     scrollbar-width: none; /* Firefox 64 */
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+  .text-input-parent {
+    margin-bottom: 38px;
+    @media (max-width: 768px) {
+      margin-bottom: 5px;
     }
   }
 `;

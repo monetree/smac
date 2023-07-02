@@ -17,13 +17,7 @@ function Loading({ className }) {
   const dispatch = useDispatch();
 
   const { name} = connectionState;
-
-  const stateNameMap = {
-    SearchingForDigitalPerson: "Searching For Digital Person",
-    DownloadingAssets: "Downloading Assets",
-    ConnectingToDigitalPerson: "Connecting To Digital Person",
-  };
-
+  
 
   // create persona scene on button press on on mount, depending on device size
   const createSceneIfNotStarted = () => {
@@ -36,24 +30,7 @@ function Loading({ className }) {
     createSceneIfNotStarted();
   }, []);
 
-  const iconSize = 66;
-  const [page, setPage] = useState(0);
-  const pages = [
-    <div>
-      <div className="row justify-content-center">
-        {/* <div className="tutorial-icon mb-2"> */}
-        <div className="loader ">
-          <div className="spinner-border" role="status">
-            <span className="sr-only"></span>
-          </div>
-        </div>
-        {/* </div> */}
-      </div>
-    </div>,
-  ];
-
-  const [skip, setSkip] = useState(false);
-
+ 
   const history = useHistory();
 
   useEffect(() => {
@@ -63,10 +40,20 @@ function Loading({ className }) {
   return (
     <div className={className}>
       <Header />
-      <div className="container">
+      <div className="container"> 
         <div className="row justify-content-center align-items-center">
           <div className="col-11 col-md-6 text-center mobile">
-            <div className="row">{pages[page]}</div>
+            <div className="row">
+              <div>
+                <div className="row justify-content-center">
+                  <div className="loader ">
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
