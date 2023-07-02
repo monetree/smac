@@ -178,6 +178,7 @@ body * {
 
 #menu {
   top: 0px;
+  right: 35px;
   position: absolute;
 }
 
@@ -564,8 +565,8 @@ video {
 }
 
 button img {
-  max-width: 20px;
-  padding: 0 0 0 10px;
+  max-width: 50px;
+  /* padding: 0 0 0 10px; */
 }
 
 .login-title {

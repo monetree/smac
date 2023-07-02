@@ -3,37 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import {
-  CameraVideoFill,
-  CameraVideoOffFill,
-  ChatSquareTextFill,
   Escape,
-  Link45deg,
-  Megaphone,
-  MicFill,
-  MicMuteFill,
-  Share,
-  SkipEndFill,
   ThreeDotsVertical,
-  VolumeMuteFill,
-  VolumeUpFill,
   X,
 } from "react-bootstrap-icons";
 import ReactTooltip from "react-tooltip";
 import {
-  stopSpeaking,
-  setShowTranscript,
-  disconnect,
-  setOutputMute,
-  setMicOn,
-  setCameraOn,
+  disconnect
 } from "../store/sm/index";
 import mic from "../img/mic.svg";
 import micFill from "../img/mic-fill.svg";
 import breakpoints from "../utils/breakpoints";
-import { primaryAccent } from "../globalStyle";
-import FeedbackModal from "./FeedbackModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 const volumeMeterHeight = 24;
 const volumeMeterMultiplier = 1.2;
@@ -42,89 +24,10 @@ const largeHeight = volumeMeterHeight * volumeMeterMultiplier;
 
 const Controls = ({ className, setIsPopup }) => {
   const {
-    micOn,
-    cameraOn,
-    isOutputMuted,
-    speechState,
-    showTranscript,
-    transcript,
-    requestedMediaPerms,
-    highlightMic,
-    highlightMute,
-    highlightChat,
-    highlightCamera,
-    highlightSkip,
     highlightMenu,
   } = useSelector((state) => ({ ...state.sm }));
 
   const dispatch = useDispatch();
-
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  // mic level visualizer
-  // TODO: fix this
-  // const typingOnly = requestedMediaPerms.mic !== true;
-  // const [volume, setVolume] = useState(0);
-  // useEffect(async () => {
-  //   if (connected && typingOnly === false) {
-  //     // credit: https://stackoverflow.com/a/64650826
-  //     let volumeCallback = null;
-  //     let audioStream;
-  //     let audioContext;
-  //     let audioSource;
-  //     let unmounted = false;
-  //     // Initialize
-  //     try {
-  //       audioStream = mediaStreamProxy.getUserMediaStream();
-  //       audioContext = new AudioContext();
-  //       audioSource = audioContext.createMediaStreamSource(audioStream);
-  //       const analyser = audioContext.createAnalyser();
-  //       analyser.fftSize = 512;
-  //       analyser.minDecibels = -127;
-  //       analyser.maxDecibels = 0;
-  //       analyser.smoothingTimeConstant = 0.4;
-  //       audioSource.connect(analyser);
-  //       const volumes = new Uint8Array(analyser.frequencyBinCount);
-  //       volumeCallback = () => {
-  //         analyser.getByteFrequencyData(volumes);
-  //         let volumeSum = 0;
-  //         volumes.forEach((v) => { volumeSum += v; });
-  //         // multiply value by 2 so the volume meter appears more responsive
-  //         // (otherwise the fill doesn't always show)
-  //         const averageVolume = (volumeSum / volumes.length) * 2;
-  //         // Value range: 127 = analyser.maxDecibels - analyser.minDecibels;
-  //         setVolume(averageVolume > 127 ? 127 : averageVolume);
-  //       };
-  //       // runs every time the window paints
-  //       const volumeDisplay = () => {
-  //         window.requestAnimationFrame(() => {
-  //           if (!unmounted) {
-  //             volumeCallback();
-  //             volumeDisplay();
-  //           }
-  //         });
-  //       };
-  //       volumeDisplay();
-  //     } catch (e) {
-  //       console.error('Failed to initialize volume visualizer!', e);
-  //     }
-
-  //     return () => {
-  //       console.log('closing down the audio stuff');
-  //       // FIXME: tracking #79
-  //       unmounted = true;
-  //       audioContext.close();
-  //       audioSource.close();
-  //     };
-  //   } return false;
-  // }, [connected]);
-
-  // bind transcrpt open and mute func to each other, so that
-  // when we open the transcript we mute the mic
-  const toggleKeyboardInput = () => {
-    dispatch(setShowTranscript(!showTranscript));
-    dispatch(setMicOn({ micOn: showTranscript }));
-  };
 
   useEffect(() => {
     ReactTooltip.rebuild();
@@ -134,68 +37,23 @@ const Controls = ({ className, setIsPopup }) => {
 
   const [showContextMenu, setShowContextMenu] = useState(false);
 
-  const originalShareCopy = "Share Experience";
-  const [shareCopy, setShareCopy] = useState(originalShareCopy);
-
-  const shareDP = async () => {
-    const url = window.location;
-    try {
-      await navigator.share({ url });
-    } catch {
-      const type = "text/plain";
-      const blob = new Blob([url], { type });
-      const data = [new window.ClipboardItem({ [type]: blob })];
-      navigator.clipboard.write(data);
-      setShareCopy("Link copied!");
-      setTimeout(() => setShareCopy(originalShareCopy), 3000);
+  const getUserInfo = () => {
+    let userInfo = localStorage.getItem("userInfo");
+    if (!userInfo) {
+      return null;
     }
+    userInfo = JSON.parse(userInfo);
+    if (!userInfo?.name) {
+      return null;
+    }
+    return userInfo;
   };
 
   return (
     <div className={className}>
     
-      <div className="d-flex" style={{ background: "#ffff" }}>
-        {/* show transcript */}
-        {/* <div>
-          <button
-            type="button"
-            className="control-icon"
-            aria-label="Toggle Transcript"
-            data-tip="Toggle Transcript"
-            onClick={toggleKeyboardInput}
-            // disabled={transcript.length <= 0}
-          >
-            <ChatSquareTextFill
-              size={iconSize}
-              color={primaryAccent}
-              // color={showTranscript ? primaryAccent : '#B3B3B3'}
-              style={{ border: highlightChat ? 'red 2px solid' : '' }}
-            />
-          </button>
-        </div> */}
-
-        {/* toggle user camera */}
-
-        {/* <div>
-          <button
-            type="button"
-            className="control-icon"
-            aria-label="Toggle Camera"
-            data-tip="Toggle Camera"
-            disabled={requestedMediaPerms.cameraDenied === true}
-            onClick={() => dispatch(setCameraOn({ cameraOn: !cameraOn }))}
-          >
-            {cameraOn ? (
-              <CameraVideoFill
-                size={iconSize}
-                color={primaryAccent}
-                style={{ border: highlightCamera ? 'red 2px solid' : '' }}
-              />
-            ) : (
-              <CameraVideoOffFill size={iconSize} style={{ border: highlightCamera ? 'red 2px solid' : '' }} />
-            )}
-          </button>
-        </div> */}
+      <div className="d-flex" style={{ background: "#ffff", marginTop: 20 }}>
+       
 
         <div className="context-control-parent">
           <button
@@ -219,6 +77,25 @@ const Controls = ({ className, setIsPopup }) => {
             <div className="context-controls shadow-">
               <div className="d-flex justify-content-end align-items-start">
                 <ul>
+                  <li>
+                    <button
+                      className={"btn-unstyled"}
+                    >
+                      <img
+                        id="profile-pic"
+                        src={getUserInfo()?.picture}
+                      />
+                      <span style={{fontWeight: 600}}>{getUserInfo()?.name}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={"btn-unstyled"}
+                      onClick={() => window.location.reload()}
+                    >
+                      <FontAwesomeIcon icon={faHouse} /> Home
+                    </button>
+                  </li>
                   <li>
                     <button
                       className={"btn-unstyled"}
@@ -257,7 +134,11 @@ Controls.propTypes = { className: PropTypes.string.isRequired };
 export default styled(Controls)`
 
   .context-control-parent {
-    position : relative
+    position : relative;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
   }
   .context-controls {
     position: absolute;

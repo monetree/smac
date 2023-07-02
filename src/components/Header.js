@@ -7,11 +7,9 @@ import { transparentHeader, headerHeight, logoLink } from "../config";
 import Controls from "./Controls";
 import {
   stopSpeaking,
-  setShowTranscript,
   disconnect,
   setOutputMute,
   setMicOn,
-  setCameraOn,
 } from "../store/sm/index";
 import {
   MicFill,
@@ -65,12 +63,27 @@ const Header = ({ className, setIsPopup }) => {
         <div className="container">
           <div className="row">
             <div className="d-flex align-items-center justify-content-between">
-              <div>
+              <div className={"main-menu"}>
                 {/* left align */}
-                <Link to={logoLink}  className={`${pathname === '/loading' ? 'logo' : 'd-none'}`}>
+                <Link to={logoLink} style={{color : pathname === '/chat' ? "#fff" : "black"}}  className={`${(pathname === '/loading' || pathname === '/chat') ? 'logo' : 'd-none'}`}>
                   Polyverse
                 </Link>
-                <aside id="menu" className={`user-menu ${pathname === '/loading' ? 'd-none' : ''}`}>
+                <ul className={"main-menu-ul"}>
+                  <li className={"main-menu-li"}>
+                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`} href={"/"}>Home</a>
+                  </li>
+                  <li className={"main-menu-li"}>
+                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`}>Settings</a>
+                  </li>
+                  <li className={"main-menu-li"}>
+                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`} onClick={() => {
+                        dispatch(disconnect());
+                        localStorage.setItem("userInfo", "");
+                        window.location.reload();
+                      }} >Logout</a>
+                  </li>
+                </ul>
+                <aside id="menu" className={`user-menu ${pathname === '/loading' ? 'd-none-' : ''}`}>
                   <div className="menu-child">
                     <img
                       id="profile-pic"
@@ -95,10 +108,11 @@ const Header = ({ className, setIsPopup }) => {
               <div>
                 {/* right align */}
                 <div
+                //connected && !loading &&
                   className={`${
-                    connected && !loading && pathname === "/chat"
+                     pathname === "/chat"
                       ? ""
-                      : "d-none"
+                      : "d-none-"
                   }`}
                 >
                   <Controls setIsPopup={setIsPopup} />
@@ -239,6 +253,41 @@ export default styled(Header)`
     // Medium devices (tablets, 768px and up)
     @media (min-width: 768px) {
       height: calc(0.8 * ${headerHeight});
+    }
+  }
+
+  .main-menu {
+    display: flex;
+
+    .main-menu-ul {
+      display: flex;
+      list-style: none;
+      margin-top: 20px;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+    .main-menu-li {
+      padding: 0 10px;
+      cursor: pointer;
+    }
+    .main-menu-li a {
+      color : #fff;
+      font-weight: 600;
+    }
+    .loading-li {
+      color : black !important;
+    }
+    .main-menu-li a:hover {
+      opacity: 0.8
+    }
+  }
+
+  #menu {
+    @media (max-width: 768px) {
+      display: none;
     }
   }
 `;

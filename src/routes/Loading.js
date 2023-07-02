@@ -11,7 +11,7 @@ import {
   landingBackgroundImage,
 } from "../config";
 
-function Loading({ className }) {
+function Loading({ className, ignoreError}) {
   const { connected, loading, error, connectionState } =
     useSelector(({ sm }) => sm);
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ function Loading({ className }) {
   return (
     <div className={className}>
       <Header />
+      {!error &&
       <div className="container"> 
         <div className="row justify-content-center align-items-center">
           <div className="col-11 col-md-6 text-center mobile">
@@ -57,6 +58,7 @@ function Loading({ className }) {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 }

@@ -58,7 +58,7 @@ function App() {
               <button
                 className="btn-unstyled"
                 type="button"
-                onClick={() => {setIgnoreError(true); windowlocation.reload();}}
+                onClick={() => {setIgnoreError(true); window.location.reload();}}
               >
                 <XCircle size={22} />
               </button>
@@ -90,7 +90,7 @@ function App() {
           <ContentCardTest />
         </Route> */}
         <Route path="/loading">
-          <Loading />
+          <Loading ignoreError={ignoreError} />
         </Route>
         <Route path="/chat">
           <DPChat />
