@@ -278,18 +278,18 @@ export const createScene = createAsyncThunk(
     // connection state /progress handler
     scene.connectionState.onConnectionStateUpdated.addListener(
       (connectionStateData) => {
-        console.log("******connectionStateData***", connectionStateData);
+        thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
         
-        if(connectionStateData && connectionStateData.name === "Disconnected"){
+        // if(connectionStateData && connectionStateData.name === "Disconnected"){
          
-          thunk.dispatch(createScene());
-        } else {
-          thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
-        }
+        //   thunk.dispatch(createScene());
+        // } else {
+        //   thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
+        // }
       }
     );
     // disconnect handler
-    // scene.onDisconnected = () => thunk.dispatch(disconnect());
+    scene.onDisconnected = () => thunk.dispatch(disconnect());
     
     // store a ref to the smwebsdk onmessage so that we can
     // use the callback while also calling the internal version
@@ -990,8 +990,8 @@ const smSlice = createSlice({
         ...state,
         loading: false,
         connected: false,
-        // error: { msg: error.message },
-        error: null,
+        error: { msg: error.message },
+        // error: null,
       };
     },
   },
