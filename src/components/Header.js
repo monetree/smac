@@ -227,8 +227,8 @@ const Header = ({ className }) => {
               type="button"
               style={{ marginLeft: 10 }}
               className="control-icon mat-focus-indicator microphone mat-fab mat-button-base mat-primary"
-              aria-label="Toggle DP Audio"
-              data-tip="Toggle DP Audio"
+              aria-label="Toggle Audio"
+              data-tip="Toggle Audio"
               onClick={() =>
                 dispatch(setOutputMute({ isOutputMuted: !isOutputMuted }))
               }
