@@ -181,9 +181,13 @@ export const createScene = createAsyncThunk(
   "sm/createScene",
   async (_, thunk) => {
     /* CREATE SCENE */
-    if (scene !== null) {
+    if(scene && scene.connectionState && 
+      scene.connectionState._connectionState &&
+      scene.connectionState._connectionState.name !== "Disconnected"
+    )
+      {
       return console.error(
-        "warning! you attempted to create a new scene, when one already exists!"
+        "warning! you attempted to create a new scene, when one already exists!", scene
       );
     }
     // request permissions from user and create instance of Scene and ask for webcam/mic permissions
@@ -233,6 +237,7 @@ export const createScene = createAsyncThunk(
       };
       if (AUTH_MODE === 0) sceneOpts.apiKey = API_KEY;
       scene = new Scene(sceneOpts);
+      
     } catch (e) {
       return thunk.rejectWithValue(e);
     }
@@ -274,11 +279,18 @@ export const createScene = createAsyncThunk(
     scene.connectionState.onConnectionStateUpdated.addListener(
       (connectionStateData) => {
         console.log("******connectionStateData***", connectionStateData);
-        thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
+        
+        if(connectionStateData && connectionStateData.name === "Disconnected"){
+         
+          thunk.dispatch(createScene());
+        } else {
+          thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
+        }
       }
     );
     // disconnect handler
-    scene.onDisconnected = () => thunk.dispatch(disconnect());
+    // scene.onDisconnected = () => thunk.dispatch(disconnect());
+    
     // store a ref to the smwebsdk onmessage so that we can
     // use the callback while also calling the internal version
     const smwebsdkOnMessage = scene.onMessage.bind(scene);
@@ -665,7 +677,7 @@ export const createScene = createAsyncThunk(
       // we can't disable logging until after the connection is established
       // logging is pretty crowded, not recommended to enable
       // unless you need to debug emotional data from webcam
-      scene.session().setLogging(false);
+      scene.session()?.setLogging(false);
 
       // set video dimensions
       const { videoWidth, videoHeight } = thunk.getState().sm;
@@ -690,6 +702,7 @@ export const createScene = createAsyncThunk(
       // fulfill promise, reducer sets state to indicate loading and connection are complete
       return thunk.fulfillWithValue();
     } catch (err) {
+      console.log("***GLOBAL ERR***", err);
       return thunk.rejectWithValue(err);
     }
   }
@@ -977,7 +990,8 @@ const smSlice = createSlice({
         ...state,
         loading: false,
         connected: false,
-        error: { msg: error.message },
+        // error: { msg: error.message },
+        error: null,
       };
     },
   },

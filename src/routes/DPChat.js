@@ -21,12 +21,14 @@ const DPChat = ({ className }) => {
     showTranscript,
     micOn,
     isOutputMuted,
+    connectionState
   } = useSelector(({ sm }) => ({ ...sm }));
 
   const dispatch = useDispatch();
   const history = useHistory();
-  
 
+  const { name } = connectionState;
+ 
   if (disconnected === true) {
     if (disconnectPage) {
       history.push(disconnectRoute);
@@ -131,7 +133,7 @@ const DPChat = ({ className }) => {
           ) : null}
         </div>
       </div>
-      {connected ? <PersonaVideo /> : null}
+      {connected && name === "Connected" ? <PersonaVideo name={name} /> : null}
      
       
     </div>

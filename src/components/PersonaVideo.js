@@ -7,7 +7,7 @@ import * as actions from "../store/sm";
 import proxyVideo from "../proxyVideo";
 import { headerHeight, transparentHeader } from "../config";
 
-function PersonaVideo({ className }) {
+function PersonaVideo({ className, name }) {
   const dispatch = useDispatch();
   const setVideoDimensions = (videoWidth, videoHeight) =>
     dispatch(actions.setVideoDimensions({ videoWidth, videoHeight }));
@@ -41,15 +41,19 @@ function PersonaVideo({ className }) {
   useEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
+    
+    // when component dismounts, remove resize listener
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     if (connected) {
       if (!videoDisplayed) {
         videoRef.current.srcObject = proxyVideo.srcObject;
         setVideoDisplayed(true);
       }
     }
-    // when component dismounts, remove resize listener
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [name]);
 
   return (
     <div ref={containerRef} className={className} style={{ height }}>

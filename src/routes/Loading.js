@@ -15,8 +15,6 @@ function Loading({ className, ignoreError}) {
   const { connected, loading, error, connectionState } =
     useSelector(({ sm }) => sm);
   const dispatch = useDispatch();
-
-  const { name} = connectionState;
   
 
   // create persona scene on button press on on mount, depending on device size
