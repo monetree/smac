@@ -71,8 +71,8 @@ const DPChat = ({ className }) => {
   }, []);
 
   window.onbeforeunload = () => {
-    console.log("cleaning up");
-    cleanup();
+    // console.log("cleaning up");
+    // cleanup();
   };
 
   // content card display is dependent on remaining space between header and footer
