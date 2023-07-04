@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -9,3 +10,30 @@ root.render(
     <App />
   </React.StrictMode>
 );
+=======
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import ReactTooltip from "react-tooltip";
+import Router from "./Router";
+import store from "./store";
+import reportWebVitals from "./reportWebVitals";
+import GlobalStyle from "./globalStyle";
+
+ReactDOM.render(
+  <React.Fragment>
+    <Provider store={store}>
+      <Router />
+    </Provider>
+    <GlobalStyle />
+    {/* globally enable react tooltips */}
+    <ReactTooltip />
+    {/* will be null if GA tracking is not enabled */}
+  </React.Fragment>,
+  document.getElementById("root")
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+>>>>>>> 94bac4ec9818bc3afefaf267d1c437e016ca2f66
