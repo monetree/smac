@@ -45,6 +45,11 @@ const Login = ({ setIsLoggedin }) => {
     "msrmeda1961@gmail.com", 
     "clarusitsol@gmail.com", 
     "ramapin@gmail.com", 
+    "stjps2023@gmail.com",
+    
+    "msrmeda1961@gmail.com", 
+    "clarusitsol@gmail.com", 
+    "ramapin@gmail.com",
     "stjps2023@gmail.com"
   ];
 
