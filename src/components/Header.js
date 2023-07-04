@@ -284,7 +284,7 @@ export default styled(Header)`
     width: 150px;
     font-weight: 600;
     font-size: 1.5rem;
-    line-height: 2rem;
+    // line-height: 2rem;
 
     // Medium devices (tablets, 768px and up)
     @media (min-width: 768px) {
