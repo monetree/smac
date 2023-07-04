@@ -1,16 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-=======
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import ReactTooltip from "react-tooltip";
@@ -36,4 +24,3 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
->>>>>>> 94bac4ec9818bc3afefaf267d1c437e016ca2f66
