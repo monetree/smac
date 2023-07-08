@@ -38,4 +38,10 @@ export const avatars = [
     language: "Hindi",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWhpbmRpIiwiYXV0aFNlcnZlciI6Imh0dHBzOi8vZGguYXouc291bG1hY2hpbmVzLmNsb3VkL2FwaS9qd3QiLCJhdXRoVG9rZW4iOiJhcGlrZXlfdjFfZDYxOTJlNmItMDE3Ny00ZGNiLThjYTYtYjVmNjRhYzQ3MGZjIn0=",
   },
+  {
+    img: AvatarThree,
+    name: "avatar-3",
+    language: "English",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVuZ2xpc2hpbmRpYW4iLCJhdXRoU2VydmVyIjoiaHR0cHM6Ly9kaC5hei5zb3VsbWFjaGluZXMuY2xvdWQvYXBpL2p3dCIsImF1dGhUb2tlbiI6ImFwaWtleV92MV83Y2Y3ODNkNC0xOTE3LTRiMzItYWU5OC1jNzMwNjhkZjYzNWMifQ==",
+  },
 ];
