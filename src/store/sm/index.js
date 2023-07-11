@@ -180,530 +180,535 @@ export const disconnect = createAsyncThunk(
 export const createScene = createAsyncThunk(
   "sm/createScene",
   async (_, thunk) => {
-    /* CREATE SCENE */
-    if(scene && scene.connectionState && 
-      scene.connectionState._connectionState &&
-      scene.connectionState._connectionState.name !== "Disconnected"
-    )
+    try{
+      /* CREATE SCENE */
+      if(scene && scene.connectionState && 
+        scene.connectionState._connectionState &&
+        scene.connectionState._connectionState.name !== "Disconnected"
+      )
       {
-      return console.error(
-        "warning! you attempted to create a new scene, when one already exists!", scene
-      );
-    }
-    // request permissions from user and create instance of Scene and ask for webcam/mic permissions
-    const { requestedMediaPerms } = thunk.getState().sm;
-    const { mic, camera } = requestedMediaPerms;
-
-    // pull out logging config from environment variables
-    // we might want to set different values for dev and prod
-    const {
-      REACT_APP_SMWEBSDK_SESSION_LOGGING_ENABLED: sessionLoggingEnabled,
-      REACT_APP_SMWEBSDK_SESSION_LOGGING_LEVEL: sessionLoggingLevel,
-      REACT_APP_SMWEBSDK_CONTENT_AWARENESS_LOGGING_ENABLED: cueLoggingEnabled,
-      REACT_APP_SMWEBSDK_CONTENT_AWARENESS_LOGGING_LEVEL: cueLoggingLevel,
-    } = process.env;
-
-    try {
-      const sceneOpts = {
-        videoElement: proxyVideo,
-        // audio only toggle, but this is set automatically if user denies camera permissions.
-        // change value if your application needs to have an explicit audio-only mode.
-        audioOnly: false,
-        // requested permissions
-        requestedMediaDevices: {
-          microphone: mic,
-          camera : false,
-        },
-        // required permissions. we can run in a typing only mode, so none is fine
-        requiredMediaDevices: {
-          microphone: false,
-          camera: false,
-        },
-        loggingConfig: {
-          session: {
-            enabled: sessionLoggingEnabled || true,
-            minLogLevel: sessionLoggingLevel || "debug",
-          },
-          contentAwareness: {
-            enabled: cueLoggingEnabled || true,
-            minLogLevel: cueLoggingLevel || "debug",
-          },
-        },
-        sendMetadata: {
-          // send url updates for react app as PAGE_METADATA intents to NLP
-          pageUrl: false,
-        },
-        stopSpeakingWhenNotVisible: false,
-      };
-      if (AUTH_MODE === 0) sceneOpts.apiKey = API_KEY;
-      scene = new Scene(sceneOpts);
-      
-    } catch (e) {
-      return thunk.rejectWithValue(e);
-    }
-
-    // check to see if user has denied permissions
-    // if so, proceed typing only but set mic/cameraDenied to true
-    let cameraDenied = false;
-    let micDenied = false;
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: false, video: false });
-    } catch {
-      cameraDenied = true;
-    }
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    } catch {
-      micDenied = true;
-    }
-
-    thunk.dispatch(
-      actions.setRequestedMediaPerms({
-        camera,
-        mic,
-        cameraDenied,
-        micDenied,
-      })
-    );
-
-    // reflect mic and camera status in redux store
-    thunk.dispatch(
-      actions.setMediaDevices({
-        micOn: micDenied ? false : mic,
-        cameraOn: cameraDenied ? false : camera,
-      })
-    );
-
-    /* BIND HANDLERS */
-    // connection state /progress handler
-    scene.connectionState.onConnectionStateUpdated.addListener(
-      (connectionStateData) => {
-        thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
-        
-        // if(connectionStateData && connectionStateData.name === "Disconnected"){
-         
-        //   thunk.dispatch(createScene());
-        // } else {
-        //   thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
-        // }
+        return console.error(
+          "warning! you attempted to create a new scene, when one already exists!", scene
+        );
       }
-    );
-    // disconnect handler
-    scene.onDisconnected = () => thunk.dispatch(disconnect());
-    
-    // store a ref to the smwebsdk onmessage so that we can
-    // use the callback while also calling the internal version
-    const smwebsdkOnMessage = scene.onMessage.bind(scene);
+      // request permissions from user and create instance of Scene and ask for webcam/mic permissions
+      const { requestedMediaPerms } = thunk.getState().sm;
+      const { mic, camera } = requestedMediaPerms;
 
-    const { sm } = thunk.getState();
-    const { autoClearCards } = sm.config;
-    scene.conversation.autoClearCards = autoClearCards;
-    // handle content cards that come in via content card API
-    scene.conversation.onCardChanged.addListener((activeCards) => {
-      thunk.dispatch(actions.setActiveCards({ activeCards }));
+      // pull out logging config from environment variables
+      // we might want to set different values for dev and prod
+      const {
+        REACT_APP_SMWEBSDK_SESSION_LOGGING_ENABLED: sessionLoggingEnabled,
+        REACT_APP_SMWEBSDK_SESSION_LOGGING_LEVEL: sessionLoggingLevel,
+        REACT_APP_SMWEBSDK_CONTENT_AWARENESS_LOGGING_ENABLED: cueLoggingEnabled,
+        REACT_APP_SMWEBSDK_CONTENT_AWARENESS_LOGGING_LEVEL: cueLoggingLevel,
+      } = process.env;
+
+      try {
+        const sceneOpts = {
+          videoElement: proxyVideo,
+          // audio only toggle, but this is set automatically if user denies camera permissions.
+          // change value if your application needs to have an explicit audio-only mode.
+          audioOnly: false,
+          // requested permissions
+          requestedMediaDevices: {
+            microphone: mic,
+            camera : false,
+          },
+          // required permissions. we can run in a typing only mode, so none is fine
+          requiredMediaDevices: {
+            microphone: false,
+            camera: false,
+          },
+          loggingConfig: {
+            session: {
+              enabled: sessionLoggingEnabled || true,
+              minLogLevel: sessionLoggingLevel || "debug",
+            },
+            contentAwareness: {
+              enabled: cueLoggingEnabled || true,
+              minLogLevel: cueLoggingLevel || "debug",
+            },
+          },
+          sendMetadata: {
+            // send url updates for react app as PAGE_METADATA intents to NLP
+            pageUrl: false,
+          },
+          stopSpeakingWhenNotVisible: false,
+        };
+        if (AUTH_MODE === 0) sceneOpts.apiKey = API_KEY;
+        scene = new Scene(sceneOpts);
+        
+      } catch (e) {
+        return thunk.rejectWithValue(e);
+      }
+
+      // check to see if user has denied permissions
+      // if so, proceed typing only but set mic/cameraDenied to true
+      let cameraDenied = false;
+      let micDenied = false;
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: false, video: false });
+      } catch {
+        cameraDenied = true;
+      }
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      } catch {
+        micDenied = true;
+      }
+
       thunk.dispatch(
-        actions.addConversationResult({
-          source: "persona",
-          card: activeCards[activeCards.length - 1],
+        actions.setRequestedMediaPerms({
+          camera,
+          mic,
+          cameraDenied,
+          micDenied,
         })
       );
-    });
 
-    scene.onMessage = (message) => {
-      // removing this will break smwebsdk eventing, call smwebsdk's message handler
-      smwebsdkOnMessage(message);
-      switch (message.name) {
-        // handles output from TTS (what user said)
-        case "recognizeResults": {
-          const output = message.body.results[0];
-          // sometimes we get an empty message, catch and log
-          if (!output) {
-            console.warn("undefined output!", message.body);
-            return false;
-          }
-          const { transcript: text } = output.alternatives[0];
-          console.log("**text**", text);
-          // we get multiple recognizeResults messages, so only add the final one to transcript
-          // but keep track of intermediate one to show the user what they're saying
-          if (text && (
-            text.toLowerCase().includes("stop emma") ||
-            text.toLowerCase().includes("emma stop") ||
-            text.toLowerCase().includes("stop")
-          )){
-            console.log("**stopSpeaking CAlled**");
-            if (!persona) console.error("persona not initiated!");
-            else persona.stopSpeaking();
-          }
+      // reflect mic and camera status in redux store
+      thunk.dispatch(
+        actions.setMediaDevices({
+          micOn: micDenied ? false : mic,
+          cameraOn: cameraDenied ? false : camera,
+        })
+      );
 
-          if (output.final === false) {
+      /* BIND HANDLERS */
+      // connection state /progress handler
+      scene.connectionState.onConnectionStateUpdated.addListener(
+        (connectionStateData) => {
+          thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
+          
+          // if(connectionStateData && connectionStateData.name === "Disconnected"){
+          
+          //   thunk.dispatch(createScene());
+          // } else {
+          //   thunk.dispatch(actions.setConnectionState({ ...connectionStateData }));
+          // }
+        }
+      );
+      // disconnect handler
+      scene.onDisconnected = () => thunk.dispatch(disconnect());
+      
+      // store a ref to the smwebsdk onmessage so that we can
+      // use the callback while also calling the internal version
+      const smwebsdkOnMessage = scene.onMessage.bind(scene);
+
+      const { sm } = thunk.getState();
+      const { autoClearCards } = sm.config;
+      scene.conversation.autoClearCards = autoClearCards;
+      // handle content cards that come in via content card API
+      scene.conversation.onCardChanged.addListener((activeCards) => {
+        thunk.dispatch(actions.setActiveCards({ activeCards }));
+        thunk.dispatch(
+          actions.addConversationResult({
+            source: "persona",
+            card: activeCards[activeCards.length - 1],
+          })
+        );
+      });
+
+      scene.onMessage = (message) => {
+        // removing this will break smwebsdk eventing, call smwebsdk's message handler
+        smwebsdkOnMessage(message);
+        switch (message.name) {
+          // handles output from TTS (what user said)
+          case "recognizeResults": {
+            const output = message.body.results[0];
+            // sometimes we get an empty message, catch and log
+            if (!output) {
+              console.warn("undefined output!", message.body);
+              return false;
+            }
+            const { transcript: text } = output.alternatives[0];
+            console.log("**text**", text);
+            // we get multiple recognizeResults messages, so only add the final one to transcript
+            // but keep track of intermediate one to show the user what they're saying
+            if (text && (
+              text.toLowerCase().includes("stop emma") ||
+              text.toLowerCase().includes("emma stop") ||
+              text.toLowerCase().includes("stop")
+            )){
+              console.log("**stopSpeaking CAlled**");
+              if (!persona) console.error("persona not initiated!");
+              else persona.stopSpeaking();
+            }
+
+            if (output.final === false) {
+              return thunk.dispatch(
+                actions.setIntermediateUserUtterance({
+                  text,
+                })
+              );
+            }
             return thunk.dispatch(
-              actions.setIntermediateUserUtterance({
+              actions.addConversationResult({
+                source: "user",
                 text,
               })
             );
           }
-          return thunk.dispatch(
-            actions.addConversationResult({
-              source: "user",
-              text,
-            })
-          );
-        }
 
-        // handles output from NLP (what DP is saying)
-        case "personaResponse": {
-          const { currentSpeech } = message.body;
-          
-          thunk.dispatch(
-            actions.addConversationResult({
-              source: "persona",
-              text: currentSpeech,
-            })
-          );
-          break;
-        }
+          // handles output from NLP (what DP is saying)
+          case "personaResponse": {
+            const { currentSpeech } = message.body;
+            
+            thunk.dispatch(
+              actions.addConversationResult({
+                source: "persona",
+                text: currentSpeech,
+              })
+            );
+            break;
+          }
 
-        // handle speech markers
-        case "speechMarker": {
-          const { name: speechMarkerName } = message.body;
-          switch (speechMarkerName) {
-            // @showCards() and @hideCards() no longer triggers a speech marker
-            // not needed w/ content card API
-            case "cinematic": {
-              // fired when CUE changes camera angles
-              break;
-            }
-            case "feature": {
-              const { arguments: featureArgs } = message.body;
-              const feature = featureArgs[0];
-              const featureState = featureArgs[1];
-              console.log(feature, featureState);
-              switch (feature) {
-                case "camera": {
-                  console.log("camera");
-                  if (featureState === "on")
-                    thunk.dispatch(actions.setCameraOn({ cameraOn: true }));
-                  else if (featureState === "off")
-                    thunk.dispatch(actions.setCameraOn({ cameraOn: false }));
-                  else
-                    console.error(
-                      `state ${featureState} not supported by @feature(microphone)!`
-                    );
-                  break;
-                }
-                case "microphone": {
-                  console.log("mic");
-                  if (featureState === "on")
-                    thunk.dispatch(actions.setMicOn({ micOn: true }));
-                  else if (featureState === "off")
-                    thunk.dispatch(actions.setMicOn({ micOn: false }));
-                  else
-                    console.error(
-                      `state ${featureState} not supported by @feature(microphone)!`
-                    );
-                  break;
-                }
-                case "transcript": {
-                  console.log("transcript");
-                  if (featureState === "on")
-                    thunk.dispatch(actions.setShowTranscript(true));
-                  else if (featureState === "off")
-                    thunk.dispatch(actions.setShowTranscript(false));
-                  else
-                    console.error(
-                      `state ${featureState} not supported by @feature(transcript)!`
-                    );
-                  break;
-                }
-                case "audio": {
-                  console.log("audio");
-                  if (featureState === "on")
-                    thunk.dispatch(
-                      actions.setOutputMute({ isOutputMuted: false })
-                    );
-                  else if (featureState === "off")
-                    thunk.dispatch(
-                      actions.setOutputMute({ isOutputMuted: true })
-                    );
-                  else
-                    console.error(
-                      `state ${featureState} not supported by @feature(audio)!`
-                    );
-                  break;
-                }
-                default: {
-                  console.error(`@feature(${feature}) not recognized!`);
-                }
+          // handle speech markers
+          case "speechMarker": {
+            const { name: speechMarkerName } = message.body;
+            switch (speechMarkerName) {
+              // @showCards() and @hideCards() no longer triggers a speech marker
+              // not needed w/ content card API
+              case "cinematic": {
+                // fired when CUE changes camera angles
+                break;
               }
-              break;
-            }
-            case "close": {
-              thunk.dispatch(disconnect());
-              break;
-            }
-            case "marker": {
-              // custom speech marker handler
-              const { arguments: markerArgs } = message.body;
-              markerArgs.forEach((a) => {
-                switch (a) {
-                  // "easter egg" speech marker, prints ASCII "summoned meatball" to console
-                  case "triggerMeatball": {
-                    console.log(meatballString);
+              case "feature": {
+                const { arguments: featureArgs } = message.body;
+                const feature = featureArgs[0];
+                const featureState = featureArgs[1];
+                console.log(feature, featureState);
+                switch (feature) {
+                  case "camera": {
+                    console.log("camera");
+                    if (featureState === "on")
+                      thunk.dispatch(actions.setCameraOn({ cameraOn: true }));
+                    else if (featureState === "off")
+                      thunk.dispatch(actions.setCameraOn({ cameraOn: false }));
+                    else
+                      console.error(
+                        `state ${featureState} not supported by @feature(microphone)!`
+                      );
                     break;
                   }
-                  case "highlightMic": {
-                    thunk.dispatch(
-                      actions.setHighlightMic({ highlightMic: true })
-                    );
-                    setTimeout(() => {
-                      thunk.dispatch(
-                        actions.setHighlightMic({ highlightMic: false })
+                  case "microphone": {
+                    console.log("mic");
+                    if (featureState === "on")
+                      thunk.dispatch(actions.setMicOn({ micOn: true }));
+                    else if (featureState === "off")
+                      thunk.dispatch(actions.setMicOn({ micOn: false }));
+                    else
+                      console.error(
+                        `state ${featureState} not supported by @feature(microphone)!`
                       );
-                    }, 3000);
                     break;
                   }
-                  case "highlightMute": {
-                    thunk.dispatch(
-                      actions.setHighlightMute({ highlightMute: true })
-                    );
-                    setTimeout(() => {
-                      thunk.dispatch(
-                        actions.setHighlightMute({ highlightMute: false })
+                  case "transcript": {
+                    console.log("transcript");
+                    if (featureState === "on")
+                      thunk.dispatch(actions.setShowTranscript(true));
+                    else if (featureState === "off")
+                      thunk.dispatch(actions.setShowTranscript(false));
+                    else
+                      console.error(
+                        `state ${featureState} not supported by @feature(transcript)!`
                       );
-                    }, 3000);
                     break;
                   }
-                  case "highlightChat": {
-                    thunk.dispatch(
-                      actions.setHighlightChat({ highlightChat: true })
-                    );
-                    setTimeout(() => {
+                  case "audio": {
+                    console.log("audio");
+                    if (featureState === "on")
                       thunk.dispatch(
-                        actions.setHighlightChat({ highlightChat: false })
+                        actions.setOutputMute({ isOutputMuted: false })
                       );
-                    }, 3000);
-                    break;
-                  }
-                  case "highlightCamera": {
-                    thunk.dispatch(
-                      actions.setHighlightCamera({ highlightCamera: true })
-                    );
-                    setTimeout(() => {
+                    else if (featureState === "off")
                       thunk.dispatch(
-                        actions.setHighlightCamera({ highlightCamera: false })
+                        actions.setOutputMute({ isOutputMuted: true })
                       );
-                    }, 3000);
-                    break;
-                  }
-                  case "highlightSkip": {
-                    thunk.dispatch(
-                      actions.setHighlightSkip({ highlightSkip: true })
-                    );
-                    setTimeout(() => {
-                      thunk.dispatch(
-                        actions.setHighlightSkip({ highlightSkip: false })
+                    else
+                      console.error(
+                        `state ${featureState} not supported by @feature(audio)!`
                       );
-                    }, 3000);
-                    break;
-                  }
-                  case "highlightMenu": {
-                    thunk.dispatch(
-                      actions.setHighlightMenu({ highlightMenu: true })
-                    );
-                    setTimeout(() => {
-                      thunk.dispatch(
-                        actions.setHighlightMenu({ highlightMenu: false })
-                      );
-                    }, 3000);
                     break;
                   }
                   default: {
-                    console.warn(`no handler for @marker(${a})!`);
+                    console.error(`@feature(${feature}) not recognized!`);
                   }
                 }
+                break;
+              }
+              case "close": {
+                thunk.dispatch(disconnect());
+                break;
+              }
+              case "marker": {
+                // custom speech marker handler
+                const { arguments: markerArgs } = message.body;
+                markerArgs.forEach((a) => {
+                  switch (a) {
+                    // "easter egg" speech marker, prints ASCII "summoned meatball" to console
+                    case "triggerMeatball": {
+                      console.log(meatballString);
+                      break;
+                    }
+                    case "highlightMic": {
+                      thunk.dispatch(
+                        actions.setHighlightMic({ highlightMic: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightMic({ highlightMic: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    case "highlightMute": {
+                      thunk.dispatch(
+                        actions.setHighlightMute({ highlightMute: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightMute({ highlightMute: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    case "highlightChat": {
+                      thunk.dispatch(
+                        actions.setHighlightChat({ highlightChat: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightChat({ highlightChat: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    case "highlightCamera": {
+                      thunk.dispatch(
+                        actions.setHighlightCamera({ highlightCamera: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightCamera({ highlightCamera: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    case "highlightSkip": {
+                      thunk.dispatch(
+                        actions.setHighlightSkip({ highlightSkip: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightSkip({ highlightSkip: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    case "highlightMenu": {
+                      thunk.dispatch(
+                        actions.setHighlightMenu({ highlightMenu: true })
+                      );
+                      setTimeout(() => {
+                        thunk.dispatch(
+                          actions.setHighlightMenu({ highlightMenu: false })
+                        );
+                      }, 3000);
+                      break;
+                    }
+                    default: {
+                      console.warn(`no handler for @marker(${a})!`);
+                    }
+                  }
+                });
+                break;
+              }
+              default: {
+                console.warn(`unrecognized speech marker: ${speechMarkerName}`);
+              }
+            }
+            break;
+          }
+
+          case "updateContentAwareness": {
+            // fired when content awareness changes
+            // eg an element w/ data-sm-content enters/exits DOM
+            break;
+          }
+          case "conversationSend": {
+            // fired when the user manually types in some input
+            // we handle this elsewhere so we don't need to handle this event
+            break;
+          }
+
+          // state messages contain a lot of things, including user emotions,
+          // call stats, and persona state
+          case "state": {
+            const { body } = message;
+            if ("persona" in body) {
+              const personaState = body.persona[1];
+
+              // handle changes to persona speech state ie idle, animating, speaking
+              if ("speechState" in personaState) {
+                const { speechState } = personaState;
+                const action = actions.setSpeechState({ speechState });
+                thunk.dispatch(action);
+              }
+
+              if ("users" in personaState) {
+                // handle various numeric values such as user emotion or
+                // probability that the user is talking
+                const userState = personaState.users[0];
+
+                if ("emotion" in userState) {
+                  const { emotion } = userState;
+                  const roundedEmotion = roundObject(emotion);
+                  const action = actions.setEmotionState({
+                    emotion: roundedEmotion,
+                  });
+                  thunk.dispatch(action);
+                }
+
+                if ("activity" in userState) {
+                  const { activity } = userState;
+                  const roundedActivity = roundObject(activity, 1000);
+                  const action = actions.setEmotionState({
+                    activity: roundedActivity,
+                  });
+                  thunk.dispatch(action);
+                }
+
+                if ("conversation" in userState) {
+                  const { conversation } = userState;
+                  const { context } = conversation;
+                  const roundedContext = roundObject(context);
+                  const action = actions.setConversationState({
+                    conversation: {
+                      ...conversation,
+                      context: roundedContext,
+                    },
+                  });
+                  thunk.dispatch(action);
+                }
+              }
+            } else if ("statistics" in body) {
+              const { callQuality } = body.statistics;
+              thunk.dispatch(actions.setCallQuality({ callQuality }));
+            }
+            break;
+          }
+
+          // activation events are some kind of emotional metadata
+          case "activation": {
+            // console.warn('activation handler not yet implemented', message);
+            break;
+          }
+
+          // animateToNamedCamera events are triggered whenever we change the camera angle.
+          // left unimplemented for now since there is only one named camera (closeUp)
+          case "animateToNamedCamera": {
+            // console.warn('animateToNamedCamera handler not yet implemented', message);
+            break;
+          }
+
+          case "stopRecognize": {
+            console.log("**stopRecognize**");
+            break;
+          }
+
+          case "startRecognize": {
+            console.log("**startRecognize8**");
+            break;
+          }
+
+          default: {
+            console.warn(`unknown message type: ${message.name}`, message);
+          }
+        }
+        return true;
+      };
+
+      // create instance of Persona class w/ scene instance
+      persona = new Persona(scene, PERSONA_ID);
+
+      /* CONNECT TO PERSONA */
+      try {
+        // get signed JWT from token server so we can connect to Persona server
+        let jwt = null;
+        let url = null;
+        if (AUTH_MODE === 1) {
+          const [tokenErr, tokenRes] = await to(
+            fetch(TOKEN_ISSUER, { method: "POST" })
+          );
+          if (tokenErr)
+            return thunk.rejectWithValue({
+              msg: "error fetching token! is this endpoint CORS authorized?",
+            });
+          const res = await tokenRes.json();
+          jwt = res.jwt;
+          url = res.url;
+        }
+
+        // connect to Persona server
+        const retryOptions = {
+          maxRetries: 20,
+          delayMs: 500,
+        };
+        const [err, sessionID] = await to(
+          scene.connect(url, "", jwt, retryOptions)
+        );
+        if (err) {
+          switch (err.name) {
+            case "notSupported":
+            case "noUserMedia": {
+              return thunk.rejectWithValue({
+                msg: "permissionsDenied",
+                err: { ...err },
               });
-              break;
             }
             default: {
-              console.warn(`unrecognized speech marker: ${speechMarkerName}`);
+              return thunk.rejectWithValue({ msg: "generic", err: { ...err } });
             }
           }
-          break;
         }
+        // pass session ID to state so we can coordinate analytics w/ session data
+        thunk.dispatch(actions.setSessionID({ sessionID }));
+        // we can't disable logging until after the connection is established
+        // logging is pretty crowded, not recommended to enable
+        // unless you need to debug emotional data from webcam
+        scene.session()?.setLogging(false);
 
-        case "updateContentAwareness": {
-          // fired when content awareness changes
-          // eg an element w/ data-sm-content enters/exits DOM
-          break;
-        }
-        case "conversationSend": {
-          // fired when the user manually types in some input
-          // we handle this elsewhere so we don't need to handle this event
-          break;
-        }
+        // set video dimensions
+        const { videoWidth, videoHeight } = thunk.getState().sm;
+        // calc resolution w/ device pixel ratio
+        const deviceWidth = Math.round(videoWidth * window.devicePixelRatio);
+        const deviceHeight = Math.round(videoHeight * window.devicePixelRatio);
+        scene.sendVideoBounds(deviceWidth, deviceHeight);
 
-        // state messages contain a lot of things, including user emotions,
-        // call stats, and persona state
-        case "state": {
-          const { body } = message;
-          if ("persona" in body) {
-            const personaState = body.persona[1];
+        // create proxy of webcam video feed if user has granted us permission
 
-            // handle changes to persona speech state ie idle, animating, speaking
-            if ("speechState" in personaState) {
-              const { speechState } = personaState;
-              const action = actions.setSpeechState({ speechState });
-              thunk.dispatch(action);
-            }
+        // since we can't store the userMediaStream in the store since it's not serializable,
+        // we use an external proxy for video streams
+        const { userMediaStream: stream } = scene.session();
 
-            if ("users" in personaState) {
-              // handle various numeric values such as user emotion or
-              // probability that the user is talking
-              const userState = personaState.users[0];
+        if (cameraDenied === false)
+          thunk.dispatch(actions.setCameraState({ cameraOn: false }));
+        // pass dispatch before calling setUserMediaStream so proxy can send dimensions to store
+        mediaStreamProxy.passDispatch(thunk.dispatch);
+        mediaStreamProxy.setUserMediaStream(stream, cameraDenied);
+        mediaStreamProxy.enableToggle(scene);
 
-              if ("emotion" in userState) {
-                const { emotion } = userState;
-                const roundedEmotion = roundObject(emotion);
-                const action = actions.setEmotionState({
-                  emotion: roundedEmotion,
-                });
-                thunk.dispatch(action);
-              }
-
-              if ("activity" in userState) {
-                const { activity } = userState;
-                const roundedActivity = roundObject(activity, 1000);
-                const action = actions.setEmotionState({
-                  activity: roundedActivity,
-                });
-                thunk.dispatch(action);
-              }
-
-              if ("conversation" in userState) {
-                const { conversation } = userState;
-                const { context } = conversation;
-                const roundedContext = roundObject(context);
-                const action = actions.setConversationState({
-                  conversation: {
-                    ...conversation,
-                    context: roundedContext,
-                  },
-                });
-                thunk.dispatch(action);
-              }
-            }
-          } else if ("statistics" in body) {
-            const { callQuality } = body.statistics;
-            thunk.dispatch(actions.setCallQuality({ callQuality }));
-          }
-          break;
-        }
-
-        // activation events are some kind of emotional metadata
-        case "activation": {
-          // console.warn('activation handler not yet implemented', message);
-          break;
-        }
-
-        // animateToNamedCamera events are triggered whenever we change the camera angle.
-        // left unimplemented for now since there is only one named camera (closeUp)
-        case "animateToNamedCamera": {
-          // console.warn('animateToNamedCamera handler not yet implemented', message);
-          break;
-        }
-
-        case "stopRecognize": {
-          console.log("**stopRecognize**");
-          break;
-        }
-
-        case "startRecognize": {
-          console.log("**startRecognize8**");
-          break;
-        }
-
-        default: {
-          console.warn(`unknown message type: ${message.name}`, message);
-        }
-      }
-      return true;
-    };
-
-    // create instance of Persona class w/ scene instance
-    persona = new Persona(scene, PERSONA_ID);
-
-    /* CONNECT TO PERSONA */
-    try {
-      // get signed JWT from token server so we can connect to Persona server
-      let jwt = null;
-      let url = null;
-      if (AUTH_MODE === 1) {
-        const [tokenErr, tokenRes] = await to(
-          fetch(TOKEN_ISSUER, { method: "POST" })
-        );
-        if (tokenErr)
-          return thunk.rejectWithValue({
-            msg: "error fetching token! is this endpoint CORS authorized?",
-          });
-        const res = await tokenRes.json();
-        jwt = res.jwt;
-        url = res.url;
+        // fulfill promise, reducer sets state to indicate loading and connection are complete
+        return thunk.fulfillWithValue();
+      } catch (err) {
+        console.log("***GLOBAL ERR***", err);
+        return thunk.rejectWithValue(err);
       }
 
-      // connect to Persona server
-      const retryOptions = {
-        maxRetries: 20,
-        delayMs: 500,
-      };
-      const [err, sessionID] = await to(
-        scene.connect(url, "", jwt, retryOptions)
-      );
-      if (err) {
-        switch (err.name) {
-          case "notSupported":
-          case "noUserMedia": {
-            return thunk.rejectWithValue({
-              msg: "permissionsDenied",
-              err: { ...err },
-            });
-          }
-          default: {
-            return thunk.rejectWithValue({ msg: "generic", err: { ...err } });
-          }
-        }
-      }
-      // pass session ID to state so we can coordinate analytics w/ session data
-      thunk.dispatch(actions.setSessionID({ sessionID }));
-      // we can't disable logging until after the connection is established
-      // logging is pretty crowded, not recommended to enable
-      // unless you need to debug emotional data from webcam
-      scene.session()?.setLogging(false);
-
-      // set video dimensions
-      const { videoWidth, videoHeight } = thunk.getState().sm;
-      // calc resolution w/ device pixel ratio
-      const deviceWidth = Math.round(videoWidth * window.devicePixelRatio);
-      const deviceHeight = Math.round(videoHeight * window.devicePixelRatio);
-      scene.sendVideoBounds(deviceWidth, deviceHeight);
-
-      // create proxy of webcam video feed if user has granted us permission
-
-      // since we can't store the userMediaStream in the store since it's not serializable,
-      // we use an external proxy for video streams
-      const { userMediaStream: stream } = scene.session();
-
-      if (cameraDenied === false)
-        thunk.dispatch(actions.setCameraState({ cameraOn: false }));
-      // pass dispatch before calling setUserMediaStream so proxy can send dimensions to store
-      mediaStreamProxy.passDispatch(thunk.dispatch);
-      mediaStreamProxy.setUserMediaStream(stream, cameraDenied);
-      mediaStreamProxy.enableToggle(scene);
-
-      // fulfill promise, reducer sets state to indicate loading and connection are complete
-      return thunk.fulfillWithValue();
     } catch (err) {
       console.log("***GLOBAL ERR***", err);
-      return thunk.rejectWithValue(err);
     }
   }
 );
@@ -813,7 +818,7 @@ const smSlice = createSlice({
       else persona.stopSpeaking();
     },
     setMicOn: (state, { payload }) => {
-      if (!scene) return console.error("scene not initiated!");
+      if (!scene) return console.warn("scene not initiated!");
       const { micOn } = payload;
       scene.setMediaDeviceActive({
         microphone: micOn,
@@ -821,7 +826,7 @@ const smSlice = createSlice({
       return { ...state, micOn };
     },
     setCameraOn: (state, { payload }) => {
-      if (!scene) return console.error("scene not initiated!");
+      if (!scene) return console.warn("scene not initiated!");
       const { cameraOn } = payload;
       scene.setMediaDeviceActive({
         camera: cameraOn,
@@ -829,7 +834,7 @@ const smSlice = createSlice({
       return { ...state, cameraOn };
     },
     setMediaDevices: (state, { payload }) => {
-      if (!scene) return console.error("scene not initiated!");
+      if (!scene || (scene && scene.connectionState && scene.connectionState._connectionState.name === "Disconnected")) return console.warn("scene not initiated!");
       const { cameraOn, micOn } = payload;
       scene.setMediaDeviceActive({
         camera: cameraOn,
