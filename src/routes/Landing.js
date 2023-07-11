@@ -94,7 +94,9 @@ function Landing({ className }) {
   });
 
   useEffect(() => {
-    if (user) {
+    let isLoggedInUser = getUserInfo();
+    
+    if (user && !isLoggedInUser) {
       axios
         .get(
           `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
