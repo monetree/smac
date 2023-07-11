@@ -42,15 +42,16 @@ const Login = ({ setIsLoggedin }) => {
     "krishna.samanth@gmail.com",
     "prajaykamat@gmail.com",
 
-    "msrmeda1961@gmail.com", 
-    "clarusitsol@gmail.com", 
-    "ramapin@gmail.com", 
-    "stjps2023@gmail.com",
-    
-    "msrmeda1961@gmail.com", 
-    "clarusitsol@gmail.com", 
+    "msrmeda1961@gmail.com",
+    "clarusitsol@gmail.com",
     "ramapin@gmail.com",
-    "stjps2023@gmail.com"
+    "stjps2023@gmail.com",
+
+    "msrmeda1961@gmail.com",
+    "clarusitsol@gmail.com",
+    "ramapin@gmail.com",
+    "stjps2023@gmail.com",
+    "krishna.medasani@gmail.com",
   ];
 
   const login = useGoogleLogin({
