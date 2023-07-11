@@ -44,4 +44,10 @@ export const avatars = [
     language: "English Indian",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVuZ2xpc2hpbmRpYW4iLCJhdXRoU2VydmVyIjoiaHR0cHM6Ly9kaC5hei5zb3VsbWFjaGluZXMuY2xvdWQvYXBpL2p3dCIsImF1dGhUb2tlbiI6ImFwaWtleV92MV83Y2Y3ODNkNC0xOTE3LTRiMzItYWU5OC1jNzMwNjhkZjYzNWMifQ==",
   },
+  {
+    img: AvatarThree,
+    name: "avatar-4",
+    language: "Arabic",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWFyYWJpYyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzEzMzNjMWU5LWZkYWItNDA0ZC1iODM5LWM5MDlkNTgwYTgzMyJ9",
+  },
 ];
