@@ -51,6 +51,21 @@ function Landing({ className }) {
     "chaitoos82@gmail.com",
     "pradeepsutodiya1@gmail.com",
     "jainashoakkumar@gmail.com",
+    "Krishna.samanth@gmail.com",
+    "krishna.samanth@gmail.com",
+    "prajaykamat@gmail.com",
+
+    "msrmeda1961@gmail.com", 
+    "clarusitsol@gmail.com", 
+    "ramapin@gmail.com", 
+    "stjps2023@gmail.com",
+    
+    "msrmeda1961@gmail.com", 
+    "clarusitsol@gmail.com", 
+    "ramapin@gmail.com",
+    "stjps2023@gmail.com",
+
+    "msindhoor@gmail.com"
   ];
 
   const getUserInfo = () => {
