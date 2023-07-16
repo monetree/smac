@@ -16,6 +16,7 @@ import Loading from "./routes/Loading";
 import Feedback from "./routes/FeedbackRoute";
 import ContentCardTest from "./routes/ContentCardTest";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Admin from "./routes/Admin";
 
 // only init google analytics if a tracking ID is defined in env
 const { REACT_APP_GA_TRACKING_ID } = process.env;
@@ -37,6 +38,7 @@ const LinkGAtoRouter = withRouter(({ history }) => {
 function App() {
   const { error } = useSelector(({ sm }) => ({ ...sm }));
   const [ignoreError, setIgnoreError] = useState(false);
+  const [sessionId, setSessionId] = useState(false);
   // every time error changes, set ignore error to false
   useEffect(() => setIgnoreError(false), [error]);
 
@@ -44,10 +46,36 @@ function App() {
   if (REACT_APP_GA_TRACKING_ID) {
     const sessionID = useSelector(({ sm }) => sm.sessionID);
     useEffect(() => {
-      if (sessionID !== "")
-        ReactGA.gtag("event", "sm_session_id", { sm_session_id: sessionID });
+      if (sessionID !== "") {
+        setSessionId(sessionID);
+        ReactGA.gtag("event", "sm_session_id", {
+          sm_session_id: sessionID,
+        });
+      }
     }, [sessionID]);
   }
+
+  const createSession = () => {
+    fetch("http://localhost:4000/execute", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        projectId: 9749,
+        sessionId: sessionId,
+        text: "Who is virat kohli ?",
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  useEffect(() => {
+    if (sessionId) {
+      createSession();
+    }
+  }, [sessionId]);
 
   return (
     <Router>
@@ -58,7 +86,10 @@ function App() {
               <button
                 className="btn-unstyled"
                 type="button"
-                onClick={() => {setIgnoreError(true); window.location.reload();}}
+                onClick={() => {
+                  setIgnoreError(true);
+                  window.location.reload();
+                }}
               >
                 <XCircle size={22} />
               </button>
@@ -76,7 +107,6 @@ function App() {
                 <a href="/loading" className="btn btn-dark me-2">
                   Reconnect
                 </a>
-                
               </div>
               {/* <div className="d-flex justify-content-center">
                 <code className="text-danger">{error.msg}</code>
@@ -94,6 +124,9 @@ function App() {
         </Route>
         <Route path="/chat">
           <DPChat />
+        </Route>
+        <Route path="/admin">
+          <Admin />
         </Route>
         {/* <Route path="/feedback">
           <Feedback />
