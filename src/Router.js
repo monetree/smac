@@ -55,28 +55,6 @@ function App() {
     }, [sessionID]);
   }
 
-  const createSession = () => {
-    fetch("http://localhost:4000/execute", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        projectId: 9749,
-        sessionId: sessionId,
-        text: "Who is virat kohli ?",
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      });
-  };
-
-  useEffect(() => {
-    if (sessionId) {
-      createSession();
-    }
-  }, [sessionId]);
-
   return (
     <Router>
       {error && !ignoreError ? (
