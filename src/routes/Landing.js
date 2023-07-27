@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Color from 'color';
-import breakpoints from '../utils/breakpoints';
-import { landingBackgroundImage, landingBackgroundColor } from '../config';
-import micFill from '../img/mic-fill.svg';
-import videoFill from '../img/camera-video-fill.svg';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import Color from "color";
+import breakpoints from "../utils/breakpoints";
+import { landingBackgroundImage, landingBackgroundColor } from "../config";
+import micFill from "../img/mic-fill.svg";
+import videoFill from "../img/camera-video-fill.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import GoogleButton from "react-google-button";
-import { useHistory } from 'react-router-dom';
-import './index.css';
+import { useHistory } from "react-router-dom";
+import "./index.css";
 
 function Landing({ className }) {
   const history = useHistory();
@@ -24,67 +24,40 @@ function Landing({ className }) {
     "pinnamanenivvs@gmail.com",
     "dprabhakar@webprodigiesinc.com",
     "taranjeetsingh3326@gmail.com",
-    "claire.shiying@gmail.com",
-    "ashishmohanty000@gmail.com",
     "manmohanalla@gmail.com",
-    "genesaigal@gmail.com",
-    "erilineresorts@gmail.com",
-    "sameera1892@gmail.com",
-    "sanjeev@vscgroup.co",
     "vpsps@yahaoo.com",
     "vpspublicschool@gmail.com",
-    "ikonsway@gmail.com",
-    "bablusb143@gmail.com",
-    "sfwhyd@gmail.com",
-    "krudra@gmail.com",
-    "mail4lucky@gmail.com",
-    "Kchawalla79@gmail.com",
-    "pasupuleti9@gmail.com",
-    "agrrohit11@gmail.com",
-    "kunapareddypadmasree@gmail.com",
-    "shaikhzameer99@gmail.com",
-    "saunakasae21@gmail.com",
-    "apernavolluru14@gmail.com",
-    "turukrish@gmail.com",
-    "skillioma.work@gmail.com",
-    "sbharat4u1985@gmail.com",
-    "chaitoos82@gmail.com",
-    "pradeepsutodiya1@gmail.com",
-    "jainashoakkumar@gmail.com",
-    "Krishna.samanth@gmail.com",
     "krishna.samanth@gmail.com",
     "prajaykamat@gmail.com",
-
-    "msrmeda1961@gmail.com", 
-    "clarusitsol@gmail.com", 
-    "ramapin@gmail.com", 
+    "msrmeda1961@gmail.com",
     "stjps2023@gmail.com",
-    
-    "msrmeda1961@gmail.com", 
-    "clarusitsol@gmail.com", 
-    "ramapin@gmail.com",
-    "stjps2023@gmail.com",
-
-    "msindhoor@gmail.com",
-    "krishna.medasani@gmail.com"
+    "keerthanaduggirala@gmail.com",
+    "msrmeda1961@gmail.com",
+    "krishna.medasani@gmail.com",
+    "rakeshkolli@gmail.com",
+    "mvc@rvrpro.in",
+    "aditya.tummala10@gmail.com",
+    "ruhifatimaa@gmail.com",
+    "contact@phanig.com",
+    "soubhagya.developer@gmail.com",
   ];
 
   const getUserInfo = () => {
     let userInfo = localStorage.getItem("userInfo");
-    if(!userInfo){
+    if (!userInfo) {
       return null;
     }
     userInfo = JSON.parse(userInfo);
-    if(!userInfo?.name){
+    if (!userInfo?.name) {
       return null;
     }
     return userInfo;
-  }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     let isLoggedInUser = getUserInfo();
-    if(isLoggedInUser){
-      history.push('/loading');
+    if (isLoggedInUser) {
+      history.push("/loading");
     }
   }, []);
 
@@ -95,7 +68,7 @@ function Landing({ className }) {
 
   useEffect(() => {
     let isLoggedInUser = getUserInfo();
-    
+
     if (user && !isLoggedInUser) {
       axios
         .get(
@@ -114,7 +87,7 @@ function Landing({ className }) {
           } else {
             console.log("***google Info**", res.data);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
-            history.push('/loading');
+            history.push("/loading");
           }
         })
         .catch((err) => console.log(err));
@@ -124,22 +97,22 @@ function Landing({ className }) {
   return (
     <div className={className}>
       {/* <div className="landing-wrapper"> */}
-        <div id="content" className="login-container">
-          <div className="login-container-block card-">
-            <div className="">
-              <h1 className="login-title"> AvatarX</h1>
-              <h3 className="login-title"> Sign in</h3>
-              {/* <h4 className="login-title">to continue to Alie AvatarX</h4> */}
-            </div>
-            <div className="btn-position">
-              <div className="space-y-3 text-center ">
-                {/* <button onClick={() => login()}>Sign in with Google 🚀 </button> */}
-                <GoogleButton onClick={() => login()} />
-              </div>
+      <div id="content" className="login-container">
+        <div className="login-container-block card-">
+          <div className="">
+            <h1 className="login-title"> AvatarX</h1>
+            <h3 className="login-title"> Sign in</h3>
+            {/* <h4 className="login-title">to continue to Alie AvatarX</h4> */}
+          </div>
+          <div className="btn-position">
+            <div className="space-y-3 text-center ">
+              {/* <button onClick={() => login()}>Sign in with Google 🚀 </button> */}
+              <GoogleButton onClick={() => login()} />
             </div>
           </div>
         </div>
-       
+      </div>
+
       {/* </div> */}
     </div>
   );
@@ -153,7 +126,10 @@ export default styled(Landing)`
   .landing-wrapper {
     min-height: 100vh;
 
-    background: ${landingBackgroundImage ? `url(${landingBackgroundImage})` : ''} ${landingBackgroundColor ? `${landingBackgroundColor};` : ''};
+    background: ${landingBackgroundImage
+        ? `url(${landingBackgroundImage})`
+        : ""}
+      ${landingBackgroundColor ? `${landingBackgroundColor};` : ""};
     background-size: auto 60%;
     background-repeat: no-repeat;
     background-position: bottom center;
@@ -167,10 +143,10 @@ export default styled(Landing)`
     padding-top: 1rem;
     display: flex;
 
-    &>div {
+    & > div {
       background-color: ${Color(landingBackgroundColor).alpha(0.5)};
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       padding: 1rem;
       border-radius: 5px;
 
@@ -186,20 +162,22 @@ export default styled(Landing)`
     align-items: center;
     justify-content: space-between;
 
-
-    &.mic-switch::before, &.mic-switch.status-checked::after {
-        background-image: url(${micFill});
+    &.mic-switch::before,
+    &.mic-switch.status-checked::after {
+      background-image: url(${micFill});
     }
-    &.video-switch::before, &.video-switch.status-checked::after {
-        background-image: url(${videoFill});
+    &.video-switch::before,
+    &.video-switch.status-checked::after {
+      background-image: url(${videoFill});
     }
-    &.mic-switch.status-checked::before, &.video-switch.status-checked::before {
+    &.mic-switch.status-checked::before,
+    &.video-switch.status-checked::before {
       background-image: none;
     }
 
     &.status-unchecked {
       &::after {
-        content: 'OFF';
+        content: "OFF";
         color: #000;
         margin-right: 18%;
       }
@@ -208,7 +186,7 @@ export default styled(Landing)`
         background-repeat: no-repeat;
         background-color: rgb(220, 220, 220);
         background-position: 45% center;
-        content: '';
+        content: "";
         display: block;
 
         border-radius: 50%;
@@ -222,17 +200,17 @@ export default styled(Landing)`
 
     &.status-checked {
       &::before {
-        content: 'ON';
-        color: #FFF;
+        content: "ON";
+        color: #fff;
         margin-left: 22%;
       }
 
       &::after {
         background-size: 60%;
         background-repeat: no-repeat;
-        background-color: #FFF;
+        background-color: #fff;
         background-position: 55% center;
-        content: '';
+        content: "";
         display: block;
 
         border-radius: 50%;
@@ -244,5 +222,4 @@ export default styled(Landing)`
       }
     }
   }
-
 `;
