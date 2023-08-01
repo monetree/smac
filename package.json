@@ -14,6 +14,7 @@
     "deploy:gcp": "npm run build && gcloud app deploy --project ui-test-persona-nhyv app.yaml --stop-previous-version --promote --version baseline --quiet"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.46.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
