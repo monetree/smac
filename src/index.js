@@ -9,8 +9,8 @@ import reportWebVitals from "./reportWebVitals";
 import GlobalStyle from "./globalStyle";
 
 datadogRum.init({
-  applicationId: "67577500-d823-467a-bd4e-db51e0434f2f",
-  clientToken: "pub8733e8acc71d1eadad12e5af290ff7e7",
+  applicationId: "2b7e8214-35c4-4691-ab02-4356d8099ba4",
+  clientToken: "pubd2a89f8d39cdd89366a83bd36952b270",
   site: "us5.datadoghq.com",
   service: "avatarx",
   env: "prod",
