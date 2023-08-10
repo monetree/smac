@@ -47,6 +47,7 @@ function Landing({ className }) {
     "sasmal.saroj143@gmail.com",
     "swathik.0329@gmail.com",
     "mauryateja9@gmail.com",
+    "pokuri.1803@gmail.com",
   ];
 
   const getUserInfo = () => {
