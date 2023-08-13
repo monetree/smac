@@ -37,6 +37,7 @@ const Login = ({ setIsLoggedin }) => {
     "pokuri.1803@gmail.com",
     "vivianoboh20@gmail.com",
     "amsalusolomon12@gmail.com",
+    "mdahsanul2015@gmail.com",
   ];
 
   const login = useGoogleLogin({
