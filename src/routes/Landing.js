@@ -28,7 +28,12 @@ function Landing({ className }) {
         },
       })
       .then((res) => {
-        setEmails(res.data);
+        let emails = res.data;
+        let emails_ = [];
+        for (let i of emails) {
+          emails_.push(i.email);
+        }
+        setEmails(emails_);
       })
       .catch((err) => console.log(err));
   };
