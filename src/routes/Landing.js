@@ -86,6 +86,7 @@ function Landing({ className }) {
             return;
           } else {
             console.log("***google Info**", res.data);
+            localStorage.setItem("user", res.data.email);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
             history.push("/loading");
           }
