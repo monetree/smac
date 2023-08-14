@@ -14,17 +14,17 @@ function App() {
 
   const getUserInfo = () => {
     let userInfo = localStorage.getItem("userInfo");
-    if(!userInfo){
+    if (!userInfo) {
       return null;
     }
     userInfo = JSON.parse(userInfo);
-    if(!userInfo?.name){
+    if (!userInfo?.name) {
       return null;
     }
     return userInfo;
-  }
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     let isLoggedInUser = getUserInfo();
     setIsLoggedIn(!!isLoggedInUser);
   }, []);
