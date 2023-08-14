@@ -17,6 +17,7 @@ import Feedback from "./routes/FeedbackRoute";
 import ContentCardTest from "./routes/ContentCardTest";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Admin from "./routes/Admin";
+import { datadogRum } from "@datadog/browser-rum";
 
 // only init google analytics if a tracking ID is defined in env
 const { REACT_APP_GA_TRACKING_ID } = process.env;
@@ -39,6 +40,8 @@ function App() {
   const { error } = useSelector(({ sm }) => ({ ...sm }));
   const [ignoreError, setIgnoreError] = useState(false);
   const [sessionId, setSessionId] = useState(false);
+  const [userData, setUserData] = useState(null);
+
   // every time error changes, set ignore error to false
   useEffect(() => setIgnoreError(false), [error]);
 
@@ -54,6 +57,30 @@ function App() {
       }
     }, [sessionID]);
   }
+
+  useEffect(() => {
+    const user_ = localStorage.getItem("user");
+    if (user_) {
+      setUserData(user_);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData) {
+      datadogRum.init({
+        applicationId: "2b7e8214-35c4-4691-ab02-4356d8099ba4",
+        clientToken: "pubd2a89f8d39cdd89366a83bd36952b270",
+        site: "us5.datadoghq.com",
+        service: userData,
+        env: "prod",
+        sessionSampleRate: 100,
+        premiumSampleRate: 100,
+        trackUserInteractions: true,
+        defaultPrivacyLevel: "mask-user-input",
+      });
+      datadogRum.startSessionReplayRecording();
+    }
+  }, [userData]);
 
   return (
     <Router>
