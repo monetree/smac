@@ -17,7 +17,7 @@ function Landing({ className }) {
   // const { mic, camera } = useSelector(({ sm }) => sm.requestedMediaPerms);
   // const dispatch = useDispatch();
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [emails, setEmails] = useState([]);
 
   const getEmails = () => {
@@ -68,6 +68,10 @@ function Landing({ className }) {
 
   useEffect(() => {
     let isLoggedInUser = getUserInfo();
+
+    if (user && user.email) {
+      localStorage.setItem("email", user.email);
+    }
 
     if (user && !isLoggedInUser) {
       axios
