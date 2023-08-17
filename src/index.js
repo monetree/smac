@@ -12,13 +12,16 @@ datadogRum.init({
   applicationId: "2b7e8214-35c4-4691-ab02-4356d8099ba4",
   clientToken: "pubd2a89f8d39cdd89366a83bd36952b270",
   site: "us5.datadoghq.com",
-  // service: "avatarx",
+  service: "avatarx",
   env: "prod",
+  // Specify a version number to identify the deployed version of your application in Datadog
+  // version: '1.0.0',
   sessionSampleRate: 100,
   premiumSampleRate: 100,
   trackUserInteractions: true,
   defaultPrivacyLevel: "mask-user-input",
 });
+
 datadogRum.startSessionReplayRecording();
 
 ReactDOM.render(
