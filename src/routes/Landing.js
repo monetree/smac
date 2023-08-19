@@ -71,6 +71,7 @@ function Landing({ className }) {
 
     if (user && user.email) {
       localStorage.setItem("email", user.email);
+      localStorage.setItem("name", user.name);
     }
 
     if (user && !isLoggedInUser) {
@@ -90,7 +91,8 @@ function Landing({ className }) {
             return;
           } else {
             console.log("***google Info**", res.data);
-            localStorage.setItem("user", res.data.email);
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("name", res.data.name);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
             history.push("/loading");
           }

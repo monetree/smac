@@ -17,6 +17,7 @@ import Feedback from "./routes/FeedbackRoute";
 import ContentCardTest from "./routes/ContentCardTest";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Admin from "./routes/Admin";
+import { datadogRum } from "@datadog/browser-rum";
 
 // only init google analytics if a tracking ID is defined in env
 const { REACT_APP_GA_TRACKING_ID } = process.env;
@@ -58,10 +59,10 @@ function App() {
   }
 
   useEffect(() => {
-    const user_ = localStorage.getItem("user");
-    if (user_) {
-      setUserData(user_);
-    }
+    datadogRum.setUser({
+      name: localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+    });
   }, []);
 
   return (

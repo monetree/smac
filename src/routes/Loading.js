@@ -10,12 +10,13 @@ import {
   landingBackgroundColor,
   landingBackgroundImage,
 } from "../config";
+import { datadogRum } from "@datadog/browser-rum";
 
-function Loading({ className, ignoreError}) {
-  const { connected, loading, error, connectionState } =
-    useSelector(({ sm }) => sm);
+function Loading({ className, ignoreError }) {
+  const { connected, loading, error, connectionState } = useSelector(
+    ({ sm }) => sm
+  );
   const dispatch = useDispatch();
-  
 
   // create persona scene on button press on on mount, depending on device size
   const createSceneIfNotStarted = () => {
@@ -28,26 +29,33 @@ function Loading({ className, ignoreError}) {
     createSceneIfNotStarted();
   }, []);
 
- 
   const history = useHistory();
 
   useEffect(() => {
     if (connected === true) history.push("/chat");
   }, [connected]);
 
+  useEffect(() => {
+    datadogRum.setUser({
+      name: localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+    });
+  }, []);
+
   return (
     <div className={className}>
       <Header />
-      {!error &&
-      <div className="container"> 
-        <div className="row justify-content-center align-items-center">
-          <div className="col-11 col-md-6 text-center mobile">
-            <div className="row">
-              <div>
-                <div className="row justify-content-center">
-                  <div className="loader ">
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only"></span>
+      {!error && (
+        <div className="container">
+          <div className="row justify-content-center align-items-center">
+            <div className="col-11 col-md-6 text-center mobile">
+              <div className="row">
+                <div>
+                  <div className="row justify-content-center">
+                    <div className="loader ">
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -55,8 +63,7 @@ function Loading({ className, ignoreError}) {
             </div>
           </div>
         </div>
-      </div>
-      }
+      )}
     </div>
   );
 }
