@@ -29,8 +29,6 @@ function App() {
     setIsLoggedIn(!!isLoggedInUser);
   }, []);
 
-  console.log("***isLoggedIn***", isLoggedIn);
-
   return (
     <React.Fragment>
       {!isLoggedIn && (

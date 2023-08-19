@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import GoogleButton from "react-google-button";
+import { datadogRum } from "@datadog/browser-rum";
 
 const Login = ({ setIsLoggedin }) => {
   const [user, setUser] = useState([]);
@@ -63,6 +64,11 @@ const Login = ({ setIsLoggedin }) => {
             return;
           } else {
             console.log("***google Info**", res.data);
+            console.log("datadogrum");
+            datadogRum.setUser({
+              name: res.data.name,
+              email: res.data.email,
+            });
             localStorage.setItem("userInfo", JSON.stringify(res.data));
             setIsLoggedin(true);
           }
