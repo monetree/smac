@@ -11,7 +11,6 @@ import Header from "../components/Header";
 import { disconnectPage, disconnectRoute } from "../config";
 import TextInput from "../components/TextInput";
 
-
 const DPChat = ({ className }) => {
   const {
     connected,
@@ -21,14 +20,14 @@ const DPChat = ({ className }) => {
     showTranscript,
     micOn,
     isOutputMuted,
-    connectionState
+    connectionState,
   } = useSelector(({ sm }) => ({ ...sm }));
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { name } = connectionState;
- 
+
   if (disconnected === true) {
     if (disconnectPage) {
       history.push(disconnectRoute);
@@ -67,7 +66,7 @@ const DPChat = ({ className }) => {
     // run resize once on mount, then add listener for future resize events
     handleResize();
     window.addEventListener("resize", handleResize);
-   
+
     // run cleanup on unmount
     return () => cleanup();
   }, []);
@@ -91,7 +90,6 @@ const DPChat = ({ className }) => {
         {/* top row */}
         <div className="row">
           <Header />
-          
         </div>
         {/* middle row */}
         <div
@@ -123,9 +121,7 @@ const DPChat = ({ className }) => {
             </div>
           </div> */}
           {showTranscript === true || micOn === false ? (
-            <div
-              className="row justify-content-center text-input-parent"
-            >
+            <div className="row justify-content-center text-input-parent">
               <div className="col-md-8 col-lg-5 p-3-">
                 <TextInput />
               </div>
@@ -134,8 +130,6 @@ const DPChat = ({ className }) => {
         </div>
       </div>
       {connected && name === "Connected" ? <PersonaVideo name={name} /> : null}
-     
-      
     </div>
   );
 };
