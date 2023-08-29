@@ -22,7 +22,7 @@ import { primaryAccent } from "../globalStyle";
 
 import Popup from "../components/popup";
 
-import {avatars} from "../config";
+import { avatars } from "../config";
 
 const iconSize = 24;
 
@@ -42,7 +42,6 @@ const Header = ({ className }) => {
 
   const [isPopup, setIsPopup] = useState(false);
   const [activeAvatar, setActiveAvatar] = useState({});
-
 
   const history = useHistory();
 
@@ -65,12 +64,11 @@ const Header = ({ className }) => {
     }
 
     let activeAvatar = localStorage.getItem("activeAvatar")
-    ? JSON.parse(localStorage.getItem("activeAvatar"))
-    : avatars[0];
+      ? JSON.parse(localStorage.getItem("activeAvatar"))
+      : avatars[0];
     setActiveAvatar(activeAvatar);
 
     window.scrollTo(0, 0);
-
   }, []);
 
   const handleSubmit = () => {
@@ -90,25 +88,78 @@ const Header = ({ className }) => {
             <div className="d-flex align-items-center justify-content-between">
               <div className={"main-menu"}>
                 {/* left align */}
-                <a href={"/"} style={{color : pathname === '/chat' ? "#fff" : "black"}}  className={`${(pathname === '/loading' || pathname === '/chat') ? 'logo' : 'd-none'}`}>
+                <a
+                  href={"/"}
+                  style={{ color: pathname === "/chat" ? "#fff" : "black" }}
+                  className={`${
+                    pathname === "/loading" || pathname === "/chat"
+                      ? "logo"
+                      : "d-none"
+                  }`}
+                >
                   AvatarX
                 </a>
                 <ul className={"main-menu-ul"}>
                   <li className={"main-menu-li"}>
-                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`} href={"/"}>Home</a>
+                    <a
+                      className={`${
+                        pathname === "/loading" ? "loading-li" : ""
+                      }`}
+                      href={"/"}
+                    >
+                      Home
+                    </a>
                   </li>
-                  <li className={"main-menu-li"} onClick={()=> setIsPopup(true)}>
-                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`}>Settings</a>
+
+                  <li
+                    className={"main-menu-li"}
+                    onClick={() => setIsPopup(true)}
+                  >
+                    <a
+                      className={`${
+                        pathname === "/loading" ? "loading-li" : ""
+                      }`}
+                    >
+                      Settings
+                    </a>
                   </li>
+
+                  {localStorage.getItem("role") === "REGULAR" ? (
+                    ""
+                  ) : (
+                    <li className={"main-menu-li"}>
+                      <a
+                        className={`${
+                          pathname === "/loading" ? "loading-li" : ""
+                        }`}
+                        href="/invite"
+                      >
+                        Invite
+                      </a>
+                    </li>
+                  )}
+
                   <li className={"main-menu-li"}>
-                    <a className={`${(pathname === '/loading') ? 'loading-li' : ''}`} onClick={() => {
+                    <a
+                      className={`${
+                        pathname === "/loading" ? "loading-li" : ""
+                      }`}
+                      onClick={() => {
                         dispatch(disconnect());
                         localStorage.setItem("userInfo", "");
                         window.location.reload();
-                      }} >Logout</a>
+                      }}
+                    >
+                      Logout
+                    </a>
                   </li>
                 </ul>
-                <aside id="menu" className={`user-menu ${pathname === '/loading' ? 'd-none-' : ''}`}>
+                <aside
+                  id="menu"
+                  className={`user-menu ${
+                    pathname === "/loading" ? "d-none-" : ""
+                  }`}
+                >
                   <div className="menu-child">
                     <img
                       id="profile-pic"
@@ -133,12 +184,8 @@ const Header = ({ className }) => {
               <div>
                 {/* right align */}
                 <div
-                //connected && !loading &&
-                  className={`${
-                     pathname === "/chat"
-                      ? ""
-                      : "d-none-"
-                  }`}
+                  //connected && !loading &&
+                  className={`${pathname === "/chat" ? "" : "d-none-"}`}
                 >
                   <Controls setIsPopup={setIsPopup} />
                 </div>
@@ -310,14 +357,14 @@ export default styled(Header)`
       cursor: pointer;
     }
     .main-menu-li a {
-      color : #fff;
+      color: #fff;
       font-weight: 600;
     }
     .loading-li {
-      color : black !important;
+      color: black !important;
     }
     .main-menu-li a:hover {
-      opacity: 0.8
+      opacity: 0.8;
     }
   }
 

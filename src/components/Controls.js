@@ -2,20 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import {
-  Escape,
-  ThreeDotsVertical,
-  X,
-} from "react-bootstrap-icons";
+import { Escape, ThreeDotsVertical, X } from "react-bootstrap-icons";
 import ReactTooltip from "react-tooltip";
-import {
-  disconnect
-} from "../store/sm/index";
+import { disconnect } from "../store/sm/index";
 import mic from "../img/mic.svg";
 import micFill from "../img/mic-fill.svg";
 import breakpoints from "../utils/breakpoints";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faHouse, faShare } from "@fortawesome/free-solid-svg-icons";
 
 const volumeMeterHeight = 24;
 const volumeMeterMultiplier = 1.2;
@@ -23,9 +17,7 @@ const smallHeight = volumeMeterHeight;
 const largeHeight = volumeMeterHeight * volumeMeterMultiplier;
 
 const Controls = ({ className, setIsPopup }) => {
-  const {
-    highlightMenu,
-  } = useSelector((state) => ({ ...state.sm }));
+  const { highlightMenu } = useSelector((state) => ({ ...state.sm }));
 
   const dispatch = useDispatch();
 
@@ -51,10 +43,7 @@ const Controls = ({ className, setIsPopup }) => {
 
   return (
     <div className={className}>
-    
       <div className="d-flex" style={{ background: "#ffff", marginTop: 20 }}>
-       
-
         <div className="context-control-parent">
           <button
             className="control-icon context-controls-trigger"
@@ -78,14 +67,11 @@ const Controls = ({ className, setIsPopup }) => {
               <div className="d-flex justify-content-end align-items-start">
                 <ul>
                   <li>
-                    <button
-                      className={"btn-unstyled"}
-                    >
-                      <img
-                        id="profile-pic"
-                        src={getUserInfo()?.picture}
-                      />
-                      <span style={{fontWeight: 600}}>{getUserInfo()?.name}</span>
+                    <button className={"btn-unstyled"}>
+                      <img id="profile-pic" src={getUserInfo()?.picture} />
+                      <span style={{ fontWeight: 600 }}>
+                        {getUserInfo()?.name}
+                      </span>
                     </button>
                   </li>
                   <li>
@@ -107,6 +93,15 @@ const Controls = ({ className, setIsPopup }) => {
 
                   <li>
                     <button
+                      className={"btn-unstyled"}
+                      onClick={() => (window.location = "/invite")}
+                    >
+                      <FontAwesomeIcon icon={faShare} /> Invite
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
                       className="btn-unstyled "
                       type="button"
                       onClick={() => {
@@ -117,8 +112,6 @@ const Controls = ({ className, setIsPopup }) => {
                       <Escape size={18} /> Logout
                     </button>
                   </li>
-
-                 
                 </ul>
               </div>
             </div>
@@ -132,9 +125,8 @@ const Controls = ({ className, setIsPopup }) => {
 Controls.propTypes = { className: PropTypes.string.isRequired };
 
 export default styled(Controls)`
-
   .context-control-parent {
-    position : relative;
+    position: relative;
 
     @media (min-width: 768px) {
       display: none;
@@ -147,7 +139,7 @@ export default styled(Controls)`
     right: -100%;
     top: 0;
 
-    @media (max-width: 600px) { 
+    @media (max-width: 600px) {
       right: 0;
     }
 
@@ -188,7 +180,7 @@ export default styled(Controls)`
   .control-icon {
     border: none;
     // background: none;
-    color:black;
+    color: black;
 
     padding: 0.4rem;
   }

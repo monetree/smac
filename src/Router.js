@@ -117,7 +117,7 @@ function App() {
         <Route path="/chat">
           <DPChat />
         </Route>
-        <Route path="/admin">
+        <Route path="/invite">
           <Admin />
         </Route>
         {/* <Route path="/feedback">

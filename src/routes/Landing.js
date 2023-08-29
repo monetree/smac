@@ -29,11 +29,11 @@ function Landing({ className }) {
       })
       .then((res) => {
         let emails = res.data;
-        let emails_ = [];
-        for (let i of emails) {
-          emails_.push(i.email);
-        }
-        setEmails(emails_);
+        // let emails_ = [];
+        // for (let i of emails) {
+        //   emails_.push(i.email);
+        // }
+        setEmails(emails);
       })
       .catch((err) => console.log(err));
   };
@@ -86,16 +86,21 @@ function Landing({ className }) {
           }
         )
         .then((res) => {
-          if (!emails.includes(res.data.email)) {
-            alert("You don't have access to this page .. ");
-            return;
-          } else {
-            console.log("***google Info**", res.data);
-            localStorage.setItem("email", res.data.email);
-            localStorage.setItem("name", res.data.name);
-            localStorage.setItem("userInfo", JSON.stringify(res.data));
-            history.push("/loading");
+          for (let i of emails) {
+            if (i.email === res.data.email) {
+              console.log("***google Info**", res.data);
+              localStorage.setItem("id", i.id);
+              localStorage.setItem("role", i.role);
+              localStorage.setItem("email", res.data.email);
+              localStorage.setItem("name", res.data.name);
+              localStorage.setItem("userInfo", JSON.stringify(res.data));
+              history.push("/loading");
+              return;
+            }
           }
+
+          alert("You don't have access to this page .. ");
+          return;
         })
         .catch((err) => console.log(err));
     }

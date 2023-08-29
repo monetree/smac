@@ -33,7 +33,9 @@ const Popup = ({
                       activeAvatar.name === avatar.name ? "img-active" : ""
                     }
                   />
-                  <p className="text-center mt-3"><strong>{avatar.language}</strong></p>
+                  <p className="text-center mt-3">
+                    <strong>{avatar.language}</strong>
+                  </p>
                 </div>
               ))}
             </div>
