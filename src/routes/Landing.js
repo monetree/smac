@@ -94,7 +94,7 @@ function Landing({ className }) {
               localStorage.setItem("email", res.data.email);
               localStorage.setItem("name", res.data.name);
               localStorage.setItem("userInfo", JSON.stringify(res.data));
-              history.push("/loading");
+              window.location = "/loading";
               return;
             }
           }
