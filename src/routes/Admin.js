@@ -7,6 +7,8 @@ const Admin = ({}) => {
   const [users, setUsers] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
   const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+  const [organization, setOrganization] = useState(null);
   const [role, setRole] = useState(null);
 
   const getUser = () => {
@@ -14,7 +16,7 @@ const Admin = ({}) => {
       .get(
         `https://api.polyverse.app/api/whitelisted-emails/${localStorage.getItem(
           "id"
-        )}`
+        )}/`
       )
       .then((res) => {
         setUser(res.data);
@@ -22,9 +24,25 @@ const Admin = ({}) => {
       .catch((err) => console.log(err));
   };
 
+  const getUsers = () => {
+    let url = `https://api.polyverse.app/api/whitelisted-emails/`;
+    if (localStorage.getItem("role") !== "ADMIN") {
+      url = `${url}?organization=${localStorage.getItem("organization")}`;
+    }
+
+    axios
+      .get(url)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const InviteUser = () => {
     axios
       .post(`https://api.polyverse.app/api/whitelisted-emails/`, {
+        name: name,
+        organization: organization,
         email: email,
         role: role,
       })
@@ -33,6 +51,7 @@ const Admin = ({}) => {
           setIsPopup(false);
           setEmail(null);
           setRole(null);
+          getUsers();
           alert("Successfully invited the user.");
         }
       })
@@ -40,21 +59,6 @@ const Admin = ({}) => {
         alert("Failed to invited the user.");
         console.log(err);
       });
-  };
-
-  const getUsers = () => {
-    axios
-      .get(`https://api.polyverse.app/api/whitelisted-emails/`)
-      .then((res) => {
-        const userss = [];
-        for (let i of res.data) {
-          if (i.role !== "ADMIN") {
-            userss.push(i);
-          }
-        }
-        setUsers(userss);
-      })
-      .catch((err) => console.log(err));
   };
 
   const UpdateRole = (id, role) => {
@@ -82,7 +86,7 @@ const Admin = ({}) => {
   return (
     <div style={{ background: "black", color: "#fff" }}>
       <Header />
-      <div className="mt-3 container">
+      <div className="mt-3 container" style={{ minHeight: "100vh" }}>
         <div style={{ color: "#fff", margin: "2em 0em" }}>
           <button
             type="button"
@@ -102,11 +106,16 @@ const Admin = ({}) => {
               <thead>
                 <tr>
                   <th>
+                    <u>Organization</u>
+                  </th>
+                  <th>
                     <u>Email</u>
                   </th>
+
                   <th>
                     <u>Role</u>
                   </th>
+
                   <th>Update</th>
                   <th>
                     <u>Action</u>
@@ -117,6 +126,7 @@ const Admin = ({}) => {
               <tbody>
                 {users.map((user_, index) => (
                   <tr key={index}>
+                    <td>{user_.organization ? user_.organization : "N/A"}</td>
                     <td>{user_.email}</td>
                     <td>
                       {user_.role === "REGULAR"
@@ -138,12 +148,7 @@ const Admin = ({}) => {
                       </select>
                     </td>
                     <td>
-                      <button
-                        disabled={user.role !== "ADMIN"}
-                        className="btn btn-light btn-sm"
-                      >
-                        Delete
-                      </button>
+                      <button className="btn btn-light btn-sm">Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -154,7 +159,11 @@ const Admin = ({}) => {
       </div>
 
       {isPopup && (
-        <div className="modal block" id="myModal">
+        <div
+          className="modal fade show"
+          id="myModal"
+          style={{ display: "block", background: "rgb(0,0,0, 0.8)" }}
+        >
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -174,6 +183,45 @@ const Admin = ({}) => {
                   Invite users to access AvatarX
                 </h5>
                 <form action="/action_page.php">
+                  <div className="form-group mb-2">
+                    <label for="name" style={{ color: "#000" }}>
+                      Name:
+                    </label>
+                    <input
+                      type="name"
+                      className="form-control"
+                      id="name"
+                      onChange={(e) => setName(e.target.value)}
+                      value={name}
+                      placeholder="Enter name"
+                    />
+                  </div>
+
+                  <div className="form-group mb-2">
+                    <label for="organization" style={{ color: "#000" }}>
+                      Organization:
+                    </label>
+                    {user.role === "ADMIN" ? (
+                      <input
+                        type="organization"
+                        className="form-control"
+                        id="organization"
+                        onChange={(e) => setOrganization(e.target.value)}
+                        value={organization}
+                        placeholder="Enter organization"
+                      />
+                    ) : (
+                      <input
+                        type="organization"
+                        className="form-control"
+                        id="organization"
+                        value={user.organization}
+                        placeholder="Enter organization"
+                        disabled
+                      />
+                    )}
+                  </div>
+
                   <div className="form-group mb-2">
                     <label for="email" style={{ color: "#000" }}>
                       Email address:

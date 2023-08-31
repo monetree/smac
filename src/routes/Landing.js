@@ -29,10 +29,6 @@ function Landing({ className }) {
       })
       .then((res) => {
         let emails = res.data;
-        // let emails_ = [];
-        // for (let i of emails) {
-        //   emails_.push(i.email);
-        // }
         setEmails(emails);
       })
       .catch((err) => console.log(err));
@@ -89,8 +85,13 @@ function Landing({ className }) {
           for (let i of emails) {
             if (i.email === res.data.email) {
               console.log("***google Info**", res.data);
+
               localStorage.setItem("id", i.id);
               localStorage.setItem("role", i.role);
+              localStorage.setItem("organization", i.organization);
+              localStorage.setItem("user_name", i.name);
+              localStorage.setItem("user_type", i.user_type);
+
               localStorage.setItem("email", res.data.email);
               localStorage.setItem("name", res.data.name);
               localStorage.setItem("userInfo", JSON.stringify(res.data));
