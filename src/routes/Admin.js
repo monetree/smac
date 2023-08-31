@@ -38,6 +38,28 @@ const Admin = ({}) => {
       .catch((err) => console.log(err));
   };
 
+  const InviteMail = (email) => {
+    axios
+      .post(`https://api.polyverse.app/api/email-invitation/`, {
+        email: email,
+      })
+      .then((res) => {
+        if (res.data) {
+          setIsPopup(false);
+          setEmail(null);
+          setName(null);
+          setOrganization(null);
+          setRole(null);
+          getUsers();
+          alert("Successfully invited the user.");
+        }
+      })
+      .catch((err) => {
+        alert("Failed to invited the user.");
+        console.log(err);
+      });
+  };
+
   const InviteUser = () => {
     axios
       .post(`https://api.polyverse.app/api/whitelisted-emails/`, {
@@ -48,11 +70,7 @@ const Admin = ({}) => {
       })
       .then((res) => {
         if (res.data) {
-          setIsPopup(false);
-          setEmail(null);
-          setRole(null);
-          getUsers();
-          alert("Successfully invited the user.");
+          InviteMail(res.data.email);
         }
       })
       .catch((err) => {
