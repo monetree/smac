@@ -61,6 +61,10 @@ const Admin = ({}) => {
   };
 
   const InviteUser = () => {
+    if (!organization) {
+      alert("organization required !");
+      return;
+    }
     axios
       .post(`https://api.polyverse.app/api/whitelisted-emails/`, {
         name: name,
