@@ -1,46 +1,91 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import axios from "axios";
+import Multiselect from "multiselect-react-dropdown";
+import "./index.css";
 
 const Admin = ({}) => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [isPopup, setIsPopup] = useState(false);
+  const [viewPopup, setViewPopup] = useState(false);
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
-  const [organization, setOrganization] = useState(null);
+  const [organization, setOrganization] = useState([]);
+  const [organizations, setOrganizations] = useState([]);
   const [role, setRole] = useState(null);
+  const [orgList, setOrgList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [viewedUser, setViewedUser] = useState({});
+
+  useEffect(() => {
+    let data_ = [];
+    for (let i of organization) {
+      data_.push(i.id);
+    }
+    setOrgList(data_);
+  }, [organization]);
+
+  const API_URL = "https://api.polyverse.app";
+  // const API_URL = "http://127.0.0.1:8000";
+
+  const getOrganizations = () => {
+    let url = `${API_URL}/api/organizations/`;
+    axios
+      .get(url)
+      .then((res) => {
+        setOrganizations(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getUsers = (orgs, role) => {
+    let url = `${API_URL}/api/users/`;
+    if (orgs && orgs.length && role !== "ADMIN") {
+      url = `${url}?ids=${orgs.toString()}`;
+    }
+    axios
+      .get(url)
+      .then((res) => {
+        const key = "id";
+        const arrayUniqueByKey = [
+          ...new Map(res.data.map((item) => [item[key], item])).values(),
+        ];
+        setUsers(arrayUniqueByKey);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    if (user) {
+      getUsers(user.orgs, user.role);
+    }
+  }, [user]);
+
+  const deleteUser = (id) => {
+    setLoading(true);
+    let url = `${API_URL}/api/whitelisted-emails/${id}/`;
+    axios
+      .delete(url)
+      .then((res) => {
+        getUsers(user.orgs, user.role);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const getUser = () => {
     axios
-      .get(
-        `https://api.polyverse.app/api/whitelisted-emails/${localStorage.getItem(
-          "id"
-        )}/`
-      )
+      .get(`${API_URL}/api/whitelisted-emails/${localStorage.getItem("id")}/`)
       .then((res) => {
         setUser(res.data);
       })
       .catch((err) => console.log(err));
   };
 
-  const getUsers = () => {
-    let url = `https://api.polyverse.app/api/whitelisted-emails/`;
-    if (localStorage.getItem("role") !== "ADMIN") {
-      url = `${url}`;
-    }
-
-    axios
-      .get(url)
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const InviteMail = (email) => {
     axios
-      .post(`https://api.polyverse.app/api/email-invitation/`, {
+      .post(`${API_URL}/api/email-invitation/`, {
         email: email,
       })
       .then((res) => {
@@ -48,9 +93,9 @@ const Admin = ({}) => {
           setIsPopup(false);
           setEmail(null);
           setName(null);
-          setOrganization(null);
+          setOrganization([]);
           setRole(null);
-          getUsers();
+          getUsers(user.orgs, user.role);
           alert("Successfully invited the user.");
         }
       })
@@ -61,14 +106,14 @@ const Admin = ({}) => {
   };
 
   const InviteUser = () => {
-    // if (!organization) {
-    //   alert("organization required !");
-    //   return;
-    // }
+    if (!orgList.length) {
+      alert("organization required !");
+      return;
+    }
     axios
-      .post(`https://api.polyverse.app/api/whitelisted-emails/`, {
+      .post(`${API_URL}/api/whitelisted-emails/`, {
         name: name,
-        // organization: organization,
+        orgs: orgList,
         email: email,
         role: role,
       })
@@ -85,12 +130,12 @@ const Admin = ({}) => {
 
   const UpdateRole = (id, role) => {
     axios
-      .patch(`https://api.polyverse.app/api/whitelisted-emails/${id}/`, {
+      .patch(`${API_URL}/api/whitelisted-emails/${id}/`, {
         role: role,
       })
       .then((res) => {
         if (res.data) {
-          getUsers();
+          getUsers(user.orgs, user.role);
           alert("Successfully updated the role.");
         }
       })
@@ -102,7 +147,7 @@ const Admin = ({}) => {
 
   useEffect(() => {
     getUser();
-    getUsers();
+    getOrganizations();
   }, []);
 
   return (
@@ -128,7 +173,7 @@ const Admin = ({}) => {
               <thead>
                 <tr>
                   <th>
-                    <u>Organization</u>
+                    <u>Organizations</u>
                   </th>
                   <th>
                     <u>Email</u>
@@ -148,7 +193,18 @@ const Admin = ({}) => {
               <tbody>
                 {users.map((user_, index) => (
                   <tr key={index}>
-                    <td>{"N/A"}</td>
+                    {user_.orgs && user_.orgs.length === 1 ? (
+                      <td>
+                        {user_.orgs.length ? `${user_.orgs[0].name}` : ""}
+                      </td>
+                    ) : (
+                      <td>
+                        {user_.orgs && user_.orgs.length
+                          ? `${user_.orgs[0].name} + ${user_.orgs.length} more`
+                          : "N/A"}
+                      </td>
+                    )}
+
                     <td>{user_.email}</td>
                     <td>
                       {user_.role === "REGULAR"
@@ -158,19 +214,50 @@ const Admin = ({}) => {
                         : "Administrator"}
                     </td>
                     <td>
-                      <select
-                        className="form-control form-control-sm"
-                        value={user_.role}
-                        onChange={(e) => UpdateRole(user_.id, e.target.value)}
-                        disabled={user.role !== "ADMIN"}
-                      >
-                        <option>Select role</option>
-                        <option value="ADMINISTRATOR">Administrator</option>
-                        <option value="REGULAR">Parent</option>
-                      </select>
+                      {user_.role === "ADMIN" ? (
+                        <select
+                          className="form-control form-control-sm"
+                          disabled={true}
+                          style={{ cursor: "not-allowed", opacity: 0.8 }}
+                        >
+                          <option value="ADMIN">Admin</option>
+                        </select>
+                      ) : (
+                        <select
+                          className="form-control form-control-sm"
+                          value={user_.role}
+                          onChange={(e) => UpdateRole(user_.id, e.target.value)}
+                          disabled={user.role !== "ADMIN"}
+                          style={
+                            user.role !== "ADMIN"
+                              ? { cursor: "not-allowed", opacity: 0.8 }
+                              : {}
+                          }
+                        >
+                          <option>Select role</option>
+                          <option value="ADMINISTRATOR">Administrator</option>
+                          <option value="REGULAR">Parent</option>
+                        </select>
+                      )}
                     </td>
                     <td>
-                      <button className="btn btn-light btn-sm">Delete</button>
+                      <button
+                        className="btn btn-light btn-sm"
+                        style={{ marginRight: "10px" }}
+                        onClick={() => {
+                          setViewedUser(user_);
+                          setViewPopup(true);
+                        }}
+                      >
+                        View
+                      </button>
+                      <button
+                        className="btn btn-light btn-sm"
+                        onClick={() => deleteUser(user_.id)}
+                        disabled={loading}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -204,7 +291,24 @@ const Admin = ({}) => {
                 >
                   Invite users to access AvatarX
                 </h5>
-                <form action="/action_page.php">
+                <form>
+                  <div className="form-group mb-2">
+                    <label for="name" style={{ color: "#000" }}>
+                      Select organization:
+                    </label>
+                    <Multiselect
+                      options={organizations}
+                      selectedValues={organization}
+                      onSelect={(selectedList, selectedItem) =>
+                        setOrganization(selectedList)
+                      }
+                      onRemove={(selectedList, selectedItem) =>
+                        setOrganization(selectedList)
+                      }
+                      displayValue="name" // Property name to display in the dropdown options
+                    />
+                  </div>
+
                   <div className="form-group mb-2">
                     <label for="name" style={{ color: "#000" }}>
                       Name:
@@ -218,31 +322,6 @@ const Admin = ({}) => {
                       placeholder="Enter name"
                     />
                   </div>
-
-                  {/* <div className="form-group mb-2">
-                    <label for="organization" style={{ color: "#000" }}>
-                      Organization:
-                    </label>
-                    {user.role === "ADMIN" ? (
-                      <input
-                        type="organization"
-                        className="form-control"
-                        id="organization"
-                        onChange={(e) => setOrganization(e.target.value)}
-                        value={organization}
-                        placeholder="Enter organization"
-                      />
-                    ) : (
-                      <input
-                        type="organization"
-                        className="form-control"
-                        id="organization"
-                        value={user.organization}
-                        placeholder="Enter organization"
-                        disabled
-                      />
-                    )}
-                  </div> */}
 
                   <div className="form-group mb-2">
                     <label for="email" style={{ color: "#000" }}>
@@ -286,6 +365,56 @@ const Admin = ({}) => {
                         onClick={InviteUser}
                       >
                         Submit
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {viewPopup && (
+        <div
+          className="modal fade show"
+          id="myModal"
+          style={{ display: "block", background: "rgb(0,0,0, 0.8)" }}
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button
+                  onClick={() => setViewPopup(false)}
+                  type="button"
+                  className="btn-close"
+                  dataBsDismiss="modal"
+                ></button>
+              </div>
+
+              <div className="modal-body">
+                <div style={{ color: "#000", marginTop: "20px" }}>
+                  <h5 style={{ color: "#000" }}>Hello {viewedUser.name}, </h5>
+                  <h6 style={{ color: "#000" }}>
+                    You have access to below organizations{" "}
+                  </h6>
+                  <ul style={{ color: "#000" }}>
+                    {viewedUser.orgs.map((u, index) => (
+                      <li style={{ color: "#000" }} key={index}>
+                        {u.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="row mt-3">
+                  <div className="col-sm-12">
+                    <p className="text-center">
+                      <button
+                        className="btn popup-btn btn-block"
+                        onClick={() => setViewPopup(false)}
+                      >
+                        Close
                       </button>
                     </p>
                   </div>

@@ -1,4 +1,3 @@
-
 html,
 body {
   width: 100%;
@@ -535,7 +534,6 @@ video {
     bottom: 50px;
   }
 
-
   #x-icon {
     visibility: hidden;
   }
@@ -666,7 +664,6 @@ button img {
   padding: 0 !important;
 }
 
-
 .main-wrapper {
   position: relative;
   height: 100vh;
@@ -675,7 +672,6 @@ button img {
 .action-wrapper {
   position: absolute;
   bottom: 30px;
-  
 }
 .mute-btn {
   border: 1px solid #ffff;
@@ -700,12 +696,11 @@ button img {
   border-radius: 40px;
 }
 
-
 .user-menu .username {
-  color: #ffff;;
+  color: #ffff;
 }
 .user-menu .username.black {
-  color: black;;
+  color: black;
 }
 
 #sm-video {
@@ -740,13 +735,12 @@ button img {
   border: none;
   font-size: 16px;
   margin: 0 5px;
-  
 }
 
 .logout-btn:hover {
-  border : 1px solid  #ffff;
+  border: 1px solid #ffff;
   background-color: black;
-  color : #fff;
+  color: #fff;
   font-weight: 400;
 }
 
@@ -757,38 +751,37 @@ button img {
   border: none;
   font-size: 16px;
   margin: 0 5px;
- 
+
   background-color: black;
   color: #ffff;
-  
 }
 
 .popup-btn:hover {
-  border : 1px solid  #ffff;
-  border : 1px solid black;
+  border: 1px solid #ffff;
+  border: 1px solid black;
   background-color: ffff;
-  color : black;
+  color: black;
   font-weight: 400;
 }
 
 .account-info-visible-mobile {
-  display:none;
- }
+  display: none;
+}
 
 @media only screen and (max-width: 767px) {
   .account-info-visible-desktop {
-   display:none;
+    display: none;
   }
 
   .account-info-visible-mobile {
-    display:block;
-   }
+    display: block;
+  }
 
-   .action-wrapper {
-     bottom : 45px !important;
-   }
+  .action-wrapper {
+    bottom: 45px !important;
+  }
 
-   .logout-btn {
+  .logout-btn {
     padding: 5px 10px;
   }
 
@@ -835,4 +828,21 @@ button img {
   margin-top: 5em;
 }
 
+.highlightOption {
+  background: #ced4d7 !important;
+  color: #000 !important;
+}
 
+.optionContainer {
+  color: #000 !important;
+}
+
+.multiSelectContainer li:hover {
+  background: #ced4d7 !important;
+  color: #000 !important;
+}
+
+.chip {
+  background: #ced4d7 !important;
+  color: #000 !important;
+}

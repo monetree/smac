@@ -32,6 +32,7 @@
     "color": "^4.2.3",
     "dotenv": "^8.2.0",
     "framer-motion": "^4.1.17",
+    "multiselect-react-dropdown": "^2.0.25",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-bootstrap-icons": "^1.10.2",
