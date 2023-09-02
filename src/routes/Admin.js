@@ -41,8 +41,13 @@ const Admin = ({}) => {
 
   const getUsers = (orgs, role) => {
     let url = `${API_URL}/api/users/`;
-    if (orgs && orgs.length && role !== "ADMIN") {
-      url = `${url}?ids=${orgs.toString()}`;
+
+    if (role !== "ADMIN") {
+      if (orgs && orgs.length) {
+        url = `${url}?ids=${orgs.toString()}`;
+      } else {
+        return;
+      }
     }
     axios
       .get(url)
