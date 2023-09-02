@@ -27,7 +27,7 @@ const Admin = ({}) => {
   const getUsers = () => {
     let url = `https://api.polyverse.app/api/whitelisted-emails/`;
     if (localStorage.getItem("role") !== "ADMIN") {
-      url = `${url}?organization=${localStorage.getItem("organization")}`;
+      url = `${url}`;
     }
 
     axios
@@ -61,14 +61,14 @@ const Admin = ({}) => {
   };
 
   const InviteUser = () => {
-    if (!organization) {
-      alert("organization required !");
-      return;
-    }
+    // if (!organization) {
+    //   alert("organization required !");
+    //   return;
+    // }
     axios
       .post(`https://api.polyverse.app/api/whitelisted-emails/`, {
         name: name,
-        organization: organization,
+        // organization: organization,
         email: email,
         role: role,
       })
@@ -148,7 +148,7 @@ const Admin = ({}) => {
               <tbody>
                 {users.map((user_, index) => (
                   <tr key={index}>
-                    <td>{user_.organization ? user_.organization : "N/A"}</td>
+                    <td>{"N/A"}</td>
                     <td>{user_.email}</td>
                     <td>
                       {user_.role === "REGULAR"
@@ -219,7 +219,7 @@ const Admin = ({}) => {
                     />
                   </div>
 
-                  <div className="form-group mb-2">
+                  {/* <div className="form-group mb-2">
                     <label for="organization" style={{ color: "#000" }}>
                       Organization:
                     </label>
@@ -242,7 +242,7 @@ const Admin = ({}) => {
                         disabled
                       />
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="form-group mb-2">
                     <label for="email" style={{ color: "#000" }}>
