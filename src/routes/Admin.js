@@ -106,7 +106,7 @@ const Admin = ({}) => {
       })
       .catch((err) => {
         alert("Failed to invited the user.");
-        console.log(err);
+        console.log("err: ", err);
       });
   };
 
