@@ -60,6 +60,9 @@ function App() {
 
   useEffect(() => {
     datadogRum.setUser({
+      id: localStorage.getItem("email")
+        ? localStorage.getItem("email")
+        : localStorage.getItem("user"),
       name: localStorage.getItem("email")
         ? localStorage.getItem("email")
         : localStorage.getItem("user"),

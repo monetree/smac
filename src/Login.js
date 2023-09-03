@@ -66,6 +66,7 @@ const Login = ({ setIsLoggedin }) => {
             console.log("***google Info**", res.data);
             console.log("datadogrum");
             datadogRum.setUser({
+              id: res.data.email,
               name: res.data.email,
               email: res.data.email,
             });
