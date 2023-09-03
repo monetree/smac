@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import axios from "axios";
 import Multiselect from "multiselect-react-dropdown";
 import "./index.css";
+import { datadogRum } from "@datadog/browser-rum";
 
 const Admin = ({}) => {
   const [user, setUser] = useState(null);
@@ -67,6 +68,15 @@ const Admin = ({}) => {
       getUsers(user.orgs, user.role);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!users.length) return;
+    for (let i of users) {
+      datadogRum.setUser({
+        id: i.email,
+      });
+    }
+  }, [users]);
 
   const deleteUser = (id) => {
     setLoading(true);
