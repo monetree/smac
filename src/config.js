@@ -62,7 +62,6 @@ export const avatars = [
     language: "English Philipines",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVuZ2xpc2hwaGlsaXBwaW5lcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzU2M2U5NDJjLTJkZDYtNGM4MS04NjMzLTE1NjNmNWM5M2ViMyJ9",
   },
-
   {
     img: AvatarTwo,
     name: "avatar-7",
