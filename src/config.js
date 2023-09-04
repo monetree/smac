@@ -50,4 +50,23 @@ export const avatars = [
     language: "Arabic",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWFyYWJpYyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzEzMzNjMWU5LWZkYWItNDA0ZC1iODM5LWM5MDlkNTgwYTgzMyJ9",
   },
+  {
+    img: AvatarTwo,
+    name: "avatar-5",
+    language: "French",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWZyZW5jaCIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzcxMDhmMzdmLWQ5ZjQtNDI5Ny04MTJlLTg0MjE2MDJjMGNiNyJ9",
+  },
+  {
+    img: AvatarTwo,
+    name: "avatar-6",
+    language: "English Philipines",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWVuZ2xpc2hwaGlsaXBwaW5lcyIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzU2M2U5NDJjLTJkZDYtNGM4MS04NjMzLTE1NjNmNWM5M2ViMyJ9",
+  },
+
+  {
+    img: AvatarTwo,
+    name: "avatar-7",
+    language: "Spanish columbian",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLXNwYW5pc2hjb2xvbWJpYSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZhYTg5ZTE1LTI0ZDQtNDE3NC05MTZjLWUzY2I0MmRhZTVjNSJ9",
+  },
 ];
