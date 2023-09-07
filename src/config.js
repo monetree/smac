@@ -53,7 +53,7 @@ export const avatars = [
   {
     img: AvatarTwo,
     name: "avatar-5",
-    language: "French",
+    language: "Indian Telugu",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLWZyZW5jaCIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzcxMDhmMzdmLWQ5ZjQtNDI5Ny04MTJlLTg0MjE2MDJjMGNiNyJ9",
   },
   {
