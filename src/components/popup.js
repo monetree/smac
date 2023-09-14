@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Popup = ({
   setIsPopup,
   avatars,
@@ -28,9 +26,24 @@ const Popup = ({
                 <div className="avatar" key={index}>
                   <img
                     src={avatar.img}
-                    onClick={() => handleActiveAvatar(avatar)}
+                    onClick={
+                      avatar.link
+                        ? () => {
+                            window.location = `${
+                              avatar.link
+                            }?token=${localStorage.getItem(
+                              "token"
+                            )}&email=${localStorage.getItem("email")}`;
+                          }
+                        : () => handleActiveAvatar(avatar)
+                    }
                     className={
                       activeAvatar.name === avatar.name ? "img-active" : ""
+                    }
+                    style={
+                      avatar.language === "Multilanguage"
+                        ? { height: "111px", width: "auto" }
+                        : {}
                     }
                   />
                   <p className="text-center mt-3">

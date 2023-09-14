@@ -19,10 +19,9 @@ import {
   VolumeUpFill,
 } from "react-bootstrap-icons";
 import { primaryAccent } from "../globalStyle";
-
 import Popup from "../components/popup";
-
 import { avatars } from "../config";
+import axios from "axios";
 
 const iconSize = 24;
 
@@ -42,6 +41,7 @@ const Header = ({ className }) => {
 
   const [isPopup, setIsPopup] = useState(false);
   const [activeAvatar, setActiveAvatar] = useState({});
+  const [profile, setProfile] = useState(null);
 
   const history = useHistory();
 
@@ -57,12 +57,26 @@ const Header = ({ className }) => {
     return userInfo;
   };
 
-  useEffect(() => {
-    let isLoggedInUser = getUserInfo();
-    if (!isLoggedInUser) {
-      history.push("/");
-    }
+  const getUser = () => {
+    const id = localStorage.getItem("id");
+    axios
+      .get(`https://api.polyverse.app/api/whitelisted-emails/${id}/`)
+      .then((res) => {
+        setProfile(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    const user = localStorage.getItem("id");
+    if (!user) {
+      window.location.href = "/";
+    } else {
+      getUser();
+    }
+  }, []);
+
+  useEffect(() => {
     let activeAvatar = localStorage.getItem("activeAvatar")
       ? JSON.parse(localStorage.getItem("activeAvatar"))
       : avatars[0];
@@ -145,9 +159,8 @@ const Header = ({ className }) => {
                         pathname === "/loading" ? "loading-li" : ""
                       }`}
                       onClick={() => {
-                        dispatch(disconnect());
-                        localStorage.setItem("userInfo", "");
-                        window.location.reload();
+                        localStorage.clear();
+                        window.location.href = "/";
                       }}
                     >
                       Logout
@@ -163,7 +176,7 @@ const Header = ({ className }) => {
                   <div className="menu-child">
                     <img
                       id="profile-pic"
-                      src={getUserInfo()?.picture}
+                      src={profile?.img_url}
                       width={55}
                       height={55}
                     />
@@ -174,7 +187,7 @@ const Header = ({ className }) => {
                         }`}
                       >
                         <b>Welcome </b>
-                        {getUserInfo()?.name}
+                        {profile?.name}
                       </p>
                     </div>
                   </div>

@@ -123,10 +123,6 @@ function App() {
         <Route path="/invite">
           <Admin />
         </Route>
-        {/* <Route path="/feedback">
-          <Feedback />
-        </Route> */}
-        {/* / goes at the bottom */}
         <Route path="/">
           <GoogleOAuthProvider clientId="118420081966-s1n42272jcg4r5l4erufahti23ubp8o0.apps.googleusercontent.com">
             <Landing />

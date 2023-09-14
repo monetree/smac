@@ -11,14 +11,23 @@ import axios from "axios";
 import GoogleButton from "react-google-button";
 import { useHistory } from "react-router-dom";
 import "./index.css";
+import { avatars } from "../config";
 
 function Landing({ className }) {
   const history = useHistory();
   // const { mic, camera } = useSelector(({ sm }) => sm.requestedMediaPerms);
   // const dispatch = useDispatch();
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [emails, setEmails] = useState([]);
+
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse.access_token),
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   const getEmails = () => {
     axios
@@ -38,45 +47,28 @@ function Landing({ className }) {
     getEmails();
   }, []);
 
-  const getUserInfo = () => {
-    let userInfo = localStorage.getItem("userInfo");
-    if (!userInfo) {
-      return null;
-    }
-    userInfo = JSON.parse(userInfo);
-    if (!userInfo?.name) {
-      return null;
-    }
-    return userInfo;
+  const saveUserProfile = (data, token, id) => {
+    axios
+      .patch(`https://api.polyverse.app/api/whitelisted-emails/${id}/`, {
+        img_url: data.picture,
+        name: data.name,
+        social_token: token,
+      })
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        window.location.href = "/loading";
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    let isLoggedInUser = getUserInfo();
-    if (isLoggedInUser) {
-      history.push("/loading");
-    }
-  }, []);
-
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log("Login Failed:", error),
-  });
-
-  useEffect(() => {
-    let isLoggedInUser = getUserInfo();
-
-    if (user && user.email) {
-      localStorage.setItem("email", user.email);
-      localStorage.setItem("name", user.name);
-    }
-
-    if (user && !isLoggedInUser) {
+    if (user) {
       axios
         .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user}`,
           {
             headers: {
-              Authorization: `Bearer ${user.access_token}`,
+              Authorization: `Bearer ${user}`,
               Accept: "application/json",
             },
           }
@@ -84,28 +76,58 @@ function Landing({ className }) {
         .then((res) => {
           for (let i of emails) {
             if (i.email === res.data.email) {
-              console.log("***google Info**", res.data);
-
               localStorage.setItem("id", i.id);
-              localStorage.setItem("role", i.role);
-              localStorage.setItem("organization", i.organization);
-              localStorage.setItem("user_name", i.name);
-              localStorage.setItem("user_type", i.user_type);
-
               localStorage.setItem("email", res.data.email);
               localStorage.setItem("name", res.data.name);
-              localStorage.setItem("userInfo", JSON.stringify(res.data));
-              window.location = "/loading";
-              return;
+
+              saveUserProfile(res.data, user, i.id);
             }
           }
-
-          alert("You don't have access to this page .. ");
-          return;
         })
         .catch((err) => console.log(err));
     }
   }, [user]);
+
+  const validateToken = (token, email) => {
+    axios
+      .post(`https://api.polyverse.app/api/verify-token/`, {
+        token: token,
+        email: email,
+      })
+      .then((res) => {
+        let data = res.data;
+        localStorage.setItem("id", data.id);
+        localStorage.setItem("email", data.email);
+        window.location.href = "/loading";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const setActiveAvatar = (name) => {
+    for (let i of avatars) {
+      if (i.name === name) {
+        localStorage.setItem("activeAvatar", JSON.stringify(i));
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
+    const user = localStorage.getItem("id");
+    const token = params.get("token");
+    const email = params.get("email");
+    const name = params.get("name");
+    if (user) {
+      window.location.href = "/loading";
+    } else {
+      if (token && email && name) {
+        setActiveAvatar(name);
+        validateToken(token, email);
+      }
+    }
+  }, []);
 
   return (
     <div className={className}>

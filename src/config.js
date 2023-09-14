@@ -5,6 +5,7 @@ import placeholder from "./img/placeholder-headshot.png";
 import AvatarOne from "./img/avatar-1.jpg";
 import AvatarTwo from "./img/avatar-2.jpg";
 import AvatarThree from "./img/avatar-3.jpg";
+import Doggo from "./img/dog.png";
 
 // header will not take up vertical height when transparent, so you need to be mindful of overlap
 export const transparentHeader = true;
@@ -66,6 +67,13 @@ export const avatars = [
     img: AvatarTwo,
     name: "avatar-7",
     language: "Spanish Colombia",
+    key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLXNwYW5pc2hjb2xvbWJpYSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZhYTg5ZTE1LTI0ZDQtNDE3NC05MTZjLWUzY2I0MmRhZTVjNSJ9",
+  },
+  {
+    link: "https://lab.avatarx.live/",
+    img: Doggo,
+    name: "Beta",
+    language: "Multilanguage",
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLXNwYW5pc2hjb2xvbWJpYSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZhYTg5ZTE1LTI0ZDQtNDE3NC05MTZjLWUzY2I0MmRhZTVjNSJ9",
   },
 ];
