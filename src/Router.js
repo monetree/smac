@@ -116,7 +116,7 @@ function App() {
           <ContentCardTest />
         </Route> */}
 
-        <Route path="/invite">
+        <Route path="/invite/:token">
           <Invite />
         </Route>
         <Route path="/loading">
