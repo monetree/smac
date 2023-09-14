@@ -18,6 +18,7 @@ import ContentCardTest from "./routes/ContentCardTest";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Admin from "./routes/Admin";
 import { datadogRum } from "@datadog/browser-rum";
+import Invite from "./routes/Invite";
 
 // only init google analytics if a tracking ID is defined in env
 const { REACT_APP_GA_TRACKING_ID } = process.env;
@@ -114,6 +115,10 @@ function App() {
         {/* <Route path="/content-card-test">
           <ContentCardTest />
         </Route> */}
+
+        <Route path="/invite">
+          <Invite />
+        </Route>
         <Route path="/loading">
           <Loading ignoreError={ignoreError} />
         </Route>

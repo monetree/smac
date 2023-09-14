@@ -19,7 +19,6 @@ function Landing({ className }) {
   // const dispatch = useDispatch();
 
   const [user, setUser] = useState(null);
-  const [emails, setEmails] = useState([]);
 
   const search = window.location.search;
   const params = new URLSearchParams(search);
@@ -28,24 +27,6 @@ function Landing({ className }) {
     onSuccess: (codeResponse) => setUser(codeResponse.access_token),
     onError: (error) => console.log("Login Failed:", error),
   });
-
-  const getEmails = () => {
-    axios
-      .get(`https://api.polyverse.app/api/whitelisted-emails/`, {
-        headers: {
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
-        let emails = res.data;
-        setEmails(emails);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getEmails();
-  }, []);
 
   const saveUserProfile = (data, token, id) => {
     axios
@@ -56,7 +37,20 @@ function Landing({ className }) {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        window.location.href = "/loading";
+        window.location.href = "/talk";
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const loginUser = (email, data, token) => {
+    axios
+      .post(`https://api.polyverse.app/api/login/`, {
+        email: email,
+        token: localStorage.getItem("org_token") || null,
+      })
+      .then((res) => {
+        localStorage.setItem("id", res.data.id);
+        saveUserProfile(data, token, res.data.id);
       })
       .catch((err) => console.log(err));
   };
@@ -74,15 +68,9 @@ function Landing({ className }) {
           }
         )
         .then((res) => {
-          for (let i of emails) {
-            if (i.email === res.data.email) {
-              localStorage.setItem("id", i.id);
-              localStorage.setItem("email", res.data.email);
-              localStorage.setItem("name", res.data.name);
-
-              saveUserProfile(res.data, user, i.id);
-            }
-          }
+          localStorage.setItem("email", res.data.email);
+          localStorage.setItem("name", res.data.name);
+          loginUser(res.data.email, res.data, user);
         })
         .catch((err) => console.log(err));
     }
@@ -140,13 +128,9 @@ function Landing({ className }) {
             {/* <h4 className="login-title">to continue to Alie AvatarX</h4> */}
           </div>
           <div className="btn-position">
-            {emails && emails.length ? (
-              <div className="space-y-3 text-center ">
-                <GoogleButton onClick={() => login()} />
-              </div>
-            ) : (
-              <div className="space-y-3 text-center ">Please wait ...</div>
-            )}
+            <div className="space-y-3 text-center ">
+              <GoogleButton onClick={() => login()} />
+            </div>
           </div>
         </div>
       </div>

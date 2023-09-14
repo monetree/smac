@@ -138,21 +138,6 @@ const Header = ({ className }) => {
                     </a>
                   </li>
 
-                  {localStorage.getItem("role") === "REGULAR" ? (
-                    ""
-                  ) : (
-                    <li className={"main-menu-li"}>
-                      <a
-                        className={`${
-                          pathname === "/loading" ? "loading-li" : ""
-                        }`}
-                        href="/invite"
-                      >
-                        Invite
-                      </a>
-                    </li>
-                  )}
-
                   <li className={"main-menu-li"}>
                     <a
                       className={`${
