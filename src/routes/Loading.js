@@ -37,15 +37,9 @@ function Loading({ className, ignoreError }) {
 
   useEffect(() => {
     datadogRum.setUser({
-      id: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
-      name: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
-      email: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
+      id: localStorage.getItem("email"),
+      name: localStorage.getItem("email"),
+      email: localStorage.getItem("email"),
     });
   }, []);
 

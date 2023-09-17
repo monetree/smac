@@ -41,7 +41,7 @@ function PersonaVideo({ className, name }) {
   useEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
-    
+
     // when component dismounts, remove resize listener
     return () => window.removeEventListener("resize", handleResize);
   }, []);

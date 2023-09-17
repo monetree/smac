@@ -13,65 +13,16 @@ import { XCircle } from "react-bootstrap-icons";
 import DPChat from "./routes/DPChat";
 import Landing from "./routes/Landing";
 import Loading from "./routes/Loading";
-import Feedback from "./routes/FeedbackRoute";
-import ContentCardTest from "./routes/ContentCardTest";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Admin from "./routes/Admin";
-import { datadogRum } from "@datadog/browser-rum";
 import Invite from "./routes/Invite";
-
-// only init google analytics if a tracking ID is defined in env
-const { REACT_APP_GA_TRACKING_ID } = process.env;
-if (REACT_APP_GA_TRACKING_ID) {
-  ReactGA.initialize(REACT_APP_GA_TRACKING_ID, { debug: true });
-  console.log(
-    `initializing google analytics with tracking ID ${REACT_APP_GA_TRACKING_ID}`
-  );
-} else console.warn("no google analytics tracking ID provided!");
-
-// make GA aware of what pages people navigate to in react router
-const LinkGAtoRouter = withRouter(({ history }) => {
-  history.listen((location) => {
-    ReactGA.set({ page: location.pathname });
-  });
-  return null;
-});
 
 function App() {
   const { error } = useSelector(({ sm }) => ({ ...sm }));
   const [ignoreError, setIgnoreError] = useState(false);
-  const [sessionId, setSessionId] = useState(false);
-  const [userData, setUserData] = useState(null);
 
   // every time error changes, set ignore error to false
   useEffect(() => setIgnoreError(false), [error]);
-
-  // send SM session ID to google analytics when we connect
-  if (REACT_APP_GA_TRACKING_ID) {
-    const sessionID = useSelector(({ sm }) => sm.sessionID);
-    useEffect(() => {
-      if (sessionID !== "") {
-        setSessionId(sessionID);
-        ReactGA.gtag("event", "sm_session_id", {
-          sm_session_id: sessionID,
-        });
-      }
-    }, [sessionID]);
-  }
-
-  useEffect(() => {
-    datadogRum.setUser({
-      id: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
-      name: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
-      email: localStorage.getItem("email")
-        ? localStorage.getItem("email")
-        : localStorage.getItem("user"),
-    });
-  }, []);
 
   return (
     <Router>
@@ -134,7 +85,6 @@ function App() {
           </GoogleOAuthProvider>
         </Route>
       </Switch>
-      <LinkGAtoRouter />
     </Router>
   );
 }
