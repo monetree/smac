@@ -70,7 +70,7 @@ export const avatars = [
     key: "eyJzb3VsSWQiOiJkZG5hLXVzaGEtbXVzdW51cmktLXNwYW5pc2hjb2xvbWJpYSIsImF1dGhTZXJ2ZXIiOiJodHRwczovL2RoLmF6LnNvdWxtYWNoaW5lcy5jbG91ZC9hcGkvand0IiwiYXV0aFRva2VuIjoiYXBpa2V5X3YxXzZhYTg5ZTE1LTI0ZDQtNDE3NC05MTZjLWUzY2I0MmRhZTVjNSJ9",
   },
   {
-    link: "https://lab.avatarx.live/",
+    link: "https://login.avatarx.live/",
     img: Doggo,
     name: "Beta",
     language: "Multilanguage",
