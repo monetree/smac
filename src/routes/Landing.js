@@ -30,7 +30,7 @@ function Landing({ className }) {
 
   const saveUserProfile = (data, token, id) => {
     axios
-      .patch(`https://api.polyverse.app/api/whitelisted-emails/${id}/`, {
+      .patch(`https://api.avatarx.live/api/whitelisted-emails/${id}/`, {
         img_url: data.picture,
         name: data.name,
         social_token: token,
@@ -44,7 +44,7 @@ function Landing({ className }) {
 
   const loginUser = (email, data, token) => {
     axios
-      .post(`https://api.polyverse.app/api/login/`, {
+      .post(`https://api.avatarx.live/api/login/`, {
         email: email,
         token: localStorage.getItem("org_token") || null,
       })
@@ -78,7 +78,7 @@ function Landing({ className }) {
 
   const validateToken = (token, email) => {
     axios
-      .post(`https://api.polyverse.app/api/verify-token/`, {
+      .post(`https://api.avatarx.live/api/verify-token/`, {
         token: token,
         email: email,
       })

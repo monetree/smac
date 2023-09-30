@@ -26,7 +26,7 @@ const Admin = ({}) => {
     setOrgList(data_);
   }, [organization]);
 
-  const API_URL = "https://api.polyverse.app";
+  const API_URL = "https://api.avatarx.live";
   // const API_URL = "http://127.0.0.1:8000";
 
   const getOrganizations = () => {
