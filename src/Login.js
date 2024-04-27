@@ -7,37 +7,7 @@ const Login = ({ setIsLoggedin }) => {
   const [user, setUser] = useState([]);
   const emails = [
     "mailbox@phanig.com",
-    "soubhagyakumar666@gmail.com",
-    "pinnamanenivvs@gmail.com",
-    "dprabhakar@webprodigiesinc.com",
-    "taranjeetsingh3326@gmail.com",
-    "manmohanalla@gmail.com",
-    "vpsps@yahaoo.com",
-    "vpspublicschool@gmail.com",
-    "krishna.samanth@gmail.com",
-    "prajaykamat@gmail.com",
-    "msrmeda1961@gmail.com",
-    "stjps2023@gmail.com",
-    "keerthanaduggirala@gmail.com",
-    "msrmeda1961@gmail.com",
-    "krishna.medasani@gmail.com",
-    "rakeshkolli@gmail.com",
-    "mvc@rvrpro.in",
-    "aditya.tummala10@gmail.com",
-    "ruhifatimaa@gmail.com",
-    "contact@phanig.com",
-    "soubhagya.developer@gmail.com",
-    "luxury.traveller.vlog@gmail.com",
-    "ashishmohanty000@gmail.com",
-    "markosmuche2018@gmail.com",
-    "claire.shiying@gmail.com",
-    "sasmal.saroj143@gmail.com",
-    "swathik.0329@gmail.com",
-    "mauryateja9@gmail.com",
-    "pokuri.1803@gmail.com",
-    "vivianoboh20@gmail.com",
-    "amsalusolomon12@gmail.com",
-    "mdahsanul2015@gmail.com",
+    "soubhagyakumar666@gmail.com"
   ];
 
   const login = useGoogleLogin({

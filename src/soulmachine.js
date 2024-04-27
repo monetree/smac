@@ -42,6 +42,7 @@ const Soulmachine = ({ logout }) => {
     console.info("success! session id:", sessionId);
 
     // start the video playing
+    
     scene
       .startVideo()
       .then((videoState) => {

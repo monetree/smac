@@ -9,19 +9,19 @@ import videoFill from "../img/camera-video-fill.svg";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import GoogleButton from "react-google-button";
-import { useHistory } from "react-router-dom";
 import "./index.css";
 import { avatars } from "../config";
 
 function Landing({ className }) {
-  const history = useHistory();
-  // const { mic, camera } = useSelector(({ sm }) => sm.requestedMediaPerms);
-  // const dispatch = useDispatch();
-
   const [user, setUser] = useState(null);
 
   const search = window.location.search;
   const params = new URLSearchParams(search);
+
+  const emails = [
+    "mailbox@phanig.com",
+    "soubhagyakumar666@gmail.com"
+  ];
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse.access_token),
@@ -68,52 +68,52 @@ function Landing({ className }) {
           }
         )
         .then((res) => {
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("name", res.data.name);
-          loginUser(res.data.email, res.data, user);
+          if (!emails.includes(res.data.email)) {
+            alert("You don't have access to this page .. ");
+            return;
+          } else {
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("name", res.data.name);
+            loginUser(res.data.email, res.data, user);
+          }
         })
         .catch((err) => console.log(err));
     }
   }, [user]);
 
-  const validateToken = (token, email) => {
-    axios
-      .post(`https://api.avatarx.live/api/verify-token/`, {
-        token: token,
-        email: email,
-      })
-      .then((res) => {
-        let data = res.data;
-        localStorage.setItem("id", data.id);
-        localStorage.setItem("email", data.email);
-        window.location.href = "/loading";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const validateToken = (token, email) => {
+  //   axios
+  //     .post(`https://api.avatarx.live/api/verify-token/`, {
+  //       token: token,
+  //       email: email,
+  //     })
+  //     .then((res) => {
+  //       let data = res.data;
+  //       localStorage.setItem("id", data.id);
+  //       localStorage.setItem("email", data.email);
+  //       window.location.href = "/loading";
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  const setActiveAvatar = (name) => {
-    for (let i of avatars) {
-      if (i.name === name) {
-        localStorage.setItem("activeAvatar", JSON.stringify(i));
-        return;
-      }
-    }
-  };
+  // const setActiveAvatar = (name) => {
+  //   for (let i of avatars) {
+  //     if (i.name === name) {
+  //       localStorage.setItem("activeAvatar", JSON.stringify(i));
+  //       return;
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
-    const user = localStorage.getItem("id");
-    const token = params.get("token");
-    const email = params.get("email");
-    const name = params.get("name");
-    if (user) {
+    const user = localStorage.getItem("email");
+    // const token = params.get("token");
+    // const email = params.get("email");
+    // const name = params.get("name");
+    if (user && emails.includes(user)) {
       window.location.href = "/loading";
-    } else {
-      if (token && email && name) {
-        setActiveAvatar(name);
-        validateToken(token, email);
-      }
     }
   }, []);
 

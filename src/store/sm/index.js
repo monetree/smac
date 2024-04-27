@@ -275,6 +275,7 @@ export const createScene = createAsyncThunk(
         })
       );
 
+
       /* BIND HANDLERS */
       // connection state /progress handler
       scene.connectionState.onConnectionStateUpdated.addListener(
@@ -318,6 +319,7 @@ export const createScene = createAsyncThunk(
           case "recognizeResults": {
             const output = message.body.results[0];
             // sometimes we get an empty message, catch and log
+            console.log("output", output)
             if (!output) {
               console.warn("undefined output!", message.body);
               return false;

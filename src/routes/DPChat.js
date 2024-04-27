@@ -87,11 +87,9 @@ const DPChat = ({ className }) => {
   return (
     <div className={className} style={{ background: "black" }}>
       <div className="video-overlay">
-        {/* top row */}
         <div className="row">
           <Header />
         </div>
-        {/* middle row */}
         <div
           className="row d-flex justify-content-end align-items-center flex-grow-1 ps-3 pe-3"
           style={{ overflow: "scroll" }}
@@ -106,7 +104,6 @@ const DPChat = ({ className }) => {
             </div>
           </div>
         </div>
-        {/* bottom row */}
         <div>
           {isOutputMuted ? (
             <div className="row">
